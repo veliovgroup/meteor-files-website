@@ -12,6 +12,7 @@ This is repository with codebase of the web application available at [files.veli
 
 - Website: __[files.veliov.com](https://files.veliov.com/)__
 - Meteor's [tutorials repository](https://github.com/veliovgroup/meteor-snippets#meteor-snippets)
+- [`ostrio:files`](https://github.com/veliovgroup/Meteor-Files) library
 - Hekoru [deploy instructions](https://github.com/veliovgroup/meteor-files-website/blob/master/heroku-deploy.md)
 
 ## Functionality:
@@ -93,6 +94,10 @@ All supported and annotated settings
   }
 }
 ```
+
+### Deployment
+
+Learn more about DevOps, deployment, and running this app live in [DevOps and Deployment tutorial](https://github.com/veliovgroup/meteor-snippets/tree/main/devops).
 
 ## Support this project:
 
