@@ -2,10 +2,11 @@ import { moment }   from 'meteor/momentjs:moment';
 import { filesize } from 'meteor/mrt:filesize';
 import { Template } from 'meteor/templating';
 import './upload-row.jade';
+import './upload-row.sass';
 
 Template.uploadRow.helpers({
   estimatedBitrate: function() {
-    return filesize(this.estimateSpeed.get(), { bits: true }) + '/s';
+    return `${filesize(this.estimateSpeed.get(), { bits: true })}/s`;
   },
   getProgressClass: function() {
     let progress = Math.ceil(this.progress.get() / 5) * 5;
@@ -16,19 +17,19 @@ Template.uploadRow.helpers({
   },
   estimatedDuration: function() {
     const duration = moment.duration(this.estimateTime.get());
-    let hours = '' + (duration.hours());
+    let hours = `${duration.hours()}`;
     if (hours.length <= 1) {
-      hours = '0' + hours;
+      hours = `0${hours}`;
     }
-    let minutes = '' + (duration.minutes());
+    let minutes = `${duration.minutes()}`;
     if (minutes.length <= 1) {
-      minutes = '0' + minutes;
+      minutes = `0${minutes}`;
     }
     let seconds = '' + (duration.seconds());
     if (seconds.length <= 1) {
-      seconds = '0' + seconds;
+      seconds = `0${seconds}`;
     }
-    return hours + ':' + minutes + ':' + seconds;
+    return `${hours}:${minutes}:${seconds}`;
   }
 });
 
