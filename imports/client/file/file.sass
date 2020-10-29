@@ -1,0 +1,75 @@
+@import "{}/imports/client/_color-scheme.sass";
+
+.main-container .row .col-50.file
+  justify-content: space-between
+  & > *
+    width: 100%
+    max-width: 100%
+  .file-title
+    margin: 0px
+    background-color: $bg-dark
+    padding: 0px
+    .go-back
+      margin: 0px
+      padding: 13px 10px
+      height: 100%
+      text-decoration: none
+      font-size: 1.2rem
+      line-height: 3.2rem
+      color: #C9C9CA
+      &:hover
+        color: #FFFFFF
+        background-color: #0D0F14
+  .file-body
+    position: relative
+    text-align: center
+    -webkit-overflow-scrolling: touch
+  .file-logo
+    font-size: 2.75rem
+    line-height: 3rem
+  .file-actions
+    margin: 2rem auto 1rem auto
+    table-layout: fixed
+    td
+      padding: 0px 12px
+      .la
+        font-size: 1.78rem
+        line-height: 2rem
+  .file-details
+    table
+      width: 100%
+    td, th
+      line-height: 1.4rem
+      word-break: break-all
+      padding: 5px 10px
+      vertical-align: middle
+    td
+      text-align: left
+    th
+      text-align: right
+      font-weight: 700
+  .scroll-wrap
+    min-height: 407px
+    max-height: 407px
+    height: 407px
+
+.top-link
+  display: inline-block
+  padding: 4px
+  width: 60px
+  height: 60px
+  border-radius: 60px
+  background-color: lighten($bg, 1.5%)
+  &:hover
+    background-color: lighten($bg, 1.95%)
+
+.fixed-table
+  table-layout: fixed
+  border-collapse: collapse
+  border-spacing: 0
+  border: 0
+  td
+    white-space: nowrap
+    overflow: hidden
+    text-overflow: ellipsis
+

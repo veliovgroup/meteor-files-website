@@ -2,6 +2,7 @@ import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { _app, Collections } from '/imports/lib/core.js';
+import './file.sass';
 import './file.jade';
 
 Template.file.onRendered(function() {
