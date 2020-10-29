@@ -1,0 +1,133 @@
+@import "{}/imports/client/_color-scheme.sass";
+
+@keyframes upload-animation
+  from
+    top: 100%
+  to
+    top: -100%
+
+progress
+  display: block
+  margin: 0px auto
+  width: 90%
+  height: 2px
+  border: none
+  color: #FEFEFE
+  background-color: #000
+  border-radius: 0px
+  -webkit-appearance: none
+  -moz-appearance: none
+  -ms-appearance: none
+  appearance: none
+
+progress::-webkit-progress-bar
+  background: #000
+  color: #000
+  border-radius: 0px
+
+progress::-webkit-progress-value
+  background: #FEFEFE
+  color: #FEFEFE
+
+progress::-moz-progress-bar
+  background: #AAA
+  color: #AAA
+  border-radius: 0px
+
+progress::-moz-progress-value
+  background: red
+  color: #FEFEFE
+
+.upload-form
+  display: flex
+  align-items: center
+  justify-content: center
+  position: relative
+  text-align: center
+  user-select: none
+  .cloud-container
+    display: inline-block
+    position: relative
+    height: 60px
+    i.la.la-cloud
+      position: relative
+      top: -12px
+      font-size: 84px
+    .arrow-container
+      display: inline-block
+      position: absolute
+      top: 7px
+      left: 0px
+      overflow: hidden
+      height: 45px
+      width: 84px
+      i.la.la-arrow-up
+        position: absolute
+        top: 10px
+        left: 20px
+        font-size: 44px
+  .dnd-notice
+    display: none
+  .percentage
+    font-size: 3.6rem
+    margin-bottom: 2.2rem
+    margin-top: 2rem
+    line-height: 3.4rem
+  &.file-over
+    cursor: copy
+    background:
+      color: $bg
+      image: url(/dnd.png)
+      repeat: no-repeat
+      position: 50% 50%
+      size: 80px 80px
+    & > *:not(.dnd-notice)
+      display: none
+    .dnd-notice
+      display: inline-block
+      position: absolute
+      width: 100%
+      bottom: 15px
+      left: 0px
+  .fake-upload
+    margin: 0px auto
+    cursor: pointer
+    transition: color 256ms ease-in-out
+    width: 85%
+    color: $link-color
+    .icon-container
+      margin: 0 auto;
+      position: relative;
+      width: 150px;
+    &:hover
+      color: $link-active
+      .la-arrow-up
+        animation: upload-animation 1024ms linear infinite
+
+.radio-inline
+  cursor: pointer
+  white-space: nowrap
+  input[type="radio"]
+    display: inline-block
+
+.radio-inline-wrap
+  display: flex
+  .radio-inline
+    flex: 1 1 0
+    display: block
+    position: relative
+    padding-left: 30px
+    margin-bottom: 0
+    font-weight: 400
+    cursor: pointer
+    user-select: none
+
+.radio-inline + .radio-inline
+  margin-top: 0
+  margin-left: 10px
+
+.show-settings
+  display: inline-block
+  transition: color 256ms ease-in-out, transform 256ms ease-in-out
+  &:hover, &.active
+    transform: rotate(150deg)

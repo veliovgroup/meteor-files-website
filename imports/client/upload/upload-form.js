@@ -7,6 +7,7 @@ import { ReactiveVar } from 'meteor/reactive-var';
 import { _app, Collections } from '/imports/lib/core.js';
 
 import { webPush } from '/imports/client/misc/web-push.js';
+import '/imports/client/upload/upload-form.sass';
 import '/imports/client/upload/upload-form.jade';
 
 const formError = new ReactiveVar(false);
@@ -93,7 +94,6 @@ Template.uploadForm.onCreated(function () {
       }).on('abort', function () {
         cleanUploaded(this);
       }).on('error', function (error) {
-        console.error(error);
         let currentError = formError.get() || '';
         if (currentError.length) {
           currentError += '<br/>';
