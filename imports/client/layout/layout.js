@@ -4,9 +4,8 @@ import { Template } from 'meteor/templating';
 import { _app } from '/imports/lib/core.js';
 import { onReload } from '/imports/client/misc/on-reload.js';
 
-import '/imports/client/components.sass';
 import '/imports/client/upload/upload-form.js';
-import '/imports/client/about/about.jade';
+import './layout.sass';
 import './layout.jade';
 
 const copySuccess = (elementId, template) => {
