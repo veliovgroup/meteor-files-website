@@ -1,3 +1,14 @@
+/*
+ * Hello there!
+ *
+ * This is "main" styles file, located under `/client` directory of meteor project
+ * that means this file will become a part of a "bundle" (e.g. core) loaded to the
+ * user's browser on "initial" load.
+ *
+ * TL;TR; Get this file as small as possible. Include only __very__ necessary rules
+ * for common DOM elements, template, and splash-screen/spinner/loader
+ */
+
 $link-color: lighten(#97A2D0, 11%)
 $link-active: #FFFFFF
 $text-color: lighten(#97A2D0, 10%)
@@ -188,6 +199,9 @@ input[type="radio"]
   &.right
     left: 8px
     right: initial
+  @media(max-width: $break-point)
+    font-size: 2.5rem
+    padding: 14px
 
 .main-container .row .col-50.file
   justify-content: space-between
