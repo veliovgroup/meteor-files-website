@@ -4,11 +4,14 @@
   <img src="https://ostr.io/apple-touch-icon-60x60.png" height="20">
 </a>
 
-# Demo app
+# File sharing web app
+
+This is repository with codebase of the web application available at [files.veliov.com](https://files.veliov.com/). It's fully-featured file-sharing service build on top of [`ostrio:files` library](https://github.com/veliovgroup/Meteor-Files) and [meteor.js](https://docs.meteor.com).
 
 ## Links:
 
 - Website: __[files.veliov.com](https://files.veliov.com/)__
+- Meteor's [tutorials repository](https://github.com/veliovgroup/meteor-snippets#meteor-snippets)
 - Hekoru [deploy instructions](https://github.com/veliovgroup/meteor-files-website/blob/master/heroku-deploy.md)
 
 ## Functionality:
