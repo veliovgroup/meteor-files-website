@@ -56,6 +56,21 @@ FlowRouter.route('/', {
 
 FlowRouter.route('/about', {
   name: 'about',
+  title: 'About',
+  meta: {
+    keywords: {
+      name: 'keywords',
+      itemprop: 'keywords',
+      content: 'about, file, files, share, sharing, upload, service, free, details'
+    },
+    description: {
+      name: 'description',
+      itemprop: 'description',
+      property: 'og:description',
+      content: 'About file-sharing web application'
+    },
+    'twitter:description': 'About file-sharing web application'
+  },
   action() {
     this.render('layout', 'about');
   },
@@ -69,6 +84,22 @@ FlowRouter.route('/about', {
 
 FlowRouter.route('/settings', {
   name: 'settings',
+  title: 'Settings',
+  meta: {
+    robots: 'noindex, nofollow',
+    keywords: {
+      name: 'keywords',
+      itemprop: 'keywords',
+      content: 'settings, options, configuration, file, upload, share, sharing'
+    },
+    description: {
+      name: 'description',
+      itemprop: 'description',
+      property: 'og:description',
+      content: 'File upload and sharing settings'
+    },
+    'twitter:description': 'File upload and sharing settings'
+  },
   action() {
     this.render('layout', 'settings');
   },

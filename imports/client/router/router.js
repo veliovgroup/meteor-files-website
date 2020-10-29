@@ -1,5 +1,5 @@
-import { _app }       from '/imports/lib/core.js';
-import { Meteor }     from 'meteor/meteor';
+import { _app } from '/imports/lib/core.js';
+import { Meteor } from 'meteor/meteor';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { FlowRouterMeta, FlowRouterTitle } from 'meteor/ostrio:flow-router-meta';
 
@@ -8,16 +8,18 @@ import { FlowRouterMeta, FlowRouterTitle } from 'meteor/ostrio:flow-router-meta'
 //   return document.createDocumentFragment();
 // };
 
-FlowRouter.globals.push({
-  title: 'Upload and share files with speed of meteor'
-});
+const title = 'Upload and share files';
+const description = 'Upload, store and share files for free without registration';
+
+FlowRouter.globals.push({ title });
 
 FlowRouter.globals.push({
   meta: {
+    robots: 'index, follow',
     keywords: {
       name: 'keywords',
       itemprop: 'keywords',
-      content: 'file, files, fast, quick, upload, store, storage, share, share files'
+      content: 'file, files, fast, quick, upload, store, storage, share, sharing, share file, upload file'
     },
     'og:url': {
       name: 'url',
@@ -37,9 +39,9 @@ FlowRouter.globals.push({
       name: 'description',
       itemprop: 'description',
       property: 'og:description',
-      content: 'Upload, store and share files for free without registration'
+      content: description
     },
-    'twitter:description': 'Upload, store and share files for free without registration',
+    'twitter:description': description,
     'twitter:title'() {
       return document.title;
     },
