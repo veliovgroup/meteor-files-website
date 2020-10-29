@@ -17,7 +17,7 @@ template(name="uploadForm")
           .danger {{{error}}}
         else
           .h1 UPLOAD A FILE
-          p.annotation {{maxFilesQty}} files up to {{getMaxSize}}
+          p.annotation #{maxFilesQty} files up to #{getMaxSize}
 
       a.info-link.right(href="{{pathFor 'about'}}" class="{{isActiveRoute 'about'}}" title="Project Info"): i.la.la-info-circle
       a.info-link.show-settings(href="{{pathFor 'settings'}}" class="{{isActiveRoute 'settings'}}" title="Upload Settings"): i.la.la-gear
