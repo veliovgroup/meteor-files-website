@@ -133,6 +133,14 @@ Template.registerHelper('getMaxSize', () => {
   return filesize(_app.conf.maxFileSize).replace('.00', '');
 });
 
+Template.registerHelper('maxFilesQty', () => {
+  return _app.conf.maxFilesQty;
+});
+
+Template.registerHelper('getTTL', () => {
+  return _app.conf.fileTTLSec / 3600;
+});
+
 Template._404.onRendered(function() {
   window.IS_RENDERED = true;
 });
