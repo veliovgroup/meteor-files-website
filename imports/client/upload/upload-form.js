@@ -67,9 +67,9 @@ Template.uploadForm.onCreated(function () {
           blamed: 0,
           expireAt: +new Date(createdAt + _app.conf.fileTTL),
           createdAt,
-          subscription: webPush.subscription || void 0
+          subscription: webPush.subscription || void 0 // <-- This is the place where we send Web Push Notification subscription to server
         },
-        streams: 'dynamic',
+        streams: (files.length > 1) ? 1 : 'dynamic',
         chunkSize: 'dynamic',
         transport: _app.conf.uploadTransport.get()
       }, false).on('end', function (error, fileObj) {
@@ -128,8 +128,7 @@ Template.uploadForm.helpers({
     let accumBitrate = 0;
     let accumDuration = 0;
 
-
-    // ITERATE OVER UPLOADS {ReacriveVar} TO
+    // ITERATE OVER UPLOADS {ReactiveVar} TO
     // ESTIMATE TOTAL SPEED AND UPLOAD ETA
     if (uploads) {
       for (let j = 0; j < uploads.length; j++) {
