@@ -1,0 +1,167 @@
+/*
+ * Hello there!
+ *
+ * This is "main" styles file, located under `/client` directory of meteor project
+ * that means this file will become a part of a "bundle" (e.g. core) loaded to the
+ * user's browser on "initial" load.
+ *
+ * TL;TR; Get this file as small as possible. Include only __very__ necessary rules
+ * for common DOM elements, template, and splash-screen/spinner/loader
+ */
+
+@import "{}/imports/client/_color-scheme.sass";
+
+@font-face
+  font-family: 'Lato'
+  font-style: normal
+  font-weight: 300
+  src: url('/fonts/lato-v14-latin_latin-ext-300.eot')
+  src: local("Lato Light"), local("Lato-Light"), url('/fonts/lato-v14-latin_latin-ext-300.eot?#iefix') format("embedded-opentype"), url('/fonts/lato-v14-latin_latin-ext-300.woff2') format("woff2"), url('/fonts/lato-v14-latin_latin-ext-300.woff') format("woff"), url('/fonts/lato-v14-latin_latin-ext-300.ttf') format("truetype"), url('/fonts/lato-v14-latin_latin-ext-300.svg#Lato') format("svg")
+
+@font-face
+  font-family: 'Lato'
+  font-style: normal
+  font-weight: 400
+  src: url('/fonts/lato-v14-latin_latin-ext-regular.eot')
+  src: local("Lato Regular"), local("Lato-Regular"), url('/fonts/lato-v14-latin_latin-ext-regular.eot?#iefix') format("embedded-opentype"), url('/fonts/lato-v14-latin_latin-ext-regular.woff2') format("woff2"), url('/fonts/lato-v14-latin_latin-ext-regular.woff') format("woff"), url('/fonts/lato-v14-latin_latin-ext-regular.ttf') format("truetype"), url('/fonts/lato-v14-latin_latin-ext-regular.svg#Lato') format("svg")
+
+@font-face
+  font-family: 'Lato'
+  font-style: normal
+  font-weight: 700
+  src: url('/fonts/lato-v14-latin_latin-ext-700.eot')
+  src: local("Lato Bold"), local("Lato-Bold"), url('/fonts/lato-v14-latin_latin-ext-700.eot?#iefix') format("embedded-opentype"), url('/fonts/lato-v14-latin_latin-ext-700.woff2') format("woff2"), url('/fonts/lato-v14-latin_latin-ext-700.woff') format("woff"), url('/fonts/lato-v14-latin_latin-ext-700.ttf') format("truetype"), url('/fonts/lato-v14-latin_latin-ext-700.svg#Lato') format("svg")
+
+@-webkit-viewport
+  width: device-width
+@-moz-viewport
+  width: device-width
+@-ms-viewport
+  width: device-width
+@-o-viewport
+  width: device-width
+@viewport
+  width: device-width
+
+@keyframes new-element
+  from
+    opacity: 0
+  to
+    opacity: 1
+
+html, body
+  padding: 0
+  margin: 0
+  height: 100%
+
+html
+  line-height: 1.2
+  font:
+    style: normal
+    size: 15px
+    weight: 400
+    display: swap
+    family: Lato, sans-serif
+  @media(max-width: $break-point)
+    font-size: 17px
+
+body
+  background-color: $background-color
+  color: $text-color
+
+p
+  margin: 2rem 0rem
+  color: $text-color
+  font-size: 0.98rem
+  line-height: 1.6rem
+
+a
+  color: $link-color
+  text-decoration: none
+  &:hover, &.active
+    color: $link-active
+    text-decoration: none
+
+.full-height
+  height: 100%
+  min-height: 100%
+
+.h1
+  font-weight: 300
+  font-size: 2rem
+  line-height: 2.8rem
+  margin-top: 0rem
+  margin-bottom: 0.5rem
+
+.h2
+  font-weight: 700
+  font-size: 1.4rem
+  line-height: 2rem
+  margin-top: 1.25rem
+  margin-bottom: 1.1rem
+
+.h3
+  font-weight: 400
+  font-size: 1.4rem
+  line-height: 1.8rem
+  margin-top: 1.15rem
+  margin-bottom: 0.9rem
+
+.text-center
+  text-align: center
+
+.flex
+  display: flex
+  justify-content: center
+  flex-direction: column
+
+.surface
+  box-shadow: 0px 0px 20px rgba(0,0,0,0.5)
+  background-color: lighten($bg, 3%)
+  max-width: $break-point
+
+.main-container
+  display: flex
+  align-items: center
+  justify-content: center
+  flex-direction: column
+
+  .row
+    width: 100%
+    display: flex
+    align-items: center
+    justify-content: center
+    flex-direction: row
+    @media(max-width: $break-point)
+      flex-direction: column
+
+    .col-50
+      flex: 0.5 1 0
+      min-height: $surface-height
+      max-height: $surface-height
+      height: $surface-height
+      max-width: $half-view
+      display: flex
+      justify-content: center
+      flex-direction: column
+      @media(max-width: $break-point)
+        max-width: 100%
+        width: 100%
+        min-height: 50vh
+        max-height: 50vh
+        height: 50vh
+
+p.annotation
+  margin-bottom: 0px
+  margin-top: 1rem
+  font-size: 0.888rem
+
+.bg-dark
+  background-color: $bg-alt
+
+.col-50
+  & > div, & > p
+    animation: new-element 350ms ease-in-out 1
+
+.invisible
+  display: none !important

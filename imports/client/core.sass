@@ -1,0 +1,114 @@
+/*
+ * Hello there!
+ *
+ * Since this file is located under `/imports` directory of meteor project
+ * We are aiming to load this file "progressively" using dynamic `import()`
+ *
+ * TL;TR; Split file like this to "modules" or "pages" and load "progressively"
+ * with templates and controllers inside routing declaration.
+ */
+
+@import "{}/imports/client/_color-scheme.sass";
+
+::active, ::focus, ::visited
+  outline: none
+
+::-webkit-scrollbar
+  display: none
+
+html
+  -ms-text-size-adjust: 100%
+  -webkit-text-size-adjust: 100%
+  text-size-adjust: 100%
+
+body
+  scroll-behavior: smooth
+  -webkit-tap-highlight-color: transparent
+  -webkit-overflow-scrolling: touch
+  overflow-scrolling: touch
+
+  -webkit-font-smoothing: antialiased
+  -moz-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+  -ms-font-smoothing: antialiased
+  -o-font-smoothing: antialiased
+  font-smoothing: antialiased
+
+  -webkit-font-smooth: always
+  -moz-font-smooth: always
+  -ms-font-smooth: always
+  -o-font-smooth: always
+  font-smooth: always
+
+  -webkit-text-rendering: optimizeLegibility
+  -moz-text-rendering: optimizeLegibility
+  -ms-text-rendering: optimizeLegibility
+  -o-text-rendering: optimizeLegibility
+  text-rendering: optimizeLegibility
+
+  line-height: normal
+  cursor: default
+
+  -ms-overflow-style: -ms-autohiding-scrollbar
+  overflow-style: autohiding-scrollbar
+  &:active, &:focus, &:visited
+    outline: none
+  &::-webkit-scrollbar
+    display: none
+
+.info-link
+  font-size: 1.4rem
+  position: absolute
+  animation: new-element 350ms ease-in-out 1
+  bottom: 6px
+  right: 8px
+  padding: 7px
+  z-index: 101
+  &.right
+    left: 8px
+    right: initial
+  @media(max-width: $break-point)
+    font-size: 2.05rem
+    padding: 14px
+
+.copy-link
+  .la-check
+    display: none
+  &.copy-success
+    .la-copy
+      display: none
+    .la-check
+      display: inline
+      color: $green
+
+.close-link:hover
+  color: $red
+
+.wh100
+  width: 100%
+  height: 100%
+
+.scroll-wrap
+  display: block
+  min-height: 100%
+  max-height: 100%
+  height: 100%
+  min-width: 100%
+  max-width: 100%
+  width: 100%
+  overflow-y: scroll
+  overflow-x: hidden
+
+.absolute-invisible
+  position: absolute
+  top: -999px
+  left: -999px
+
+.danger
+  color: $red
+
+.success
+  color: $green
+
+small
+  font-size: 0.9rem

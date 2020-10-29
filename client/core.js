@@ -9,10 +9,6 @@ import { setUpServiceWorker } from '/imports/client/misc/setup-service-worker.js
 import { _app, Collections } from '/imports/lib/core.js';
 
 import '/imports/client/files.collection.js';
-
-import '/imports/client/_404/_404.jade';
-import '/imports/client/layout/layout.js';
-import '/imports/client/loading/loading.jade';
 import '/imports/client/router/router.js';
 import '/imports/client/router/routes.js';
 
@@ -139,10 +135,6 @@ Template.registerHelper('maxFilesQty', () => {
 
 Template.registerHelper('getTTL', () => {
   return _app.conf.fileTTLSec / 3600;
-});
-
-Template._404.onRendered(function() {
-  window.IS_RENDERED = true;
 });
 
 Meteor.startup(() => {

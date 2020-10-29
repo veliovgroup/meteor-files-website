@@ -41,6 +41,20 @@ const promiseMethod = (name, args, sharedObj, key) => {
   });
 };
 
+// ASK FLOWROUTER TO WAIT AND PULL ALL DYNAMIC DEPENDENCIES
+FlowRouter.wait();
+Promise.all([
+  import('/imports/client/loading/loading.jade'),
+  import('/imports/client/core.sass'),
+  import('/imports/client/line-awesome.css'),
+  import('/imports/client/layout/layout.js'),
+  import('/imports/client/_404/_404.js')
+]).then(() => {
+  FlowRouter.initialize();
+}).catch((e) => {
+  console.error('[Promise.all] loading dynamic imports error:', e);
+});
+
 FlowRouter.route('/', {
   name: 'index',
   action() {
@@ -75,7 +89,7 @@ FlowRouter.route('/about', {
     this.render('layout', 'about');
   },
   waitOn() {
-    return import('/imports/client/about/about.jade');
+    return import('/imports/client/about/about.js');
   },
   whileWaiting() {
     this.render('layout', 'loading');
