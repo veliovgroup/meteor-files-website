@@ -8,6 +8,12 @@
 
 This is repository with codebase of the web application available at [files.veliov.com](https://files.veliov.com/). It's fully-featured file-sharing service build on top of [`ostrio:files` library](https://github.com/veliovgroup/Meteor-Files) and [meteor.js](https://docs.meteor.com).
 
+This is third reincarnation of this webapp, most of changes in this release made during [Impact Meteor Conference 2020](https://impact.meteor.com) to showcase Meteor usage building modern webapps.
+
+Awarded by Meteor Chef with [GCAA 2016](https://themeteorchef.com/blog/giant-cotton-apron-awards-show). Used by [thousands Meteor developers](https://atmospherejs.com/ostrio/files) to manage files and uploads in Meteor.js apps.
+
+Backed by [veliovgroup](https://veliovgroup.com), sponsored by [ostr.io](https://ostr.io) and [awesome community members](https://github.com/veliovgroup/supporters#supporters). Idea, development, maintenance, and support by [@smart_egg](https://twitter.com/smart_egg) and [@veliovgroup](https://twitter.com/veliovgroup).
+
 ## Links:
 
 - Website: __[files.veliov.com](https://files.veliov.com/)__
