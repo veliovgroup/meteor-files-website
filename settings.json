@@ -1,14 +1,21 @@
 {
   "storagePath": "/data/meteor-files/uploads",
   "public": {
-    "maxFileSizeMb": 300,
-    "maxFilesQty": 8,
-    "fileTTLSec": 259200
+    "maxFileSizeMb": 3000,
+    "maxFilesQty": 10,
+    "fileTTLSec": 129600,
+    "vapid": {
+      "publicKey": ""
+    }
   },
   "s3": {
     "key": "",
     "secret": "",
     "bucket": "",
     "region": ""
+  },
+  "vapid": {
+    "email": "",
+    "privateKey": ""
   }
 }
