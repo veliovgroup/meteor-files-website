@@ -12,7 +12,7 @@ This is third reincarnation of this webapp, most of changes in this release made
 
 Awarded by Meteor Chef with [GCAA 2016](https://themeteorchef.com/blog/giant-cotton-apron-awards-show). Used by [thousands Meteor developers](https://atmospherejs.com/ostrio/files) to manage files and uploads in Meteor.js apps.
 
-Backed by [veliovgroup](https://veliovgroup.com), sponsored by [ostr.io](https://ostr.io) and [awesome community members](https://github.com/veliovgroup/supporters#supporters). Idea, development, maintenance, and support by [@smart_egg](https://twitter.com/smart_egg) and [@veliovgroup](https://twitter.com/veliovgroup).
+Backed by [veliovgroup](https://veliovgroup.com), sponsored by [ostr.io](https://ostr.io) and [awesome community members](https://github.com/veliovgroup/Meteor-Files#supporters). Idea, development, maintenance, and support by [@smart_egg](https://twitter.com/smart_egg) and [@veliovgroup](https://twitter.com/veliovgroup).
 
 ## Links:
 
