@@ -1,7 +1,7 @@
 template(name="uploadRow")
   .item-row.upload
     .item-icon
-      .progress-radial(class="progress-{{getProgressClass}}")
+      .progress-radial(class="progress-#{getProgressClass}")
         .overlay(data-toggle-upload)
           if onPause.get
             span(title="Resume upload"): i.la.la-lg.la-play
