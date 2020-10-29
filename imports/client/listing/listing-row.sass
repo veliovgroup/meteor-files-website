@@ -1,0 +1,60 @@
+@import "{}/imports/client/_color-scheme.sass";
+
+.item-row
+  display: flex
+  justify-content: center
+  flex-direction: row
+  justify-content: space-between
+  width: 100%
+  border-bottom: 2px solid $bg
+  cursor: pointer
+  & > *
+    padding: 12px 7px
+    display: flex
+    justify-content: center
+    flex-direction: column
+  .item-icon, .file-settings
+    flex: 0.05 1 0
+    justify-content: normal
+  .item-details
+    flex: 0.85 1 0
+  .file-name
+    word-break: break-all
+    margin-bottom: 0.25rem
+    font-weight: 700
+  .file-info
+    color: $muted
+    font-size: 0.777rem
+    font-weight: 600
+  .file-settings
+    font-size: 1.4rem
+    padding: 23px 12px
+    &:hover
+      background-color: lighten($bg-dark, 3%)
+  &.upload
+    .item-icon
+      flex: 0.01 1 0
+    .item-details
+      flex: 0.99 1 0
+  &:not(.upload):hover
+    background-color: $bg-dark
+
+.preview-circle
+  margin: 0px auto
+  height: 40px
+  width: 40px
+  text-align: center
+  overflow: hidden
+  border-radius: 40px
+  border: 2px solid $text-color
+  background-color: $bg
+  position: relative
+  i
+    font-size: 20px
+    line-height: 0px
+    margin-top: 18px
+    padding-left: 3px
+  img
+    width: 36px
+    height: 36px
+    border-radius: 40px

@@ -3,6 +3,7 @@ import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { ReactiveVar } from 'meteor/reactive-var';
 import { _app, Collections } from '/imports/lib/core.js';
+import './listing-row.sass';
 import './listing-row.jade';
 
 const showSettings = new ReactiveVar(false);

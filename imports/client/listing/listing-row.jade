@@ -25,7 +25,7 @@ template(name="listingRow")
         | &nbsp;
         span(title="Will be removed #{removedIn}") expire #{removedIn}
     a.file-settings(data-download-file title="Download file" href="#{link}?download=true" download="#{name}"): i.la.la-download
-    a.file-settings.copy-link(data-copy="{{urlFor 'file' _id=_id}}" title="Copy link to this file" href="#")
+    a.file-settings.copy-link(data-copy="{{urlFor 'file' _id=_id}}" title="Copy share link" href="#")
       i.la.la-copy
       i.la.la-check
     a.file-settings.close-link(data-hide title="Hide file" href="#")
