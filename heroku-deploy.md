@@ -45,23 +45,8 @@ heroku config:set ROOT_URL=https://<your-app-name>.herokuapp.com
 # Should be something like: mongodb://<dbuser>:<dbpassword>@dt754268.mlab.com:19470/mydb
 heroku config:set MONGO_URL=mongodb://<dbuser>:<dbpassword>@dt754268.mlab.com:19470/mydb
 
-# For DropBox:
-# heroku config:set DROPBOX='{"dropbox":{"key": "xxx", "secret": "xxx", "token": "xxx"}}'
-
 # For AWS:S3:
 # heroku config:set S3='{"s3":{"key": "xxx", "secret": "xxx", "bucket": "xxx", "region": "xxx"}}'
-
-# For Facebook:
-# heroku config:set ACCOUNTS_FACEBOOK_ID=xxx ACCOUNTS_FACEBOOK_SEC=yyy
-
-# For Twitter:
-# heroku config:set ACCOUNTS_TWITTER_ID=xxx ACCOUNTS_TWITTER_SEC=yyy
-
-# For GitHub:
-# heroku config:set ACCOUNTS_GITHUB_ID=xxx ACCOUNTS_GITHUB_SEC=yyy
-
-# For Meteor Developer:
-# heroku config:set ACCOUNTS_METEOR_ID=xxx ACCOUNTS_METEOR_SEC=yyy
 
 # Enable sticky sessions, to support HTTP upload:
 heroku features:enable http-session-affinity
