@@ -1,0 +1,54 @@
+@import "{}/imports/client/_color-scheme.sass";
+
+input[type="radio"]
+  display: inline-block
+  cursor: pointer
+  position: relative
+  vertical-align: middle
+  box-sizing: border-box
+  -webkit-appearance: none
+  appearance: none
+  background: #F0F0F0
+  border: 1px solid $text-color
+  border-radius: 30px
+  height: 18px
+  width: 18px
+  outline: none
+  margin: 0px 4px 0px 0px
+  &:hover
+    border-color: $link-active
+  &:checked, &:checked:hover
+    border-color: $text-color
+  &:checked:after, &:checked:hover:after
+    content: ''
+    top: 4px
+    left: 4px
+    position: absolute
+    height: 8px
+    width: 8px
+    border-radius: 8px
+    background-color: $bg
+  &:hover, &:active, &:active:hover
+    outline: none
+
+.radio-inline
+  cursor: pointer
+  white-space: nowrap
+  input[type="radio"]
+    display: inline-block
+
+.radio-inline-wrap
+  display: flex
+  .radio-inline
+    flex: 1 1 0
+    display: block
+    position: relative
+    padding-left: 30px
+    margin-bottom: 0
+    font-weight: 400
+    cursor: pointer
+    user-select: none
+
+.radio-inline + .radio-inline
+  margin-top: 0
+  margin-left: 10px

@@ -1,6 +1,7 @@
 import { _app } from '/imports/lib/core.js';
 import { Template } from 'meteor/templating';
 
+import './settings.sass';
 import './settings.jade';
 
 Template.settings.onRendered(function() {
