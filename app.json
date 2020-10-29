@@ -1,22 +1,23 @@
 {
-  "name": "Meteor-Files-Demo",
+  "name": "meteor-files-website",
   "version": "1.14.3",
   "description": "Upload files with the speed of Meteor. Application build on top of ostrio:files package",
-  "repository": "https://github.com/VeliovGroup/Meteor-Files-Demo",
-  "website": "https://github.com/VeliovGroup/Meteor-Files-Demo",
+  "repository": "https://github.com/VeliovGroup/meteor-files-website",
+  "website": "https://github.com/VeliovGroup/meteor-files-website",
   "logo": "https://raw.githubusercontent.com/VeliovGroup/Meteor-Files/master/logo.png",
   "scripts": {
     "start": "node main.js"
   },
   "dependencies": {
-    "@babel/runtime": "^7.11.2",
-    "aws-sdk": "^2.768.0",
-    "bson": "^4.1.0",
+    "@babel/runtime": "^7.12.1",
+    "aws-sdk": "^2.781.0",
+    "bson": "^4.2.0",
     "bson-ext": "^2.0.5",
     "core-js": "^3.6.5",
     "fs-extra": "^9.0.1",
     "jquery": "^3.5.1",
-    "meteor-node-stubs": "^1.0.1"
+    "meteor-node-stubs": "^1.0.1",
+    "web-push": "^3.4.4"
   },
   "env": {
     "ROOT_URL": {

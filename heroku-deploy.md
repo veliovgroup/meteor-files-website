@@ -7,7 +7,7 @@
 - Then go to Terminal into Meteor's project directory and run:
 
 ```shell
-# Build an app ypourself, or use pre-build version: https://github.com/VeliovGroup/Meteor-Files-Demo
+# Build meteor app from https://github.com/VeliovGroup/meteor-files-website
 # Available architectures:
 # os.osx.x86_64
 # os.linux.x86_64
