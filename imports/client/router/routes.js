@@ -47,8 +47,7 @@ Promise.all([
   import('/imports/client/loading/loading.jade'),
   import('/imports/client/core.sass'),
   import('/imports/client/line-awesome.css'),
-  import('/imports/client/layout/layout.js'),
-  import('/imports/client/_404/_404.js')
+  import('/imports/client/layout/layout.js')
 ]).then(() => {
   FlowRouter.initialize();
 }).catch((e) => {
@@ -170,7 +169,10 @@ FlowRouter.route('/:_id', {
     this.render('layout', 'loading');
   },
   onNoData() {
-    this.render('layout', '_404');
+    this.render('layout', 'loading');
+    import('/imports/client/_404/_404.js').then(() => {
+      this.render('layout', '_404');
+    });
   },
   data(params) {
     // CHECK IF FILE EXISTS IN LOCAL STORAGE
@@ -196,9 +198,15 @@ FlowRouter.route('/:_id', {
 
 // 404 route (catch all)
 FlowRouter.route('*', {
+  title: '404: Page not found',
+  meta: meta404,
   action() {
     this.render('layout', '_404');
   },
-  title: '404: Page not found',
-  meta: meta404
+  waitOn() {
+    return import('/imports/client/_404/_404.js');
+  },
+  whileWaiting() {
+    this.render('layout', 'loading');
+  }
 });
