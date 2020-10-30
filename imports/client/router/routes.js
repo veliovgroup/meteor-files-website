@@ -124,7 +124,7 @@ FlowRouter.route('/settings', {
   }
 });
 
-FlowRouter.route('/:_id', {
+FlowRouter.route('/f/:_id', {
   name: 'file',
   title(params, queryParams, file) {
     if (file) {

@@ -91,16 +91,6 @@ Collections.files = new FilesCollection({
     }
     return `Max. file size is ${filesize(_app.conf.maxFileSize).replace('.00', '')} you've tried to upload ${filesize(this.file.size)}`;
   },
-  downloadCallback(fileObj) {
-    if (this.params && this.params.query && this.params.query.download === 'true') {
-      Collections.files.collection.update(fileObj._id, {
-        $inc: {
-          'meta.downloads': 1
-        }
-      }, _app.NOOP);
-    }
-    return true;
-  },
   interceptDownload(http, fileRef, version) {
     let path;
     if (useS3) {
@@ -170,7 +160,7 @@ Collections.files.on('afterUpload', function(fileRef) {
     title: `File: ${fileRef.name}`,
     body: 'Successfully uploaded. Click to view',
     data: {
-      url: `/${fileRef._id}`
+      url: `/f/${fileRef._id}`
     }
   };
 

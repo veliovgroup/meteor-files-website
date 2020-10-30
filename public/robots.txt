@@ -2,4 +2,10 @@ User-agent: *
 Allow: /
 
 User-agent: *
+Disallow: /settings/
 Disallow: /cdn/
+Disallow: /f/
+
+Host: files.veliov.com
+
+Sitemap: https://files.veliov.com/sitemap.xml
