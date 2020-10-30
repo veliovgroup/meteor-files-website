@@ -79,8 +79,10 @@ All supported and annotated settings
 
 ```js
 {
+  "debug": false, // Enable debug mode on a Server
   "storagePath": "/data/meteor-files/uploads", // LOCAL STORAGE ON THE SERVER
   "public": {
+    "debug": false, // Enable debug mode on a Client (Browser)
     "maxFileSizeMb": 1024, // MAXIMUM UPLOAD FILE-SIZE
     "maxFilesQty": 8, // MAXIMUM AMOUNT OF SIMULTANEOUSLY UPLOADED FILES
     "fileTTLSec": 259200, // 3 days; FILE'S TTL IN SECONDS
@@ -104,6 +106,16 @@ All supported and annotated settings
 ### Deployment
 
 Learn more about DevOps, deployment, and running this app live in [DevOps and Deployment tutorial](https://github.com/veliovgroup/meteor-snippets/tree/main/devops).
+
+### Debugging
+
+#### On server
+
+Set environment variable `DEBUG` to `true` or `{ debug: true }` in the [settings file](https://docs.meteor.com/api/core.html#Meteor-settings) passed via `--settings` option. This will enable logging mode in the meteor-files package
+
+#### On client (browser)
+
+Set `{ public: { debug: true } }` in the [settings file](https://docs.meteor.com/api/core.html#Meteor-settings) passed via `--settings` option. This will enable logging mode in the meteor-files package
 
 ## Support this project:
 

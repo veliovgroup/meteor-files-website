@@ -8,7 +8,7 @@ Collections._files = new Mongo.Collection(null);
 Collections._files._name = 'uploadedFiles';
 
 Collections.files = new FilesCollection({
-  // debug: true,
+  debug: Meteor.settings.public.debug || false,
   collection: Collections._files,
   allowClientCode: false,
   // disableUpload: true,

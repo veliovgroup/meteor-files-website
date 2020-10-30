@@ -1,6 +1,8 @@
 {
+  "debug": false,
   "storagePath": "/data/meteor-files/uploads",
   "public": {
+    "debug": false,
     "maxFileSizeMb": 3000,
     "maxFilesQty": 10,
     "fileTTLSec": 129600,

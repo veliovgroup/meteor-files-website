@@ -22,6 +22,10 @@ if (process.env.S3) {
   Meteor.settings.s3 = JSON.parse(process.env.S3).s3;
 }
 
+if (!Meteor.settings.debug) {
+  Meteor.settings.debug = process.env.DEBUG === 'true' ? true : false;
+}
+
 const s3Conf = Meteor.settings.s3 || {};
 
 if (s3Conf && s3Conf.key && s3Conf.secret && s3Conf.bucket && s3Conf.region) {
@@ -75,7 +79,7 @@ if (s3Conf && s3Conf.key && s3Conf.secret && s3Conf.bucket && s3Conf.region) {
 }
 
 Collections.files = new FilesCollection({
-  // debug: true,
+  debug: Meteor.settings.debug,
   storagePath: Meteor.settings.storagePath || 'assets/app/uploads/uploadedFiles',
   collectionName: 'uploadedFiles',
   allowClientCode: false,
