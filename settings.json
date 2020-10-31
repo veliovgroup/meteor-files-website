@@ -1,6 +1,9 @@
 {
   "debug": false,
   "storagePath": "/data/meteor-files/uploads",
+  "spiderable": {
+    "auth": ""
+  },
   "public": {
     "debug": false,
     "maxFileSizeMb": 3000,

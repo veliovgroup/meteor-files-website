@@ -82,6 +82,9 @@ All supported and annotated settings
 {
   "debug": false, // Enable debug mode on a Server
   "storagePath": "/data/meteor-files/uploads", // LOCAL STORAGE ON THE SERVER
+  "spiderable": { // `spiderable-middleware` package settings
+    "auth": ""
+  },
   "public": {
     "debug": false, // Enable debug mode on a Client (Browser)
     "maxFileSizeMb": 1024, // MAXIMUM UPLOAD FILE-SIZE
