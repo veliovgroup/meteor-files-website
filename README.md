@@ -17,7 +17,7 @@ Backed by [veliovgroup](https://veliovgroup.com), sponsored by [ostr.io](https:/
 ## Links:
 
 - Website: __[files.veliov.com](https://files.veliov.com/)__
-- Meteor's [tutorials repository](https://github.com/veliovgroup/meteor-snippets#meteor-snippets)
+- Meteor's [tutorials repository](https://github.com/veliovgroup/meteor-snippets#meteor-snippets) inspired by this app
 - [`ostrio:files`](https://github.com/veliovgroup/Meteor-Files) library
 - Self-hosted (Nginx + Phusion Passenger) [deploy tutorial](https://github.com/veliovgroup/meteor-snippets/tree/main/devops#deploy)
 - Hekoru [deploy instructions](https://github.com/veliovgroup/meteor-files-website/blob/master/heroku-deploy.md)
@@ -114,11 +114,11 @@ Learn more about DevOps, deployment, and running this app live in [DevOps and De
 
 ### Debugging
 
-#### On server
+#### On a server
 
 Set environment variable `DEBUG` to `true` or `{ debug: true }` in the [settings file](https://docs.meteor.com/api/core.html#Meteor-settings) passed via `--settings` option. This will enable logging mode in the meteor-files package
 
-#### On client (browser)
+#### On a client (browser)
 
 Set `{ public: { debug: true } }` in the [settings file](https://docs.meteor.com/api/core.html#Meteor-settings) passed via `--settings` option. This will enable logging mode in the meteor-files package
 
