@@ -4,7 +4,6 @@
   "description": "Upload files with the speed of Meteor. Application build on top of ostrio:files package",
   "main": "main.js",
   "scripts": {
-    "preinstall": "cd ./programs/server && npm install",
     "start": "node main.js"
   },
   "repository": {
