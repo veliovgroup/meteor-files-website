@@ -51,11 +51,11 @@ FlowRouter.globals.push({
     'og:image': {
       name: 'image',
       property: 'og:image',
-      content: Meteor.absoluteUrl('icon_1200x630.png')
+      content: Meteor.absoluteUrl('social-1280x640.png')
     },
     'twitter:image': {
       name: 'twitter:image',
-      content: Meteor.absoluteUrl('icon_750x560.png')
+      content: Meteor.absoluteUrl('social-1280x640.png')
     }
   },
   link: {
@@ -69,10 +69,10 @@ FlowRouter.globals.push({
     image: {
       itemprop: 'image',
       content() {
-        return Meteor.absoluteUrl('icon_1200x630.png');
+        return Meteor.absoluteUrl('social-1280x640.png');
       },
       href() {
-        return Meteor.absoluteUrl('icon_1200x630.png');
+        return Meteor.absoluteUrl('social-1280x640.png');
       }
     }
   }
