@@ -3,6 +3,7 @@ import { Meteor } from 'meteor/meteor';
 const webPush = {
   isEnabled: false,
   publicKey: Meteor.settings.public?.vapid?.publicKey,
+  // CHECK AND ENSURE PUSH NOTIFICATIONS ENABLED IN THIS BROWSER
   async check() {
     if (!this.publicKey) {
       return;
@@ -12,11 +13,13 @@ const webPush = {
     const subscription = await swRegistration.pushManager.getSubscription();
 
     if (subscription) {
+      this.isEnabled = false;
       this.subscription = JSON.stringify(subscription);
     } else {
       this.enable();
     }
   },
+  // DISABLE/UNSUBSCRIBE PUSH NOTIFICATIONS
   async disable() {
     if (!this.publicKey) {
       return;
@@ -36,6 +39,8 @@ const webPush = {
       console.error('[webPush.disable] Error:', disableError);
     }
   },
+  // ENABLE PUSH NOTIFICATIONS
+  // ASK FOR USER PERMISSIONS IF NECESSARY
   async enable() {
     if (!this.publicKey) {
       return;
