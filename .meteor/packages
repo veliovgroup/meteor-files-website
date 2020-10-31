@@ -36,3 +36,6 @@ ostrio:flow-router-extra
 ostrio:flow-router-title
 ostrio:flow-router-meta
 ostrio:spiderable-middleware
+
+# Analytics
+ostrio:analytics

@@ -92,7 +92,8 @@ All supported and annotated settings
     "fileTTLSec": 259200, // 3 days; FILE'S TTL IN SECONDS
     "vapid": { // VAPID WEB PUSH NOTIFICATIONS CONFIGURATION
       "publicKey": "" // WEB PUSH NOTIFICATION PUBLIC KEY
-    }
+    },
+    "trackingId": "" // trackingId for ostrio-analytics package
   },
   "s3": { // AWS:S#3 CLOUD STORAGE CREDENTIALS
     "key": "",

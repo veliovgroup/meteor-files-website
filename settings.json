@@ -11,7 +11,8 @@
     "fileTTLSec": 129600,
     "vapid": {
       "publicKey": ""
-    }
+    },
+    "trackingId": ""
   },
   "s3": {
     "key": "",
