@@ -19,6 +19,7 @@ Backed by [veliovgroup](https://veliovgroup.com), sponsored by [ostr.io](https:/
 - Website: __[files.veliov.com](https://files.veliov.com/)__
 - Meteor's [tutorials repository](https://github.com/veliovgroup/meteor-snippets#meteor-snippets)
 - [`ostrio:files`](https://github.com/veliovgroup/Meteor-Files) library
+- Self-hosted (Nginx + Phusion Passenger) [deploy tutorial](https://github.com/veliovgroup/meteor-snippets/tree/main/devops#deploy)
 - Hekoru [deploy instructions](https://github.com/veliovgroup/meteor-files-website/blob/master/heroku-deploy.md)
 
 ## Functionality:
