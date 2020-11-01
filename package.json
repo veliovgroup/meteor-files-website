@@ -28,6 +28,12 @@
     "url": "https://github.com/VeliovGroup/meteor-files-website/issues"
   },
   "homepage": "https://github.com/VeliovGroup/meteor-files-website",
+  "meteor": {
+    "mainModule": {
+      "client": "client/core.js",
+      "server": "server/core.js"
+    }
+  },
   "dependencies": {
     "@babel/runtime": "^7.12.1",
     "aws-sdk": "^2.781.0",

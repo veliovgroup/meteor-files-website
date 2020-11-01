@@ -45,7 +45,7 @@ const promiseMethod = (name, args, sharedObj, key) => {
 FlowRouter.wait();
 Promise.all([
   import('/imports/client/loading/loading.jade'),
-  import('/imports/client/core.sass'),
+  import('/imports/client/styles/core.sass'),
   import('/imports/client/line-awesome.css'),
   import('/imports/client/layout/layout.js')
 ]).then(() => {

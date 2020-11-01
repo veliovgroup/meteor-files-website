@@ -10,6 +10,8 @@ import Analytics from 'meteor/ostrio:analytics';
 import { setUpServiceWorker } from '/imports/client/misc/setup-service-worker.js';
 import { _app, Collections } from '/imports/lib/core.js';
 
+import '/imports/client/styles/bundle.sass';
+
 import '/imports/client/files.collection.js';
 import '/imports/client/router/router.js';
 import '/imports/client/router/routes.js';
