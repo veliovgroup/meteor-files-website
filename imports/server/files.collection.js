@@ -231,17 +231,15 @@ Collections.files.on('afterUpload', function(fileRef) {
         });
       }
     }
-  } else {
-    if (webPushSubscription) {
-      webPush.send(webPushSubscription, messageObj);
-      Collections.files.collection.update({
-        _id: fileRef._id
-      }, {
-        $unset: {
-          'meta.subscription': ''
-        }
-      });
-    }
+  } else if (webPushSubscription) {
+    webPush.send(webPushSubscription, messageObj);
+    Collections.files.collection.update({
+      _id: fileRef._id
+    }, {
+      $unset: {
+        'meta.subscription': ''
+      }
+    });
   }
 });
 

@@ -13,9 +13,11 @@ import '/imports/client/upload/upload-form.jade';
 const formError = new ReactiveVar(false);
 
 Template.uploadForm.onCreated(function () {
+  const template = this;
   this.uploadQTY = 0;
+  this.heatingUp = new ReactiveVar(false);
 
-  this.initiateUpload = (event, files) => {
+  this.initiateUpload = async (event, files) => {
     if (_app.uploads.get()) {
       return false;
     }
@@ -37,6 +39,8 @@ Template.uploadForm.onCreated(function () {
 
     this.uploadQTY = files.length;
     const cleanUploaded = (current) => {
+      template.heatingUp.set(false);
+
       const _uploads = _app.clone(_app.uploads.get());
       if (_app.isArray(_uploads)) {
         for (let i = 0; i < _uploads.length; i++) {
@@ -55,6 +59,11 @@ Template.uploadForm.onCreated(function () {
 
     const uploads = [];
     const createdAt = +new Date();
+
+    this.heatingUp.set(true);
+    // ASK IF USER OKAY WITH WEB PUSH NOTIFICATIONS
+    // GET subscription IF PERMISSION IS GRANTED
+    await webPush.check();
 
     // ITEREATE OVER EACH SELECTED FILE BY USER.
     // AND UPLOAD EACH FILE INDIVIDUALLY.
@@ -104,6 +113,7 @@ Template.uploadForm.onCreated(function () {
         }, 15000);
         cleanUploaded(this);
       }).on('start', function() {
+        template.heatingUp.set(false);
         uploads.push(this);
         _app.uploads.set(uploads);
       }).start();
@@ -118,6 +128,9 @@ Template.uploadForm.helpers({
   },
   uploads() {
     return _app.uploads.get();
+  },
+  isHeatingUp() {
+    return Template.instance().heatingUp.get() && !_app.uploads.get().length;
   },
   status() {
     let i = 0;
