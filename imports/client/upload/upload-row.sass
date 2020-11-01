@@ -1,4 +1,4 @@
-@import "{}/imports/client/styles/_color-scheme.sass";
+@import "{}/imports/client/styles/_color-scheme.sass"
 
 .progress-radial
   position: relative
@@ -7,6 +7,7 @@
   border-radius: 50%
   color: $text-color
   background-color: $text-color
+  cursor: pointer
 
   .overlay
     position: absolute
@@ -19,14 +20,12 @@
     text-align: center
     font-size: 13px
     line-height: 39px
-    transition: background-color 256ms ease-in-out
-
     .action
       display: none
       visibility: hidden
 
   &:hover .overlay
-    background-color: 
+    background-color: $background-color
 
     .action
       display: inline

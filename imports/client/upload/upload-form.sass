@@ -1,4 +1,4 @@
-@import "{}/imports/client/styles/_color-scheme.sass";
+@import "{}/imports/client/styles/_color-scheme.sass"
 
 @keyframes upload-animation
   from
@@ -92,13 +92,12 @@ progress::-moz-progress-value
   .fake-upload
     margin: 0px auto
     cursor: pointer
-    transition: color 256ms ease-in-out
     width: 85%
     color: $link-color
     .icon-container
-      margin: 0 auto;
-      position: relative;
-      width: 150px;
+      margin: 0 auto
+      position: relative
+      width: 150px
     &:hover
       color: $link-active
       .la-arrow-up
@@ -106,6 +105,6 @@ progress::-moz-progress-value
 
 .show-settings
   display: inline-block
-  transition: color 256ms ease-in-out, transform 256ms ease-in-out
+  transition: transform 256ms ease-in-out
   &:hover, &.active
     transform: rotate(150deg)
