@@ -14,6 +14,22 @@ Awarded by Meteor Chef with [GCAA 2016](https://themeteorchef.com/blog/giant-cot
 
 Backed by [veliovgroup](https://veliovgroup.com), sponsored by [ostr.io](https://ostr.io) and [awesome community members](https://github.com/veliovgroup/Meteor-Files#supporters). Idea, development, maintenance, and support by [@smart_egg](https://twitter.com/smart_egg) and [@veliovgroup](https://twitter.com/veliovgroup).
 
+## ToC:
+
+- [Links](https://github.com/veliovgroup/meteor-files-website#links)
+- [Goals](https://github.com/veliovgroup/meteor-files-website#goals) of this project
+- [Features](https://github.com/veliovgroup/meteor-files-website#functionality)
+- [Quick start](https://github.com/veliovgroup/meteor-files-website#quick-start)
+  - [Activate AWS:S3](https://github.com/veliovgroup/meteor-files-website#activate-awss3)
+  - [Activate Web Push Notifications](https://github.com/veliovgroup/meteor-files-website#activate-web-push-notifications)
+  - [Change application settings](https://github.com/veliovgroup/meteor-files-website#application-settings)
+- [Deploy this app](https://github.com/veliovgroup/meteor-files-website#deployment)
+- [SEO](https://github.com/veliovgroup/meteor-files-website#seo)
+  - [`title` and `meta` tags](https://github.com/veliovgroup/meteor-files-website#meta-tags-and-title)
+  - [Pre-rendering](https://github.com/veliovgroup/meteor-files-website#pre-rendering)
+- [Debugging](https://github.com/veliovgroup/meteor-files-website#debugging)
+- ❤️ [Support this project](https://github.com/veliovgroup/meteor-files-website#support-this-project)
+
 ## Links:
 
 - Website: __[files.veliov.com](https://files.veliov.com/)__
@@ -21,6 +37,15 @@ Backed by [veliovgroup](https://veliovgroup.com), sponsored by [ostr.io](https:/
 - [`ostrio:files`](https://github.com/veliovgroup/Meteor-Files) library
 - Self-hosted (Nginx + Phusion Passenger) [deploy tutorial](https://github.com/veliovgroup/meteor-snippets/tree/main/devops#deploy)
 - Hekoru [deploy instructions](https://github.com/veliovgroup/meteor-files-website/blob/master/heroku-deploy.md)
+
+## Goals
+
+Goals of this open source web application:
+
+- Showcase usage of [`ostrio:files` library](https://github.com/veliovgroup/Meteor-Files)
+- Showcase usage of ServiceWorker with Meteor
+- Showcase implementing fully-featured PWA using Meteor
+- Build good, open source, and free solution to quickly upload and share files
 
 ## Functionality:
 
@@ -31,6 +56,8 @@ Backed by [veliovgroup](https://veliovgroup.com), sponsored by [ostr.io](https:/
 - Heroku support (*including one-click-deploy*)
 
 ## Quick start:
+
+Application is ready to be used as it is without need of extra configuration. Optionally there's a lot of room for changing settings to meet your needs, like store files in AWS:S3, activating Web Push Notifications via APNs when file is fully loaded and moved to long-term storage.
 
 ### Activate AWS:S3
 
@@ -108,11 +135,11 @@ All supported and annotated settings
 }
 ```
 
-### Deployment
+## Deployment
 
 Learn more about DevOps, deployment, and running this app live in [DevOps and Deployment tutorial](https://github.com/veliovgroup/meteor-snippets/tree/main/devops).
 
-### SEO
+## SEO
 
 To make this project "crawlable" by search engines, social networks, and web-crawlers on this project we are using:
 
@@ -189,6 +216,8 @@ Pre-rendering getting activated by setting `spiderable.auth` property in `METEOR
 
 ### Debugging
 
+Having an issue running this web application? Try next option to find out why:
+
 #### On a server
 
 Set environment variable `DEBUG` to `true` or `{ debug: true }` in the [settings file](https://docs.meteor.com/api/core.html#Meteor-settings) passed via `--settings` option. This will enable logging mode in the meteor-files package
@@ -197,7 +226,7 @@ Set environment variable `DEBUG` to `true` or `{ debug: true }` in the [settings
 
 Set `{ public: { debug: true } }` in the [settings file](https://docs.meteor.com/api/core.html#Meteor-settings) passed via `--settings` option. This will enable logging mode in the meteor-files package
 
-## Support this project:
+## Support this project
 
 - Star on [GitHub](https://github.com/VeliovGroup/Meteor-Files)
 - Star on [Atmosphere](https://atmospherejs.com/ostrio/files)
