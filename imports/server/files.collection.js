@@ -30,14 +30,24 @@ const s3Conf = Meteor.settings.s3 || {};
 
 if (s3Conf && s3Conf.key && s3Conf.secret && s3Conf.bucket && s3Conf.region) {
   useS3  = true;
+
+  /* AWS:S3 CLIENT INSTANCE
+   * @type {AWS.Service}
+   * @instanceof AWS.Service
+   * @name client
+   */
+  const s3ConnectionTimeout = 6000000;
+  const s3Retries = 4;
   client = new S3({
     secretAccessKey: s3Conf.secret,
     accessKeyId: s3Conf.key,
     region: s3Conf.region,
+    maxRetries: s3Retries,
     sslEnabled: false,
+    correctClockSkew: true,
     httpOptions: {
-      timeout: 600000,
-      agent: false
+      connectTimeout: s3ConnectionTimeout,
+      timeout: s3ConnectionTimeout * s3Retries
     }
   });
 
