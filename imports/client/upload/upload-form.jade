@@ -4,6 +4,9 @@ template(name="uploadForm")
       | Drop files here for upload, or
       a(href="#" data-cancel-dnd) cancel
 
+    a.info-link.right(href="{{pathFor 'about'}}" class="{{isActiveRoute 'about'}}" title="Project Info"): i.la.la-info-circle
+    a.info-link.show-settings(href="{{pathFor 'settings'}}" class="{{isActiveRoute 'settings'}}" title="Upload Settings"): i.la.la-gear
+
     unless uploads
       input.invisible#userfile(class="{{#if showSettings}}settings-open{{/if}}" type="file" name="userfile" required multiple)
 
@@ -18,9 +21,6 @@ template(name="uploadForm")
         else
           .h1 UPLOAD A FILE
           p.annotation #{maxFilesQty} files up to #{getMaxSize}
-
-      a.info-link.right(href="{{pathFor 'about'}}" class="{{isActiveRoute 'about'}}" title="Project Info"): i.la.la-info-circle
-      a.info-link.show-settings(href="{{pathFor 'settings'}}" class="{{isActiveRoute 'settings'}}" title="Upload Settings"): i.la.la-gear
     else
       .h1.percentage #{status.progress}%
       progress(max="100" value="#{status.progress}")
