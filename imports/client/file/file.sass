@@ -49,9 +49,14 @@
       text-align: right
       font-weight: 700
   .scroll-wrap
-    min-height: 407px
-    max-height: 407px
-    height: 407px
+    position: relative
+    min-height: calc(100% - 48px)
+    max-height: calc(100% - 48px)
+    height: calc(100% - 48px)
+    @media(max-width: $break-point)
+      min-height: calc(100% - 54px)
+      max-height: calc(100% - 54px)
+      height: calc(100% - 54px)
 
 .top-link
   display: inline-block
