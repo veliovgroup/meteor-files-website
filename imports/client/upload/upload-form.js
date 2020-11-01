@@ -202,12 +202,9 @@ Template.uploadForm.events({
     return false;
   },
   'click #fakeUpload'(e, template) {
-    if (!_app.isiOS) {
-      e.preventDefault();
-      template.$('#userfile').trigger('click');
-      return false;
-    }
+    e.preventDefault();
     template.$('#userfile').trigger('click');
+    return false;
   },
   'dragover #uploadFile, dragenter #uploadFile'(e) {
     e.preventDefault();
