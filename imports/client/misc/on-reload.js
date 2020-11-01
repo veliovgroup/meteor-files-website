@@ -35,14 +35,18 @@ const onReload = async () => {
     }
   }
 
-  try {
-    // UNREGISTER ALL ServiceWorkerRegistration(s)
-    const swRegistrations = await navigator.serviceWorker.getRegistrations();
-    for (let registration of swRegistrations) {
-      await registration.unregister();
+  // navigator.serviceWorker REQUIRE SSL/TLS/HTTPS/443 CONNECTION
+  // AND NOT AVAILABLE ON HTTP/80
+  if (navigator.serviceWorker) {
+    try {
+      // UNREGISTER ALL ServiceWorkerRegistration(s)
+      const swRegistrations = await navigator.serviceWorker.getRegistrations();
+      for (let registration of swRegistrations) {
+        await registration.unregister();
+      }
+    } catch (error) {
+      console.warn('[registration.unregister] [ERROR:]', error);
     }
-  } catch (error) {
-    console.warn('[registration.unregister] [ERROR:]', error);
   }
 
   // OPTIONALLY THIS IS RIGHT PLACE TO DISABLE/INVALIDATE/UNSUBSCRIBE
