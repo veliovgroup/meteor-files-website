@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import { webPush } from '/imports/client/misc/web-push.js';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 
 /*
@@ -15,8 +14,6 @@ const setUpServiceWorker = async (force = false) => {
       navigator.serviceWorker.addEventListener('message', (event) => {
         if (event.data.action === 'openRoute' && event.data.url) {
           FlowRouter.go(event.data.url);
-        } else if ('PushManager' in window && event.data.action === 'webPush.enable') {
-          webPush.enable();
         }
       }, false);
 
@@ -28,11 +25,7 @@ const setUpServiceWorker = async (force = false) => {
 
         window.addEventListener('load', async () => {
           try {
-            await navigator.serviceWorker.register(Meteor.absoluteUrl('sw-v2.js'));
-
-            if ('PushManager' in window) {
-              webPush.check();
-            }
+            await navigator.serviceWorker.register(Meteor.absoluteUrl('sw-v3.js'));
           } catch (error) {
             console.info('Can\'t load SW');
             console.error(error);
@@ -41,11 +34,7 @@ const setUpServiceWorker = async (force = false) => {
       } else {
         const swRegistration = await navigator.serviceWorker.ready;
 
-        if (swRegistration) {
-          if ('PushManager' in window) {
-            webPush.check();
-          }
-        } else {
+        if (!swRegistration) {
           setUpServiceWorker(true);
         }
       }
