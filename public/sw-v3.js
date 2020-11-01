@@ -10,7 +10,7 @@
    * @type {string}
    * @summary UNIQUE CACHE KEY, `v*` SHOULD GET INCREMETED WITH ANY CHANGES TO THIS FILE
    */
-  const CACHE_NAME = 'cacheKey-v2';
+  const CACHE_NAME = 'cacheKey-v3';
   /*
    * @constant
    * @name PAGES
@@ -27,14 +27,12 @@
    * - `html` - Used to check if request is for HTML content
    * - `method` - Used to check if this is GET request
    * - `static` - Static *cacheble* files extensions
-   * - `staticVendors` - Domain names which serves static content
    * - `sockjs` - Path to sockjs endpoint
    */
   const RE = {
     html: /text\/html/i,
     method: /GET/i,
     static: /\.(?:html|png|jpe?g|ico|css|js|gif|webm|webp|eot|svg|ttf|webmanifest|woff|woff2)(?:\?[a-zA-Z0-9-._~:\/#\[\]@!$&\'()*+,;=]*)?$/i,
-    staticVendors: /(?:fonts\.googleapis\.com|gstatic\.com|assets\.hcaptcha\.com)/i,
     sockjs: /\/sockjs\//
   };
 
@@ -46,7 +44,7 @@
    * @returns {void 0}
    */
   const exceptionHandler = (error) => {
-    // console.error('[ServiceWorker] [exceptionHandler] Network Error:', error);
+    console.error('[ServiceWorker] [exceptionHandler] Network Error:', error);
     return new Response('<html><body><head><title>Service Unavailable</title></head><h1>Service Unavailable</h1><p>You are offline, or service is temporarily unavailable. Please, try to <a href="#" onClick="window.location.href=window.location.href">reload the page</a>.</p><p>If you still see this page, that may mean you need to purge browser cache. One of the options is using DevTools. Please, follow the next path:<ol><li>To open DevTools: (right-click) -> "inspect element"</li><li>Click on the "Application" tab</li><li>Click on [clear site data] button</li></ol></p><p>Options to clear browser cache may vary from browser to browser. Still, it should be relatively easy to locate the "clear cache" option in the browser\'s settings.</p><p>We are very sorry for the inconvenience that may have caused you.</p></body></html>', {
       status: 200,
       statusText: 'Service Unavailable',
@@ -97,13 +95,13 @@
 
   /*
    * @function
-   * @name vendorStaticCheck
+   * @name staticCheck
    * @param {Request} req - Request object
-   * @summary Check that request is sent to origin or to static file
+   * @summary Check that request is sent to a static file
    * @returns {boolean}
    */
-  const vendorStaticCheck = (req) => {
-    return RE.staticVendors.test(req.url) && RE.static.test(req.url);
+  const staticCheck = (req) => {
+    return RE.static.test(req.url);
   };
 
   /*
@@ -134,7 +132,7 @@
       return;
     }
 
-    if (requestCheck(event.request) && (originStaticCheck(event.request) || vendorStaticCheck(event.request))) {
+    if (requestCheck(event.request) && (originStaticCheck(event.request) || staticCheck(event.request))) {
       const req = event.request.clone();
       event.respondWith(caches.match(req).then((cached) => {
         const fresh = fetch(req).then((response) => {
@@ -169,21 +167,6 @@
     }));
 
     await self.clients.claim();
-
-    // GET OPEN WINDOWS ACCOCIATED WITH THIS SERVICE WORKER
-    const availClients = await self.clients.matchAll({
-      includeUncontrolled: false,
-      type: 'window'
-    });
-
-    // USE ONLY FIST AVAILABALE WINDOW
-    // TO ACTIVATE WEB-PUSH NOTIFICATIONS
-    const client = availClients[0];
-    if (client) {
-      client.postMessage({
-        action: 'webPush.enable'
-      });
-    }
   });
 
   /*
