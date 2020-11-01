@@ -21,14 +21,18 @@ const onReload = async () => {
     // We good here...
   }
 
-  try {
-    const keys = await window.caches.keys();
+  // window.caches REQUIRE SSL/TLS/HTTPS/443 CONNECTION
+  // AND NOT AVAILABLE ON HTTP/80
+  if (window.caches) {
+    try {
+      const keys = await window.caches.keys();
 
-    for (let name of keys) {
-      await window.caches.delete(name);
+      for (let name of keys) {
+        await window.caches.delete(name);
+      }
+    } catch (error) {
+      console.error('[window.caches.delete] [ERROR:]', error);
     }
-  } catch (error) {
-    console.error('[window.caches.delete] [ERROR:]', error);
   }
 
   try {
