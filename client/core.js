@@ -1,4 +1,5 @@
 import { Meteor } from 'meteor/meteor';
+import { moment } from 'meteor/momentjs:moment';
 import { Template } from 'meteor/templating';
 import { filesize } from 'meteor/mrt:filesize';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
@@ -144,6 +145,10 @@ Template.registerHelper('maxFilesQty', () => {
 
 Template.registerHelper('getTTL', () => {
   return _app.conf.fileTTLSec / 3600;
+});
+
+Template.registerHelper('fromNow', (timestamp) => {
+  return moment(timestamp).fromNow();
 });
 
 Meteor.startup(() => {

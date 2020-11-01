@@ -36,7 +36,7 @@ template(name="file")
               br
               | copy link
             if canPreview
-              td: a(title="Open file in a new window" href="#{link}?play=true" target="_blank")
+              td: a(title="Open file in a new window" href="#{link}" target="_blank")
                 i.la.la-external-link.la-lg
                 br
                 | open
@@ -70,6 +70,9 @@ template(name="file")
                 | &nbsp;
                 a(data-blame title="Mark this upload as inappropriate" href="#" class="{{#if isBlamed}}danger{{/if}}")
                   i.la.la-flag-o
+            tr
+              th Expire:
+              td {{fromNow meta.expireAt}}
           p.text-center: a.top-link(data-show-file href="#" title="Back to file")
             i.la.la-arrow-up.la-lg
             br

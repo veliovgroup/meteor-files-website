@@ -1,4 +1,3 @@
-import { moment } from 'meteor/momentjs:moment';
 import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { ReactiveVar } from 'meteor/reactive-var';
@@ -9,9 +8,6 @@ import './listing-row.jade';
 const showSettings = new ReactiveVar(false);
 
 Template.listingRow.helpers({
-  removedIn() {
-    return moment(this.meta.expireAt).fromNow();
-  },
   showSettings() {
     return showSettings.get() === this._id;
   }
