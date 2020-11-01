@@ -218,15 +218,15 @@ WebApp.connectHandlers.use(new Spiderable({
 
 Pre-rendering getting activated by setting `spiderable.auth` property in `METEOR_SETTINGS` environment variable or `setting.json` on a dev stage.
 
-### Debugging
+## Debugging
 
 Having an issue running this web application? Try next option to find out why:
 
-#### On a server
+### On a server
 
 Set environment variable `DEBUG` to `true` or `{ debug: true }` in the [settings file](https://docs.meteor.com/api/core.html#Meteor-settings) passed via `--settings` option. This will enable logging mode in the meteor-files package
 
-#### On a client (browser)
+### On a client (browser)
 
 Set `{ public: { debug: true } }` in the [settings file](https://docs.meteor.com/api/core.html#Meteor-settings) passed via `--settings` option. This will enable logging mode in the meteor-files package
 
