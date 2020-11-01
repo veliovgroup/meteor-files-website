@@ -59,6 +59,10 @@ Goals of this open source web application:
 
 Application is ready to be used as it is without need of extra configuration. Optionally there's a lot of room for changing settings to meet your needs, like store files in AWS:S3, activating Web Push Notifications via APNs when file is fully loaded and moved to long-term storage.
 
+- [Activate AWS:S3](https://github.com/veliovgroup/meteor-files-website#activate-awss3)
+- [Activate Web Push Notifications](https://github.com/veliovgroup/meteor-files-website#activate-web-push-notifications)
+- [Change application settings](https://github.com/veliovgroup/meteor-files-website#application-settings)
+
 ### Activate AWS:S3
 
 1. Read [this article](https://github.com/VeliovGroup/Meteor-Files/wiki/AWS-S3-Integration)
