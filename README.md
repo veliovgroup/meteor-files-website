@@ -112,6 +112,81 @@ All supported and annotated settings
 
 Learn more about DevOps, deployment, and running this app live in [DevOps and Deployment tutorial](https://github.com/veliovgroup/meteor-snippets/tree/main/devops).
 
+### SEO
+
+To make this project "crawlable" by search engines, social networks, and web-crawlers on this project we are using:
+
+- [`ostrio:flow-router-meta`](https://github.com/VeliovGroup/Meteor-flow-router-meta) package to generate meta-tags and title
+- [Pre-rendering](https://prerendering.com/) service to serve static HTML
+
+### Meta tags and title
+
+Using [`ostrio:flow-router-meta`](https://github.com/VeliovGroup/Meteor-flow-router-meta) package controlling meta-tags content as easy as extending *FlowRouter* definition with `{ meta, title, link }` properties:
+
+```js
+FlowRouter.route('/about', {
+  name: 'about',
+  title: 'About',
+  meta: {
+    description: 'About file-sharing web application'
+  },
+  action() {
+    this.render('layout', 'about');
+  }
+});
+```
+
+Set default meta tags and page title using `FlowRouter.globals.push({ meta })`:
+
+```js
+const title = 'Default page title up to 65 symbols';
+const description = 'Default description up to 160 symbols';
+
+FlowRouter.globals.push({ title });
+FlowRouter.globals.push({
+  meta: {
+    robots: 'index, follow',
+    keywords: 'keywords, separated, with, comma'
+  }
+});
+```
+
+Activate `meta` and `title` packages:
+
+```js
+import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
+import { FlowRouterMeta, FlowRouterTitle } from 'meteor/ostrio:flow-router-meta';
+
+/* ... DEFINE FLOWROUTER RULES HERE, BEFORE INIT ... */
+
+new FlowRouterTitle(FlowRouter);
+new FlowRouterMeta(FlowRouter);
+```
+
+### Pre-rendering
+
+To pre-render JS-driven templates (Blaze, React, Vue, etc.) to HTML we are using [pre-rendering](https://prerendering.com/) via [`siderable-middleware` package](https://github.com/VeliovGroup/spiderable-middleware#meteor-specific-usage):
+
+```js
+/*
+ * @locus Server
+ */
+
+import { Meteor } from 'meteor/meteor';
+import { WebApp } from 'meteor/webapp';
+import Spiderable from 'meteor/ostrio:spiderable-middleware';
+
+WebApp.connectHandlers.use(new Spiderable({
+  serviceURL: 'https://render.ostr.io',
+  auth: 'pass:login',
+  only: [/^\/?$/, /^\/about\/?$/i, /^\/f\/[A-z0-9]{16}\/?$/i]
+}));
+
+// Allow pre-rendering only for existing public routes: `index`, `about` `file`
+```
+
+Pre-rendering getting activated by setting `spiderable.auth` property in `METEOR_SETTINGS` environment variable or `setting.json` on a dev stage.
+
 ### Debugging
 
 #### On a server
