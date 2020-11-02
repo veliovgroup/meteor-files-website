@@ -63,7 +63,7 @@ ostrio:files@1.14.3
 ostrio:flow-router-extra@3.7.5
 ostrio:flow-router-meta@2.1.1
 ostrio:flow-router-title@3.2.1
-ostrio:spiderable-middleware@1.6.1
+ostrio:spiderable-middleware@1.6.2
 ostrio:templatehelpers@2.2.2
 promise@0.11.2
 random@1.2.0
