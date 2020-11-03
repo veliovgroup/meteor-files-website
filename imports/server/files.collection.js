@@ -90,6 +90,7 @@ if (s3Conf && s3Conf.key && s3Conf.secret && s3Conf.bucket && s3Conf.region) {
 
 Collections.files = new FilesCollection({
   debug: Meteor.settings.debug,
+  continueUploadTTL: 32400, // Limit upload to 9 hours (by default 3 hours), since we allow 3GB in our demo app, it might take time on slow connection to upload it
   storagePath: Meteor.settings.storagePath || 'assets/app/uploads/uploadedFiles',
   collectionName: 'uploadedFiles',
   allowClientCode: false,
