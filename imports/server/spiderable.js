@@ -8,6 +8,6 @@ if (Meteor.settings.spiderable?.auth) {
     rootURL: process.env.ROOT_URL,
     serviceURL: 'https://render.ostr.io',
     auth: Meteor.settings.spiderable.auth,
-    only: [/^\/?$/, /^\/about\/?$/i, /^\/f\/[A-z0-9]{16}\/?$/i]
+    only: [/^\/?$/, /^\/about\/?$/i, /^\/f\/[A-z0-9]{14,20}\/?$/i]
   }));
 }
