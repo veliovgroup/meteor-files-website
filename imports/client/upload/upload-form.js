@@ -79,7 +79,7 @@ Template.uploadForm.onCreated(function () {
           createdAt,
           subscription: webPush.subscription || void 0 // <-- This is the place where we send Web Push Notification subscription to server
         },
-        streams: (files.length > 1) ? 1 : 'dynamic',
+        streams: 1, // Using single stream per upload for stability reasons
         chunkSize: 'dynamic',
         transport: _app.conf.uploadTransport.get()
       }, false).on('end', function (error, fileObj) {
