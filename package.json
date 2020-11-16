@@ -35,11 +35,11 @@
     }
   },
   "dependencies": {
-    "@babel/runtime": "^7.12.1",
-    "aws-sdk": "^2.783.0",
+    "@babel/runtime": "^7.12.5",
+    "aws-sdk": "^2.792.0",
     "bson": "^4.2.0",
     "bson-ext": "^2.0.5",
-    "core-js": "^3.6.5",
+    "core-js": "^3.7.0",
     "fs-extra": "^9.0.1",
     "jquery": "^3.5.1",
     "meteor-node-stubs": "^1.0.1",
@@ -50,7 +50,7 @@
     "npm": "6.14.8"
   },
   "devDependencies": {
-    "browserslist": "^4.14.6",
-    "caniuse-lite": "^1.0.30001154"
+    "browserslist": "^4.14.7",
+    "caniuse-lite": "^1.0.30001158"
   }
 }
