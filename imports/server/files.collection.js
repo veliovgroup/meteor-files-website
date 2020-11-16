@@ -244,9 +244,8 @@ Collections.files.on('afterUpload', function(fileRef) {
   }
 });
 
-// This line now commented due to Heroku usage
-// Collections.files.collection._ensureIndex {'meta.expireAt': 1}, {expireAfterSeconds: 0, background: true}
-Collections.files.collection._ensureIndex({'meta.expireAt': 1}, {background: true});
+// Set index on 'meta.expireAt' field
+Collections.files.collection._ensureIndex({ 'meta.expireAt': 1 }, { background: true });
 
 // Intercept FileCollection's remove method
 // to remove file from AWS S3
@@ -278,16 +277,13 @@ if (useS3) {
   };
 }
 
-// Remove all files on server load/reload, useful while testing/development
-// Meteor.startup -> Collections.files.remove {}
-
+// Every two minutes (120000ms) check for files which is about to expire
 // Remove files along with MongoDB records two minutes before expiration date
-// If we have 'expireAfterSeconds' index on 'meta.expireAt' field,
-// it won't remove files themselves.
+// Note: having 'expireAfterSeconds' index on 'meta.expireAt' field, won't remove file itself
 Meteor.setInterval(() => {
   Collections.files.remove({
     'meta.expireAt': {
-      $lte: +new Date(+Date.now() + 120000)
+      $lte: Date.now() + 120000
     }
   }, _app.NOOP);
 }, 120000);
