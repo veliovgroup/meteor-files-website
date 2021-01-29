@@ -118,7 +118,7 @@ All supported and annotated settings
   },
   "public": {
     "debug": false, // Enable debug mode on a Client (Browser)
-    "maxFileSizeMb": 1024, // MAXIMUM UPLOAD FILE-SIZE
+    "maxFileSizeMb": 1024, // MAXIMUM UPLOAD FILE-SIZE IN MEGABYTES (1024mb ~= 1GB)
     "maxFilesQty": 8, // MAXIMUM AMOUNT OF SIMULTANEOUSLY UPLOADED FILES
     "fileTTLSec": 259200, // 3 days; FILE'S TTL IN SECONDS
     "vapid": { // VAPID WEB PUSH NOTIFICATIONS CONFIGURATION
@@ -148,7 +148,7 @@ Learn more about DevOps, deployment, and running this app live in [DevOps and De
 To make this project "crawlable" by search engines, social networks, and web-crawlers on this project we are using:
 
 - [`ostrio:flow-router-meta`](https://github.com/VeliovGroup/Meteor-flow-router-meta) package to generate meta-tags and title
-- [Pre-rendering](https://prerendering.com/) service to serve static HTML
+- [Pre-rendering](https://prerendering.com/) service to serve rendered HTML to crawlers and search engines
 
 ### Meta tags and title
 
@@ -176,6 +176,7 @@ const description = 'Default description up to 160 symbols';
 FlowRouter.globals.push({ title });
 FlowRouter.globals.push({
   meta: {
+    description,
     robots: 'index, follow',
     keywords: 'keywords, separated, with, comma'
   }
@@ -213,14 +214,14 @@ WebApp.connectHandlers.use(new Spiderable({
   only: [/^\/?$/, /^\/about\/?$/i, /^\/f\/[A-z0-9]{16}\/?$/i]
 }));
 
-// Allow pre-rendering only for existing public routes: `index`, `about` `file`
+// Allow pre-rendering only for existing public routes: `/index`, `/about`, and `/f/file_id`
 ```
 
-Pre-rendering getting activated by setting `spiderable.auth` property in `METEOR_SETTINGS` environment variable or `setting.json` on a dev stage.
+Pre-rendering getting activated by setting `spiderable.auth` property in `METEOR_SETTINGS` environment variable or [`settings.json`](https://github.com/veliovgroup/meteor-files-website/blob/master/settings.json) on a dev stage.
 
 ## Debugging
 
-Having an issue running this web application? Try next option to find out why:
+Having an issue running this web application? Try next options to find out why:
 
 ### On a server
 
@@ -235,6 +236,6 @@ Set `{ public: { debug: true } }` in the [settings file](https://docs.meteor.com
 - Star on [GitHub](https://github.com/VeliovGroup/Meteor-Files)
 - Star on [Atmosphere](https://atmospherejs.com/ostrio/files)
 - Share via [Facebook](https://www.facebook.com/sharer.php?u=https%3A%2F%2Fgithub.com%2FVeliovGroup%2FMeteor-Files) and [Twitter](https://twitter.com/share?url=https%3A%2F%2Fgithub.com%2FVeliovGroup%2FMeteor-Files)
-- [Sponsor via GitHub](https://github.com/sponsors/dr-dimitru)
-- [Support via PayPal](https://paypal.me/veliovgroup) — support my open source contributions once or on regular basis
+- [Sponsor via GitHub](https://github.com/sponsors/dr-dimitru) — support open source contributions on a regular basis
+- [Support via PayPal](https://paypal.me/veliovgroup) — support our open source contributions
 - Use [ostr.io](https://ostr.io) — [Monitoring](https://snmp-monitoring.com), [Analytics](https://ostr.io/info/web-analytics), [WebSec](https://domain-protection.info), [Web-CRON](https://web-cron.info) and [Pre-rendering](https://prerendering.com) for a website
