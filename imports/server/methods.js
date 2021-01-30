@@ -1,5 +1,5 @@
-import { check }             from 'meteor/check';
-import { Meteor }            from 'meteor/meteor';
+import { check } from 'meteor/check';
+import { Meteor } from 'meteor/meteor';
 import { _app, Collections } from '/imports/lib/core.js';
 
 Meteor.methods({
