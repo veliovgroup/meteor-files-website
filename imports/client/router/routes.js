@@ -42,6 +42,7 @@ const promiseMethod = (name, args, sharedObj, key) => {
 };
 
 // ASK FLOWROUTER TO WAIT AND PULL ALL DYNAMIC DEPENDENCIES
+// BEFORE INITIALIZING ROUTER
 FlowRouter.wait();
 Promise.all([
   import('/imports/client/loading/loading.jade'),
@@ -128,7 +129,7 @@ FlowRouter.route('/f/:_id', {
   name: 'file',
   title(params, queryParams, file) {
     if (file) {
-      return `Download file: ${file.get('name')}`;
+      return 'Download shared file';
     }
     return meta404.title;
   },
@@ -140,19 +141,34 @@ FlowRouter.route('/f/:_id', {
         keywords: {
           name: 'keywords',
           itemprop: 'keywords',
-          content: `file, download, shared, ${file.name}, ${file.extension}, ${file.type}`
+          content: 'secure, file, download, shared, share'
         },
         description: {
           name: 'description',
           itemprop: 'description',
           property: 'og:description',
-          content: `Download shared file: ${file.name}`
+          content: 'Download shared file before its expiration'
         },
-        'twitter:description': `Download shared file: ${file.name}`
+        'og:image': {
+          property: 'og:image',
+          content: Meteor.absoluteUrl('file-1280x640.png')
+        },
+        'twitter:description': 'Download shared file',
+        'twitter:image': {
+          name: 'twitter:image',
+          content: Meteor.absoluteUrl('file-1280x640.png')
+        }
       };
     }
 
     return meta404;
+  },
+  link: {
+    image: {
+      itemprop: 'image',
+      content: Meteor.absoluteUrl('file-1280x640.png'),
+      href: Meteor.absoluteUrl('file-1280x640.png')
+    }
   },
   action(params) {
     this.render('layout', 'file', { params });
@@ -169,8 +185,11 @@ FlowRouter.route('/f/:_id', {
     this.render('layout', 'loading');
   },
   onNoData() {
+    // SHOW "loading" TEMPLATE
     this.render('layout', 'loading');
+    // PULL 404 TEMPLATE AND ITS CONTROLLER "PROGRESSIVELY" FROM SERVER
     import('/imports/client/_404/_404.js').then(() => {
+      // RENDER 404 TEMPLATE AFTER IT'S FULLY LOADED ON THE CLIENT
       this.render('layout', '_404');
     });
   },
@@ -184,6 +203,7 @@ FlowRouter.route('/f/:_id', {
     // CHECK IF FILE EXISTS ON SERVER
     if (this.conf.file) {
       // INSERT RECORD TO LOCAL COLLECTION
+      // WHICH WOULD STORE RECORD IN THE PERSISTENT STORAGE
       Collections._files.insert(this.conf.file);
 
       // GET *FileCursor* FROM *FilesCollection*
