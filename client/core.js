@@ -4,10 +4,10 @@ import { Template } from 'meteor/templating';
 import { filesize } from 'meteor/mrt:filesize';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { ReactiveVar } from 'meteor/reactive-var';
-import { ClientStorage } from 'meteor/ostrio:cstorage';
 
 import Analytics from 'meteor/ostrio:analytics';
 
+import { persistentReactive } from '/imports/client/misc/persistent-reactive.js';
 import { setUpServiceWorker } from '/imports/client/misc/setup-service-worker.js';
 import { _app, Collections } from '/imports/lib/core.js';
 
@@ -66,61 +66,11 @@ _app.currentUrl = () => {
   return Meteor.absoluteUrl((FlowRouter.current().path || document.location.pathname).replace(/^\//g, '')).split('?')[0].split('#')[0].replace('!', '');
 };
 
-// PERSISTENT REACTIVE VARIABLE
-// STATEFUL REACTIVE VARIABLE
-_app.persistentReactive = (name, initial) => {
-  let reactive;
-  if (ClientStorage.has(name)) {
-    reactive = new ReactiveVar(ClientStorage.get(name));
-  } else {
-    ClientStorage.set(name, initial);
-    reactive = new ReactiveVar(initial);
-  }
-
-  reactive.set = function (newValue) {
-    let oldValue = reactive.curValue;
-    if ((reactive.equalsFunc || ReactiveVar._isEqual)(oldValue, newValue)) {
-      return;
-    }
-    reactive.curValue = newValue;
-    ClientStorage.set(name, newValue);
-    reactive.dep.changed();
-  };
-
-  return reactive;
-};
-
 // STORE USER'S CHOICE OF TRANSPORT
-_app.conf.uploadTransport = _app.persistentReactive('uploadTransport', 'http');
+_app.conf.uploadTransport = persistentReactive('uploadTransport', 'http');
 // STORE FILES BLAMED BY THIS USER
-_app.conf.blamed = _app.persistentReactive('blamedUploads', []);
-
-// UPON INITIAL LOAD:
-// GET RECENTLY UPLOADED/SEEN FILES FROM PERSISTENT STORAGE
-// ITERATE OVER FILE RECORDS TO EXCLUDE EXPIRED AND PUSH THE
-// REST OF THE RECORDS TO `._files` COLLECTION
-_app.conf.recentUploads = _app.persistentReactive('recentUploads', []);
-const _recentUploads = _app.conf.recentUploads.get();
-if (_recentUploads && _recentUploads.length) {
-  const now = Date.now();
-  const expired = [];
-  _recentUploads.forEach((fileRef, i) => {
-    if (fileRef.meta.expireAt < now) {
-      expired.push(i);
-    } else if (!Collections._files.findOne(fileRef._id)) {
-      Collections._files.insert(fileRef);
-    }
-  });
-
-  if (expired.length) {
-    expired.forEach((expiredIndex) => {
-      _recentUploads.splice(expiredIndex, 1);
-    });
-
-    _app.conf.recentUploads.set(_recentUploads);
-  }
-}
-
+_app.conf.blamed = persistentReactive('blamedUploads', []);
+// ReactiveVar USED TO SHOW "A new version available..." PROMPT
 _app.isNewVersionAvailable = new ReactiveVar(false);
 
 Template.registerHelper('isFileOver', () => {
