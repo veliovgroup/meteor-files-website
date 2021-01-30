@@ -44,16 +44,16 @@ Goals of this open source web application:
 
 - Showcase usage of [`ostrio:files` library](https://github.com/veliovgroup/Meteor-Files)
 - Showcase usage of ServiceWorker with Meteor
-- Showcase implementing fully-featured PWA using Meteor
-- Build good, open source, and free solution to quickly upload and share files
+- Showcase implementing fully-featured PWA (*including push-notifications*) using Meteor
+- Build good and open source solution to quickly upload and share files
 
 ## Functionality:
 
-- Upload / Download Files
-- Drag'n'drop support (*files only, folders is not supported yet*)
-- AWS:S3 as storage
-- PWA with Push Notifications
-- Heroku support (*including one-click-deploy*)
+- 📑 Upload / Download Files
+- 🗂 Drag'n'drop support for files and directories
+- 🗄 Use AWS:S3 as a storage
+- 📲 PWA with Push Notifications
+- 🚀 Upload via HTTP and/or DDP
 
 ## Quick start:
 
