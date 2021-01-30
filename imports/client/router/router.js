@@ -3,13 +3,15 @@ import { Meteor } from 'meteor/meteor';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { FlowRouterMeta, FlowRouterTitle } from 'meteor/ostrio:flow-router-meta';
 
+// inMemoryRendering ISN'T STABLE YET, BUT UNCOMMETING
+// LINES BELOW WOULD ACTIVATE "OFF-SCREEN" TEMPLATE RENDERING
 // FlowRouter.Renderer.inMemoryRendering = true;
 // FlowRouter.Renderer.getMemoryElement = () => {
 //   return document.createDocumentFragment();
 // };
 
 const title = 'Upload and share files';
-const description = 'Upload, store and share files for free without registration';
+const description = 'Upload and share files for free without registration';
 
 FlowRouter.globals.push({ title });
 
@@ -19,7 +21,7 @@ FlowRouter.globals.push({
     keywords: {
       name: 'keywords',
       itemprop: 'keywords',
-      content: 'file, files, fast, quick, upload, store, storage, share, sharing, share file, upload file'
+      content: 'file, files, fast, quick, upload, share, sharing, share file, upload file'
     },
     'og:url': {
       name: 'url',
@@ -31,9 +33,7 @@ FlowRouter.globals.push({
     'og:title': {
       name: 'title',
       property: 'og:title',
-      content() {
-        return document.title;
-      }
+      content: title
     },
     description: {
       name: 'description',
@@ -42,9 +42,7 @@ FlowRouter.globals.push({
       content: description
     },
     'twitter:description': description,
-    'twitter:title'() {
-      return document.title;
-    },
+    'twitter:title': title,
     'twitter:url'() {
       return _app.currentUrl();
     },
@@ -68,12 +66,8 @@ FlowRouter.globals.push({
     },
     image: {
       itemprop: 'image',
-      content() {
-        return Meteor.absoluteUrl('social-1280x640.png');
-      },
-      href() {
-        return Meteor.absoluteUrl('social-1280x640.png');
-      }
+      content: Meteor.absoluteUrl('social-1280x640.png'),
+      href: Meteor.absoluteUrl('social-1280x640.png')
     }
   }
 });
