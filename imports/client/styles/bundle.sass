@@ -46,6 +46,52 @@
 @viewport
   width: device-width
 
+::active, ::focus, ::visited
+  outline: none
+
+::-webkit-scrollbar
+  display: none
+
+html
+  -ms-text-size-adjust: 100%
+  -webkit-text-size-adjust: 100%
+  text-size-adjust: 100%
+
+body
+  scroll-behavior: smooth
+  -webkit-tap-highlight-color: transparent
+  -webkit-overflow-scrolling: touch
+  overflow-scrolling: touch
+
+  -webkit-font-smoothing: antialiased
+  -moz-font-smoothing: antialiased
+  -moz-osx-font-smoothing: grayscale
+  -ms-font-smoothing: antialiased
+  -o-font-smoothing: antialiased
+  font-smoothing: antialiased
+
+  -webkit-font-smooth: always
+  -moz-font-smooth: always
+  -ms-font-smooth: always
+  -o-font-smooth: always
+  font-smooth: always
+
+  -webkit-text-rendering: optimizeLegibility
+  -moz-text-rendering: optimizeLegibility
+  -ms-text-rendering: optimizeLegibility
+  -o-text-rendering: optimizeLegibility
+  text-rendering: optimizeLegibility
+
+  line-height: normal
+  cursor: default
+
+  -ms-overflow-style: -ms-autohiding-scrollbar
+  overflow-style: autohiding-scrollbar
+  &:active, &:focus, &:visited
+    outline: none
+  &::-webkit-scrollbar
+    display: none
+
 @keyframes new-element
   from
     opacity: 0
@@ -80,7 +126,7 @@ p
 
 a
   color: $link-color
-  text-decoration: none
+  text-decoration: underline
   &:hover, &.active
     color: $link-active
     text-decoration: none
