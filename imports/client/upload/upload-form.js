@@ -12,6 +12,23 @@ import '/imports/client/upload/upload-form.jade';
 
 const formError = new ReactiveVar(false);
 
+const getFilesFromDirectory = async (directory) => {
+  let files = [];
+
+  for await (const [name, entry] of directory.entries()) {
+    console.log({name, entry});
+    if (name.startsWith('.') || entry.name.startsWith('.')) {
+      continue;
+    } else if (entry.kind === 'file') {
+      files.push(await entry.getFile());
+    } else if (entry.kind === 'directory') {
+      files = files.concat(await getFilesFromDirectory(entry));
+    }
+  }
+
+  return files;
+};
+
 Template.uploadForm.onCreated(function () {
   const template = this;
   this.uploadQTY = 0;
@@ -77,20 +94,13 @@ Template.uploadForm.onCreated(function () {
           blamed: 0,
           expireAt: +new Date(createdAt + _app.conf.fileTTL),
           createdAt,
-          subscription: webPush.subscription || void 0 // <-- This is the place where we send Web Push Notification subscription to server
+          subscription: webPush.subscription || void 0 // <-- This is the place where we send Web Push Notification subscription to a server
         },
-        streams: 1, // Using single stream per upload for stability reasons
         chunkSize: 'dynamic',
         transport: _app.conf.uploadTransport.get()
       }, false).on('end', function (error, fileObj) {
         if (!error) {
-          const recentUploads = _app.conf.recentUploads.get();
-          if (recentUploads.length >= 100) {
-            recentUploads.shift();
-          }
-
-          recentUploads.push(fileObj);
-          _app.conf.recentUploads.set(recentUploads);
+          // PUSH NEWLY UPLOADED FILE TO PERSISTENT COLLECTION
           Collections._files.insert(fileObj);
 
           if (files.length === 1) {
@@ -131,6 +141,9 @@ Template.uploadForm.helpers({
   },
   isHeatingUp() {
     return Template.instance().heatingUp.get() && !_app.uploads.get().length;
+  },
+  isDisconnected() {
+    return !Meteor.status().connected;
   },
   status() {
     let i = 0;
@@ -225,13 +238,32 @@ Template.uploadForm.events({
     _app.isFileOver.set(true);
     e.originalEvent.dataTransfer.dropEffect = 'copy';
   },
-  'drop #uploadFile.file-over'(e, template) {
+  async 'drop #uploadFile.file-over'(e, template) {
     e.preventDefault();
     e.stopPropagation();
     formError.set(false);
     _app.isFileOver.set(false);
+    console.log('files', e.originalEvent.dataTransfer.files);
+    console.log('items', e.originalEvent.dataTransfer.items);
     e.originalEvent.dataTransfer.dropEffect = 'copy';
-    template.initiateUpload(e, e.originalEvent.dataTransfer.files, template);
+    let files = [];
+    if (e.originalEvent.dataTransfer?.items && e.originalEvent.dataTransfer.items.length > 0) {
+      for (const item of e.originalEvent.dataTransfer.items) {
+        console.log('item.kind', item.kind)
+        const entry = await item.getAsFileSystemHandle();
+        // console.log({entry})
+        if (entry.kind === 'file') {
+          files.push(await entry.getFile());
+        } else if (entry.kind === 'directory') {
+          files = files.concat(await getFilesFromDirectory(entry));
+        }
+      }
+    } else {
+      files = e.originalEvent.dataTransfer.files;
+    }
+
+    console.log(files)
+    template.initiateUpload(e, files, template);
     return false;
   },
   'change #userfile'(e, template) {

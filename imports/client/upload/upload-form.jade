@@ -10,7 +10,7 @@ template(name="uploadForm")
     if isHeatingUp
       .h1.percentage 0%
       progress(max="100" value="1")
-      p
+      .upload-actions
         | 00:00:00
         | &nbsp;
         | &middot;
@@ -39,9 +39,12 @@ template(name="uploadForm")
       else
         .h1.percentage #{status.progress}%
         progress(max="100" value="#{status.progress}")
-        p
+        .upload-actions
           if error
             span.danger {{{error}}}
+          else if isDisconnected
+            span.danger Connection interrupted. 
+            | The upload will resume once the connection is re-established
           else
             | #{status.accumDuration}
             | &nbsp;
