@@ -12,22 +12,74 @@ import '/imports/client/upload/upload-form.jade';
 
 const formError = new ReactiveVar(false);
 
-const getFilesFromDirectory = async (directory) => {
-  let files = [];
+/**
+ * Read a file from FileSystemFileEntry in async way
+ * @function readWebkitEntry
+ * @param {FileSystemFileEntry} entry - FileSystemEntry with .isDirectory === true returned from non-standard `.webkitGetAsEntry()` method
+ * @returns {Promise}
+ */
+const readWebkitEntry = (entry) => {
+  return new Promise((resolve, reject) => {
+    entry.file(resolve, reject);
+  });
+};
 
-  for await (const [name, entry] of directory.entries()) {
-    console.log({name, entry});
-    if (name.startsWith('.') || entry.name.startsWith('.')) {
-      continue;
-    } else if (entry.kind === 'file') {
-      files.push(await entry.getFile());
-    } else if (entry.kind === 'directory') {
-      files = files.concat(await getFilesFromDirectory(entry));
+/**
+ * Recursively read directory and enclosed directories
+ * Using non-standard `.entries()` and `.createReader()` APIs for compatibility
+ * As of 2020-02-02 this approach works in FireFox, Safari, and Chrome
+ * @function getFilesFromDirectory
+ * @param {DataTransferItem|FileSystemFileEntry} directory - Directory selected by user in `drop` event
+ * @param {Boolean} isWebKit - `true` if directory returned from `.webkitGetAsEntry()` method
+ * @returns {[File]} - Array of File instances
+ */
+const getFilesFromDirectory = async (directory, isWebKit = false) => {
+  let files = [];
+  try {
+    if (isWebKit) {
+      if (typeof directory.createReader === 'function') {
+        files = await readWebkitEntries(directory.createReader());
+      }
+    } else {
+      for await (const [name, entry] of directory.entries()) {
+        if (name.startsWith('.') || entry.name.startsWith('.')) {
+          continue;
+        } else if (entry.kind === 'file') {
+          files.push(await entry.getFile());
+        } else if (entry.kind === 'directory') {
+          files = files.concat(await getFilesFromDirectory(entry));
+        }
+      }
     }
+  } catch (e) {
+    // SOMENTHING ISN'T FULLY SUPPORTED YET...
+    console.error(e);
   }
 
   return files;
 };
+
+/**
+ * Recursively read entries returned freom reader created by `.webkitGetAsEntry().createReader()` method
+ * @function readWebkitEntries
+ * @param {FileSystemDirectoryReader} reader - reader created by `.webkitGetAsEntry().createReader()` method
+ * @returns {Promise}
+ */
+function readWebkitEntries(reader) {
+  let files = [];
+  return new Promise((resolve, reject) => {
+    reader.readEntries(async (entries) => {
+      for (const entry of entries) {
+        if (entry.isFile && !entry.name.startsWith('.')) {
+          files.push(await readWebkitEntry(entry));
+        } else if (entry.isDirectory) {
+          files = files.concat(await getFilesFromDirectory(entry, true));
+        }
+      }
+      resolve(files);
+    }, reject);
+  });
+}
 
 Template.uploadForm.onCreated(function () {
   const template = this;
@@ -241,28 +293,34 @@ Template.uploadForm.events({
   async 'drop #uploadFile.file-over'(e, template) {
     e.preventDefault();
     e.stopPropagation();
-    formError.set(false);
     _app.isFileOver.set(false);
-    console.log('files', e.originalEvent.dataTransfer.files);
-    console.log('items', e.originalEvent.dataTransfer.items);
     e.originalEvent.dataTransfer.dropEffect = 'copy';
+
+    formError.set(false);
     let files = [];
-    if (e.originalEvent.dataTransfer?.items && e.originalEvent.dataTransfer.items.length > 0) {
-      for (const item of e.originalEvent.dataTransfer.items) {
-        console.log('item.kind', item.kind)
-        const entry = await item.getAsFileSystemHandle();
-        // console.log({entry})
-        if (entry.kind === 'file') {
-          files.push(await entry.getFile());
-        } else if (entry.kind === 'directory') {
-          files = files.concat(await getFilesFromDirectory(entry));
+    let i = -1;
+    for (const file of e.originalEvent.dataTransfer.files) {
+      i++;
+      // FILTER ZERO-SIZE FILES AND DETECT DIRS
+      // DIRECTORIES WON'T HAVE MIME-TYPE
+      if (file.size > 0 && file.type) {
+        files.push(file);
+      } else if (e.originalEvent.dataTransfer?.items?.[i]) {
+        const item = e.originalEvent.dataTransfer.items[i];
+
+        let entry = {};
+        if (typeof item.webkitGetAsEntry === 'function') {
+          entry = item.webkitGetAsEntry();
+        } else if (typeof item.getAsFileSystemHandle === 'function') {
+          entry = await item.getAsFileSystemHandle();
+        }
+
+        if (entry.kind === 'directory' || entry.isDirectory) {
+          files = files.concat(await getFilesFromDirectory(entry, entry.isDirectory));
         }
       }
-    } else {
-      files = e.originalEvent.dataTransfer.files;
     }
 
-    console.log(files)
     template.initiateUpload(e, files, template);
     return false;
   },
