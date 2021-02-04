@@ -320,11 +320,6 @@ Template.uploadForm.events({
     }
     return false;
   },
-  'click #fakeUpload'(e, template) {
-    e.preventDefault();
-    template.$('#userfile').trigger('click');
-    return false;
-  },
   'dragover #uploadFile, dragenter #uploadFile'(e) {
     e.preventDefault();
     e.stopPropagation();
