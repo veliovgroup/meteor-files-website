@@ -50,7 +50,7 @@ Goals of this open source web application:
 ## Functionality:
 
 - 📑 Upload / Download Files
-- 🗂 Drag'n'drop support for files and directories
+- 🗂 Drag'n'drop support for files and directories (*including nested directories*)
 - 🗄 Use AWS:S3 as a storage
 - 📲 PWA with Push Notifications
 - 🚀 Upload via HTTP and/or DDP

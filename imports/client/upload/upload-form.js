@@ -11,6 +11,34 @@ import '/imports/client/upload/upload-form.sass';
 import '/imports/client/upload/upload-form.jade';
 
 const formError = new ReactiveVar(false);
+// LIST OF FILES WE DON'T WANT TO UPLOAD WHEN RECURSIVELY READING A DIRECTORY
+const SYSTEM_HIDDEN_FILES = ['.DS_Store', 'Thumbs.db'];
+const NOT_SUPPORTED_MSG = 'Directory upload not supported by this browser';
+
+/**
+ * Extend Directory Object with `.fullPath` property
+ * @function setDirFullPath
+ * @param {Object} directory - Directory Object
+ * @returns {void 0}
+ */
+const setDirFullPath = (directory) => {
+  if (directory.fullPath) {
+    directory.fullPath += `/${directory.name}`;
+  } else {
+    directory.fullPath = `/${directory.name}`;
+  }
+};
+
+/**
+ * Extend File with `.fullPath` property
+ * @function setFileFullPath
+ * @param {Object} directory - File's parent directory or empty Object
+ * @param {Object} file - File object
+ * @returns {void 0}
+ */
+const setFileFullPath = (directory, file) => {
+  file.fullPath = `${directory.fullPath || `/${directory.name}` || ''}/${file.name}`;
+};
 
 /**
  * Read a file from FileSystemFileEntry in async way
@@ -34,33 +62,35 @@ const readWebkitEntry = (entry) => {
  * @returns {[File]} - Array of File instances
  */
 const getFilesFromDirectory = async (directory, isWebKit = false) => {
+  setDirFullPath(directory);
   let files = [];
-  try {
-    if (isWebKit) {
-      if (typeof directory.createReader === 'function') {
-        files = await readWebkitEntries(directory.createReader());
-      }
-    } else {
-      for await (const [name, entry] of directory.entries()) {
-        if (name.startsWith('.') || entry.name.startsWith('.')) {
-          continue;
-        } else if (entry.kind === 'file') {
-          files.push(await entry.getFile());
-        } else if (entry.kind === 'directory') {
-          files = files.concat(await getFilesFromDirectory(entry));
-        }
+  if (isWebKit) {
+    if (typeof directory.createReader === 'function') {
+      const reader = directory.createReader();
+      reader.fullPath = directory.fullPath;
+      files = await readWebkitEntries(reader);
+    }
+  } else {
+    for await (const [name, entry] of directory.entries()) {
+      if (SYSTEM_HIDDEN_FILES.includes(name) || SYSTEM_HIDDEN_FILES.includes(entry.name) || name.startsWith('._.') || entry.name.startsWith('._.')) {
+        // IGNORE SYSTEM FILES
+        continue;
+      } else if (entry.kind === 'file') {
+        const file = await entry.getFile();
+        setFileFullPath(directory, file);
+        files.push(file);
+      } else if (entry.kind === 'directory') {
+        entry.fullPath = directory.fullPath;
+        files = files.concat(await getFilesFromDirectory(entry));
       }
     }
-  } catch (e) {
-    // SOMENTHING ISN'T FULLY SUPPORTED YET...
-    console.error(e);
   }
 
   return files;
 };
 
 /**
- * Recursively read entries returned freom reader created by `.webkitGetAsEntry().createReader()` method
+ * Recursively read entries returned from reader created by `.webkitGetAsEntry().createReader()` method
  * @function readWebkitEntries
  * @param {FileSystemDirectoryReader} reader - reader created by `.webkitGetAsEntry().createReader()` method
  * @returns {Promise}
@@ -70,10 +100,21 @@ function readWebkitEntries(reader) {
   return new Promise((resolve, reject) => {
     reader.readEntries(async (entries) => {
       for (const entry of entries) {
-        if (entry.isFile && !entry.name.startsWith('.')) {
-          files.push(await readWebkitEntry(entry));
+        if (entry.isFile) {
+          // IGNORE SYSTEM FILES
+          if (!SYSTEM_HIDDEN_FILES.includes(entry.name) && !entry.name.startsWith('._.')) {
+            const file = await readWebkitEntry(entry);
+            setFileFullPath(reader, file);
+            files.push(file);
+          }
         } else if (entry.isDirectory) {
-          files = files.concat(await getFilesFromDirectory(entry, true));
+          entry.fullPath = reader.fullPath;
+          try {
+            files = files.concat(await getFilesFromDirectory(entry, true));
+          } catch (e) {
+            // Something isn't supported...
+            formError.set(NOT_SUPPORTED_MSG);
+          }
         }
       }
       resolve(files);
@@ -299,25 +340,57 @@ Template.uploadForm.events({
     formError.set(false);
     let files = [];
     let i = -1;
+    let dirs = [];
+    const dirsWebKit = [];
+    const dirsPromises = [];
     for (const file of e.originalEvent.dataTransfer.files) {
       i++;
-      // FILTER ZERO-SIZE FILES AND DETECT DIRS
+      // FILTER ZERO-SIZE FILES AND DETECT DIRECTORIES
       // DIRECTORIES WON'T HAVE MIME-TYPE
       if (file.size > 0 && file.type) {
-        files.push(file);
+        if (!SYSTEM_HIDDEN_FILES.includes(file.name) && !file.name.startsWith('._.')) {
+          setFileFullPath({}, file);
+          files.push(file);
+        }
       } else if (e.originalEvent.dataTransfer?.items?.[i]) {
         const item = e.originalEvent.dataTransfer.items[i];
 
-        let entry = {};
+        // WHENEVER WE USE WEBKIT UNOFFICIAL API VIA .webkitGetAsEntry
+        // OR MODERN WORKING DRAFT AND PARTIALLY DROPPED .getAsFileSystemHandle
+        // TO READ A DIRECTORY — BOTH OF METHODS WOULD RETURN EMPTY RESPONCE INSIDE
+        // ASYNC CALL OR AFTER USING await KEYWORD. THIS HAPPENS FOR SECURITY REASONS
+        // AS FILESYSTEM HANDLE LIVES INSIDE SINGLE EVENT LOOP CYCLE
+        //
+        // TO SOLVE/VORKAROUND IT WE WILL PUSH METHODS RESULTS INTO AN ARRAY
+        // LATER RECURSIVELY READING ITS CONTENTS
         if (typeof item.webkitGetAsEntry === 'function') {
-          entry = item.webkitGetAsEntry();
+          dirsWebKit.push(item.webkitGetAsEntry());
         } else if (typeof item.getAsFileSystemHandle === 'function') {
-          entry = await item.getAsFileSystemHandle();
+          dirsPromises.push(item.getAsFileSystemHandle());
         }
+      }
+    }
 
-        if (entry.kind === 'directory' || entry.isDirectory) {
-          files = files.concat(await getFilesFromDirectory(entry, entry.isDirectory));
+
+    if (dirsWebKit.length) {
+      dirs = dirsWebKit;
+    }
+
+    if (dirsPromises.length) {
+      dirs = dirs.concat(await Promise.all(dirsPromises));
+    }
+
+    // IF DIRECTORIES ARE PASSED TO `drop` EVENT AND BROWSER HAS API TO
+    // READ IT — PROCEED WITH RECURSIVELY READING DIRECTORIES
+    if (dirs.length) {
+      try {
+        for (const dir of dirs) {
+          files = files.concat(await getFilesFromDirectory(dir, dir.isDirectory));
         }
+      } catch (readDirErr) {
+        // Something isn't supported...
+        formError.set(NOT_SUPPORTED_MSG);
+        return false;
       }
     }
 
