@@ -233,7 +233,7 @@ Set `{ public: { debug: true } }` in the [settings file](https://docs.meteor.com
 
 ## Support this project
 
-- Star on [GitHub](https://github.com/VeliovGroup/Meteor-Files)
+- Star on [GitHub](https://github.com/veliovgroup/Meteor-Files)
 - Star on [Atmosphere](https://atmospherejs.com/ostrio/files)
 - Share via [Facebook](https://www.facebook.com/sharer.php?u=https%3A%2F%2Fgithub.com%2FVeliovGroup%2FMeteor-Files) and [Twitter](https://twitter.com/share?url=https%3A%2F%2Fgithub.com%2FVeliovGroup%2FMeteor-Files)
 - [Sponsor via GitHub](https://github.com/sponsors/dr-dimitru) — support open source contributions on a regular basis
