@@ -138,7 +138,7 @@ Template.uploadForm.onCreated(function () {
     }
 
     if (files.length > Meteor.settings.public.maxFilesQty) {
-      formError.set(`Please select up to ${Meteor.settings.public.maxFilesQty} files`);
+      formError.set(`please submit up to ${Meteor.settings.public.maxFilesQty} files. ${files.length} files were selected`);
       return false;
     }
 
@@ -181,7 +181,7 @@ Template.uploadForm.onCreated(function () {
     // INSTANCE AND PUSH IT TO `uploads` {ReactiveVar} ARRAY.
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      Collections.files.insert({
+      const upload = Collections.files.insert({
         file: file,
         meta: {
           blamed: 0,
@@ -219,13 +219,21 @@ Template.uploadForm.onCreated(function () {
         template.heatingUp.set(false);
         uploads.push(this);
         _app.uploads.set(uploads);
-      }).start();
+      });
+
+      upload.start();
     }
     return true;
   };
 });
 
 Template.uploadForm.helpers({
+  isOffline() {
+    return !Meteor.status().connected;
+  },
+  meteorStatus() {
+    return Meteor.status().status;
+  },
   error() {
     return formError.get();
   },
@@ -289,6 +297,11 @@ Template.uploadForm.helpers({
 });
 
 Template.uploadForm.events({
+  'click [data-reconnect]'(e) {
+    e.preventDefault();
+    Meteor.reconnect();
+    return false;
+  },
   'click [data-pause-all]'(e) {
     e.preventDefault();
     const uploads = _app.uploads.get();
@@ -333,46 +346,41 @@ Template.uploadForm.events({
     e.originalEvent.dataTransfer.dropEffect = 'copy';
 
     formError.set(false);
-    let files = [];
     let i = -1;
     let dirs = [];
-    const dirsWebKit = [];
-    const dirsPromises = [];
+    let files = [];
+    const pushFile = (file) => {
+      // FILTER ZERO-SIZE AND SYSTEM FILES
+      if (file.size > 0 && !SYSTEM_HIDDEN_FILES.includes(file.name) && !file.name.startsWith('._.')) {
+        setFileFullPath({}, file);
+        files.push(file);
+      }
+    };
+
     for (const file of e.originalEvent.dataTransfer.files) {
       i++;
-      // FILTER ZERO-SIZE FILES AND DETECT DIRECTORIES
-      // DIRECTORIES WON'T HAVE MIME-TYPE
-      if (file.size > 0 && file.type) {
-        if (!SYSTEM_HIDDEN_FILES.includes(file.name) && !file.name.startsWith('._.')) {
-          setFileFullPath({}, file);
-          files.push(file);
-        }
-      } else if (e.originalEvent.dataTransfer?.items?.[i]) {
-        const item = e.originalEvent.dataTransfer.items[i];
-
-        // WHENEVER WE USE WEBKIT UNOFFICIAL API VIA .webkitGetAsEntry
-        // OR MODERN WORKING DRAFT AND PARTIALLY DROPPED .getAsFileSystemHandle
-        // TO READ A DIRECTORY — BOTH OF METHODS WOULD RETURN EMPTY RESPONCE INSIDE
-        // ASYNC CALL OR AFTER USING await KEYWORD. THIS HAPPENS FOR SECURITY REASONS
-        // AS FILESYSTEM HANDLE LIVES INSIDE SINGLE EVENT LOOP CYCLE
-        //
-        // TO SOLVE/VORKAROUND IT WE WILL PUSH METHODS RESULTS INTO AN ARRAY
-        // LATER RECURSIVELY READING ITS CONTENTS
+      const item = e.originalEvent.dataTransfer.items[i];
+      // WHENEVER WE USE WEBKIT UNOFFICIAL API VIA .webkitGetAsEntry
+      // OR MODERN WORKING DRAFT AND PARTIALLY DROPPED .getAsFileSystemHandle
+      // TO READ A DIRECTORY — BOTH OF METHODS WOULD RETURN EMPTY RESPONCE INSIDE
+      // ASYNC CALL OR AFTER USING await KEYWORD. THIS HAPPENS FOR SECURITY REASONS
+      // AS FILESYSTEM HANDLE LIVES INSIDE SINGLE EVENT LOOP CYCLE
+      if (typeof item.webkitGetAsEntry !== 'function' && typeof item.getAsFileSystemHandle !== 'function') {
+        pushFile(file);
+      } else {
+        let fsFile;
         if (typeof item.webkitGetAsEntry === 'function') {
-          dirsWebKit.push(item.webkitGetAsEntry());
+          fsFile = item.webkitGetAsEntry();
         } else if (typeof item.getAsFileSystemHandle === 'function') {
-          dirsPromises.push(item.getAsFileSystemHandle());
+          fsFile = await item.getAsFileSystemHandle();
+        }
+
+        if (fsFile.isFile === true || fsFile.kind === 'file') {
+          pushFile(file);
+        } else {
+          dirs.push(fsFile);
         }
       }
-    }
-
-
-    if (dirsWebKit.length) {
-      dirs = dirsWebKit;
-    }
-
-    if (dirsPromises.length) {
-      dirs = dirs.concat(await Promise.all(dirsPromises));
     }
 
     // IF DIRECTORIES ARE PASSED TO `drop` EVENT AND BROWSER HAS API TO
@@ -384,11 +392,11 @@ Template.uploadForm.events({
         }
       } catch (readDirErr) {
         // Something isn't supported...
+        Meteor._debug(NOT_SUPPORTED_MSG, readDirErr);
         formError.set(NOT_SUPPORTED_MSG);
         return false;
       }
     }
-
     template.initiateUpload(e, files, template);
     return false;
   },

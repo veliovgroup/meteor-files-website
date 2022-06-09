@@ -61,6 +61,8 @@ addListener(window, ['drop'], (e) => {
 });
 
 _app.isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent || navigator.vendor || window.opera) && !window.MSStream;
+_app.isMobile = _app.isiOS || ('ontouchstart' in window);
+_app.isStandalone = ('standalone' in window.navigator && window.navigator.standalone) || window.matchMedia('(display-mode: standalone)').matches || false;
 _app.uploads = new ReactiveVar(false);
 _app.currentUrl = () => {
   return Meteor.absoluteUrl((FlowRouter.current().path || document.location.pathname).replace(/^\//g, '')).split('?')[0].split('#')[0].replace('!', '');
@@ -95,6 +97,10 @@ Template.registerHelper('maxFilesQty', () => {
 
 Template.registerHelper('getTTL', () => {
   return _app.conf.fileTTLSec / 3600;
+});
+
+Template.registerHelper('isMobile', () => {
+  return _app.isMobile;
 });
 
 Template.registerHelper('fromNow', (timestamp) => {
