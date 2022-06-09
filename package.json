@@ -36,7 +36,7 @@
   },
   "dependencies": {
     "@babel/runtime": "^7.18.3",
-    "aws-sdk": "^2.1151.0",
+    "aws-sdk": "^2.1152.0",
     "core-js": "^3.22.8",
     "fs-extra": "^10.1.0",
     "jquery": "^3.6.0",
