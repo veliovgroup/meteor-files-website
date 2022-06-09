@@ -1,13 +1,14 @@
 import { ReactiveVar } from 'meteor/reactive-var';
 // meteor add ostrio:cstorage
 import { ClientStorage } from 'meteor/ostrio:cstorage';
+const clientStorage = new ClientStorage();
 
 const persistentReactive = (name, initial) => {
   let reactive;
-  if (ClientStorage.has(name)) {
-    reactive = new ReactiveVar(ClientStorage.get(name));
+  if (clientStorage.has(name)) {
+    reactive = new ReactiveVar(clientStorage.get(name));
   } else {
-    ClientStorage.set(name, initial);
+    clientStorage.set(name, initial);
     reactive = new ReactiveVar(initial);
   }
 
@@ -17,7 +18,7 @@ const persistentReactive = (name, initial) => {
       return;
     }
     reactive.curValue = newValue;
-    ClientStorage.set(name, newValue);
+    clientStorage.set(name, newValue);
     reactive.dep.changed();
   };
 
