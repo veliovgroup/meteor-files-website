@@ -12,7 +12,7 @@ Meteor.methods({
       $inc: {
         'meta.blamed': -1
       }
-    }, _app.NOOP);
+    }, _app.noop);
     return true;
   },
   'file.blame'(_id) {
@@ -39,7 +39,7 @@ Meteor.methods({
       $inc: {
         'meta.blamed': 1
       }
-    }, _app.NOOP);
+    }, _app.noop);
     return true;
   },
   'file.get'(_id) {

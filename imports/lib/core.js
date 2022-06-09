@@ -8,7 +8,7 @@ const _app = {
     fileTTLSec: Meteor.settings.public.fileTTLSec || 86400,
     fileTTL: (Meteor.settings.public.fileTTLSec || 86400) * 1000
   },
-  NOOP(){},
+  noop(){},
   isUndefined(obj) {
     return obj === void 0;
   },

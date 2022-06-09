@@ -65,7 +65,7 @@ _app.createThumbnails = (collection, fileRef, cb) => {
               'versions.original.meta.width': features.width,
               'versions.original.meta.height': features.height
             }
-          }, _app.NOOP);
+          }, _app.noop);
 
           Object.keys(sizes).forEach((name) => {
             const size = sizes[name];

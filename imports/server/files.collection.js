@@ -77,6 +77,8 @@ if (s3Conf && s3Conf.key && s3Conf.secret && s3Conf.bucket && s3Conf.region) {
                 bound(() => {
                   if (awsRemoveError) {
                     throw new Meteor.Error(500, 'Achtung! No REMOVAL access to AWS:S3 storage', awsRemoveError);
+                  } else {
+                    Meteor._debug('Meteor Files App: AWS integration SUCCESSFULLY tested');
                   }
                 });
               });
@@ -285,5 +287,5 @@ Meteor.setInterval(() => {
     'meta.expireAt': {
       $lte: Date.now() + 120000
     }
-  }, _app.NOOP);
+  }, _app.noop);
 }, 120000);
