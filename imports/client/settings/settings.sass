@@ -31,23 +31,10 @@ input[type="radio"]
   &:hover, &:active, &:active:hover
     outline: none
 
-.radio-inline
+label
   cursor: pointer
   white-space: nowrap
   input[type="radio"]
     display: inline-block
-
-.radio-inline-wrap
-  display: flex
-  .radio-inline
-    flex: 1 1 0
-    display: block
-    position: relative
-    padding-left: 30px
-    margin-bottom: 0
-    font-weight: 400
-    cursor: pointer
-
-.radio-inline + .radio-inline
-  margin-top: 0
-  margin-left: 10px
+  & + label
+    margin-left: 15px

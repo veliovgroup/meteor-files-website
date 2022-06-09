@@ -1,15 +1,18 @@
 template(name="settings")
-  form.col-50.upload-form
-    .h2 Upload via:
+  form.col-50
+    .info-block
+      h1.h2 upload transport
 
-    div.radio-inline-wrap
-      label.radio-inline
+      label
         input(type="radio" name="transport" value="ddp" checked="{{#if compare uploadTransport '===' 'ddp'}}checked{{/if}}")
-        | DDP
-      label.radio-inline
+        b DDP
+      label
         input(type="radio" name="transport" value="http" checked="{{#if compare uploadTransport '===' 'http'}}checked{{/if}}")
-        | HTTP (<em>faster</em>)
+        b HTTP (<em>faster</em>)
 
-    p.annotation Any file-type.<br>This form supports drag'n'drop.
+      p 
+        | any file-type
+        br
+        b drag'n'drop files and directories
 
     a.info-link.right(href="{{pathFor 'index'}}" title="close"): i.la.la-times

@@ -49,30 +49,30 @@ template(name="file")
           table.fixed-table: tbody
             tr
               th Name:
-              td #{name}
+              td(colspan="2") #{name}
             tr
               th Mime-type:
-              td #{type}
+              td(colspan="2") #{type}
             tr
               th Size:
-              td {{filesize size}}
+              td(colspan="2") {{filesize size}}
             tr
               th Extension:
-              td 
+              td(colspan="2") 
                 if extension
                   | .#{extension}
                 else
                   | extension-less
             tr
               th Abuse:
-              td
+              td(colspan="2")
                 | #{meta.blamed}
                 | &nbsp;
                 a(data-blame title="Mark this upload as inappropriate" href="#" class="{{#if isBlamed}}danger{{/if}}")
                   i.la.la-flag-o
             tr
               th Expire:
-              td {{fromNow meta.expireAt}}
+              td(colspan="2") {{fromNow meta.expireAt}}
           p.text-center: a.top-link(data-show-file href="#" title="Back to file")
             i.la.la-arrow-up.la-lg
             br

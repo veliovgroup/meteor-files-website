@@ -7,10 +7,10 @@ template(name="index")
         each recent.each
           +listingRow
     else
-      .text-center
-        .h3 You have no uploaded files
-        div
-          | Start with 
+      .info-block
+        .h2 you have no uploaded files
+        p
+          | start with 
           a(data-select-file href="#" title="Select file") selecting a file
           br
-          | or drag'n'drop file(s) or directory
+          b drag'n'drop file(s) or directory

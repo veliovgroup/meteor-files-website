@@ -138,13 +138,6 @@ a
     height: 100vh
     min-height: 100vh
 
-.h1
-  font-weight: 300
-  font-size: 2rem
-  line-height: 2.8rem
-  margin-top: 0rem
-  margin-bottom: 0.5rem
-
 .h2
   font-weight: 700
   font-size: 1.4rem
@@ -161,6 +154,8 @@ a
 
 .text-center
   text-align: center
+.text-left
+  text-align: left !important
 
 .flex
   display: flex
@@ -204,15 +199,19 @@ a
         max-height: 50vh
         height: 50vh
 
-p.annotation
-  margin-bottom: 0px
-  margin-top: 1rem
-  font-size: 0.888rem
+.info-block
+  padding: 0px 15px 0px 15px
+  box-sizing: border-box
+  @media(max-width: $break-point)
+    padding-left: 70px
+  p
+    width: 100%
 
 .bg-dark
   background-color: $bg-alt
 
 .col-50
+  position: relative
   & > div, & > p
     animation: new-element 350ms ease-in-out 1
 
