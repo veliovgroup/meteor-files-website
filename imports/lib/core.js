@@ -77,8 +77,8 @@ const _app = {
 
 const helpers = ['String', 'Number', 'Date'];
 for (let i = 0; i < helpers.length; i++) {
-  _app['is' + helpers[i]] = function (obj) {
-    return Object.prototype.toString.call(obj) === '[object ' + helpers[i] + ']';
+  _app[`is${helpers[i]}`] = function (obj) {
+    return Object.prototype.toString.call(obj) === `[object ${helpers[i]}]`;
   };
 }
 
