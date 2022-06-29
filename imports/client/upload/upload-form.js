@@ -210,7 +210,7 @@ Template.uploadForm.onCreated(function () {
         if (currentError.length) {
           currentError += '<br/>';
         }
-        formError.set(`${currentError}${this.file.name}: ${_app.isObject(error) ? error.reason : error}`);
+        formError.set(`${currentError}${this.file.name}: ${(_app.isObject(error) && error?.reason) ? error.reason : (error || 'unexpected error occurred')}`);
         this.errorTimer = setTimeout( () => {
           formError.set(false);
         }, 15000);
