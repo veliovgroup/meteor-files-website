@@ -35,9 +35,9 @@
     }
   },
   "dependencies": {
-    "@babel/runtime": "^7.18.3",
-    "aws-sdk": "^2.1152.0",
-    "core-js": "^3.22.8",
+    "@babel/runtime": "^7.18.6",
+    "aws-sdk": "^2.1164.0",
+    "core-js": "^3.23.3",
     "fs-extra": "^10.1.0",
     "jquery": "^3.6.0",
     "meteor-node-stubs": "^1.2.3",
@@ -48,7 +48,7 @@
     "npm": "^6.14.17"
   },
   "devDependencies": {
-    "browserslist": "^4.20.4",
-    "caniuse-lite": "^1.0.30001352"
+    "browserslist": "^4.21.1",
+    "caniuse-lite": "^1.0.30001361"
   }
 }
