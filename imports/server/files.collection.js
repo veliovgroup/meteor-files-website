@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Random } from 'meteor/random';
 import { filesize } from 'meteor/mrt:filesize';
-import { FilesCollection } from 'meteor/ostrio:files';
+import { FilesCollection, helpers } from 'meteor/ostrio:files';
 import { _app, Collections } from '/imports/lib/core.js';
 import { webPush } from '/imports/server/web-push.js';
 
@@ -98,6 +98,10 @@ Collections.files = new FilesCollection({
   allowClientCode: false,
   // disableUpload: true,
   // disableDownload: true,
+  namingFunction(file) {
+    // Overwrite client's `namingFunction` for security reasons against reverse-engineering
+    return helpers.sanitize(file.fileId);
+  },
   onBeforeUpload() {
     if (this.file.size <= _app.conf.maxFileSize) {
       return true;
