@@ -1,14 +1,10 @@
 template(name="_404")
   // response:status-code=404
-  .col-50.file
-    .file-title
-      a.go-back(href="/" title="go to homepage")
-        i.la.la-angle-left.la-lg
-        | Home
-
-    .file-body.flex.wh100
-      .h3 Whoops... 404. Page not found
+  .col-50
+    .text-center
+      h1.h2 whoops... page not found
       p
         | Page not found, was removed, or never was here.
         br
-        a(href="/") Go to main page
+        b.muted
+          a(href="/") Go to main page
