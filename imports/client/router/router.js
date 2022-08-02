@@ -33,7 +33,9 @@ FlowRouter.globals.push({
     'og:title': {
       name: 'title',
       property: 'og:title',
-      content: title
+      content() {
+        return document.title || title;
+      }
     },
     description: {
       name: 'description',
@@ -42,7 +44,9 @@ FlowRouter.globals.push({
       content: description
     },
     'twitter:description': description,
-    'twitter:title': title,
+    'twitter:title'() {
+      return document.title || title;
+    },
     'twitter:url'() {
       return _app.currentUrl();
     },
@@ -72,5 +76,5 @@ FlowRouter.globals.push({
   }
 });
 
-new FlowRouterTitle(FlowRouter);
 new FlowRouterMeta(FlowRouter);
+new FlowRouterTitle(FlowRouter);
