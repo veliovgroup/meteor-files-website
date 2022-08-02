@@ -5,27 +5,29 @@
   width: 44px
   height: 44px
   border-radius: 50%
-  color: $text-color
-  background-color: $text-color
+  color: darken($link-color, 7%)
+  background-color: darken($background-color, 3%)
   cursor: pointer
 
   .overlay
     position: absolute
-    width: 40px
-    height: 40px
-    background-color: $bg
+    width: 36px
+    height: 36px
+    background-color: darken($background-color, 3%)
     border-radius: 50%
-    margin-left: 2px
-    margin-top: 2px
+    margin-left: 4px
+    margin-top: 4px
     text-align: center
-    font-size: 13px
-    line-height: 39px
+    font-size: 12px
+    font-weight: 500
+    line-height: 36px
     .action
       display: none
       visibility: hidden
 
   &:hover .overlay
     background-color: $background-color
+    color: $link-color
 
     .action
       display: inline
@@ -39,61 +41,61 @@
   background-image: none
 
 .progress-5
-  background-image: linear-gradient(90deg, $bg 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(108deg, $text-color 50%, $bg 50%, $bg)
+  background-image: linear-gradient(90deg, lighten($bg, 3%) 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(108deg, darken($background-color, 3%) 50%, lighten($bg, 3%) 50%, lighten($bg, 3%))
 
 .progress-10
-  background-image: linear-gradient(90deg, $bg 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(126deg, $text-color 50%, $bg 50%, $bg)
+  background-image: linear-gradient(90deg, lighten($bg, 3%) 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(126deg, darken($background-color, 3%) 50%, lighten($bg, 3%) 50%, lighten($bg, 3%))
 
 .progress-15
-  background-image: linear-gradient(90deg, $bg 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(144deg, $text-color 50%, $bg 50%, $bg)
+  background-image: linear-gradient(90deg, lighten($bg, 3%) 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(144deg, darken($background-color, 3%) 50%, lighten($bg, 3%) 50%, lighten($bg, 3%))
 
 .progress-20
-  background-image: linear-gradient(90deg, $bg 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(162deg, $text-color 50%, $bg 50%, $bg)
+  background-image: linear-gradient(90deg, lighten($bg, 3%) 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(162deg, darken($background-color, 3%) 50%, lighten($bg, 3%) 50%, lighten($bg, 3%))
 
 .progress-25
-  background-image: linear-gradient(90deg, $bg 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(180deg, $text-color 50%, $bg 50%, $bg)
+  background-image: linear-gradient(90deg, lighten($bg, 3%) 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(180deg, darken($background-color, 3%) 50%, lighten($bg, 3%) 50%, lighten($bg, 3%))
 
 .progress-30
-  background-image: linear-gradient(90deg, $bg 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(198deg, $text-color 50%, $bg 50%, $bg)
+  background-image: linear-gradient(90deg, lighten($bg, 3%) 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(198deg, darken($background-color, 3%) 50%, lighten($bg, 3%) 50%, lighten($bg, 3%))
 
 .progress-35
-  background-image: linear-gradient(90deg, $bg 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(216deg, $text-color 50%, $bg 50%, $bg)
+  background-image: linear-gradient(90deg, lighten($bg, 3%) 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(216deg, darken($background-color, 3%) 50%, lighten($bg, 3%) 50%, lighten($bg, 3%))
 
 .progress-40
-  background-image: linear-gradient(90deg, $bg 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(234deg, $text-color 50%, $bg 50%, $bg)
+  background-image: linear-gradient(90deg, lighten($bg, 3%) 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(234deg, darken($background-color, 3%) 50%, lighten($bg, 3%) 50%, lighten($bg, 3%))
 
 .progress-45
-  background-image: linear-gradient(90deg, $bg 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(252deg, $text-color 50%, $bg 50%, $bg)
+  background-image: linear-gradient(90deg, lighten($bg, 3%) 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(252deg, darken($background-color, 3%) 50%, lighten($bg, 3%) 50%, lighten($bg, 3%))
 
 .progress-50
-  background-image: linear-gradient(-90deg, $text-color 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, $text-color 50%, $bg 50%, $bg)
+  background-image: linear-gradient(-90deg, darken($background-color, 3%) 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, darken($background-color, 3%) 50%, lighten($bg, 3%) 50%, lighten($bg, 3%))
 
 .progress-55
-  background-image: linear-gradient(-72deg, $text-color 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, $text-color 50%, $bg 50%, $bg)
+  background-image: linear-gradient(-72deg, darken($background-color, 3%) 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, darken($background-color, 3%) 50%, lighten($bg, 3%) 50%, lighten($bg, 3%))
 
 .progress-60
-  background-image: linear-gradient(-54deg, $text-color 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, $text-color 50%, $bg 50%, $bg)
+  background-image: linear-gradient(-54deg, darken($background-color, 3%) 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, darken($background-color, 3%) 50%, lighten($bg, 3%) 50%, lighten($bg, 3%))
 
 .progress-65
-  background-image: linear-gradient(-36deg, $text-color 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, $text-color 50%, $bg 50%, $bg)
+  background-image: linear-gradient(-36deg, darken($background-color, 3%) 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, darken($background-color, 3%) 50%, lighten($bg, 3%) 50%, lighten($bg, 3%))
 
 .progress-70
-  background-image: linear-gradient(-18deg, $text-color 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, $text-color 50%, $bg 50%, $bg)
+  background-image: linear-gradient(-18deg, darken($background-color, 3%) 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, darken($background-color, 3%) 50%, lighten($bg, 3%) 50%, lighten($bg, 3%))
 
 .progress-75
-  background-image: linear-gradient(0deg, $text-color 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, $text-color 50%, $bg 50%, $bg)
+  background-image: linear-gradient(0deg, darken($background-color, 3%) 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, darken($background-color, 3%) 50%, lighten($bg, 3%) 50%, lighten($bg, 3%))
 
 .progress-80
-  background-image: linear-gradient(18deg, $text-color 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, $text-color 50%, $bg 50%, $bg)
+  background-image: linear-gradient(18deg, darken($background-color, 3%) 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, darken($background-color, 3%) 50%, lighten($bg, 3%) 50%, lighten($bg, 3%))
 
 .progress-85
-  background-image: linear-gradient(36deg, $text-color 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, $text-color 50%, $bg 50%, $bg)
+  background-image: linear-gradient(36deg, darken($background-color, 3%) 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, darken($background-color, 3%) 50%, lighten($bg, 3%) 50%, lighten($bg, 3%))
 
 .progress-90
-  background-image: linear-gradient(54deg, $text-color 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, $text-color 50%, $bg 50%, $bg)
+  background-image: linear-gradient(54deg, darken($background-color, 3%) 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, darken($background-color, 3%) 50%, lighten($bg, 3%) 50%, lighten($bg, 3%))
 
 .progress-95
-  background-image: linear-gradient(72deg, $text-color 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, $text-color 50%, $bg 50%, $bg)
+  background-image: linear-gradient(72deg, darken($background-color, 3%) 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, darken($background-color, 3%) 50%, lighten($bg, 3%) 50%, lighten($bg, 3%))
 
 .progress-100
-  background-image: linear-gradient(90deg, $text-color 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, $text-color 50%, $bg 50%, $bg)
+  background-image: linear-gradient(90deg, darken($background-color, 3%) 50%, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0)), linear-gradient(270deg, darken($background-color, 3%) 50%, lighten($bg, 3%) 50%, lighten($bg, 3%))

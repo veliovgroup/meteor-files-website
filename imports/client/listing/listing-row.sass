@@ -40,16 +40,22 @@
       flex: 0.99 1 0
   &:not(.upload):hover
     background-color: $bg-dark
+    .preview-circle
+      color: $link-active
+      background-color: darken($background-color, 1%)
+      border: 2px solid darken($background-color, 1%)
+
 
 .preview-circle
+  color: $link-color
   margin: 0px auto
   height: 40px
   width: 40px
   text-align: center
   overflow: hidden
   border-radius: 40px
-  border: 2px solid $text-color
-  background-color: $bg
+  border: 2px solid darken($background-color, 5%)
+  background-color: darken($background-color, 5%)
   position: relative
   i
     font-size: 20px

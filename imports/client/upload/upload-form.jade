@@ -16,7 +16,7 @@ template(name="uploadForm")
           else
             | wait for re-connection or
         br
-        a(data-reconnect href="#") try to reconnect now
+        b.muted: a(data-reconnect href="#") try to reconnect now
     else
       if isHeatingUp
         .upload-title.percentage 0%

@@ -1,11 +1,6 @@
 template(name="file")
   .col-50.file
     +with file.with
-      .file-title
-        a.go-back(href="/" title="go back")
-          i.la.la-angle-left.la-lg
-          | Back
-
       .file-body.scroll-wrap
         .wh100.flex
           .file-logo
@@ -73,7 +68,12 @@ template(name="file")
             tr
               th Expire:
               td(colspan="2") {{fromNow meta.expireAt}}
-          p.text-center: a.top-link(data-show-file href="#" title="Back to file")
-            i.la.la-arrow-up.la-lg
-            br
-            | back
+          
+          p.strong.muted
+            a(href="/" title="Back to the list of files") back to files
+            | &nbsp;
+            | &middot;
+            | &nbsp;
+            a(data-show-file href="#" title="Scroll up to file's actions") up
+
+    a.info-link.right(href="{{pathFor 'index'}}" title="close"): i.la.la-times

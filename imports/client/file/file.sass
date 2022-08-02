@@ -2,36 +2,18 @@
 
 .main-container .row .col-50.file
   justify-content: space-between
-  & > *
-    width: 100%
-    max-width: 100%
-  .file-title
-    margin: 0px
-    background-color: $bg-dark
-    padding: 0px
-    .go-back
-      margin: 0px
-      padding: 13px 10px
-      height: 100%
-      text-decoration: none
-      font-size: 1.2rem
-      line-height: 3.2rem
-      color: #C9C9CA
-      &:hover
-        color: #FFFFFF
-        background-color: #0D0F14
   .file-body
     position: relative
     text-align: center
     -webkit-overflow-scrolling: touch
-    a
-      text-decoration: none
   .file-logo
     font-size: 2.75rem
     line-height: 3rem
   .file-actions
     margin: 2rem auto 1rem auto
     table-layout: fixed
+    a
+      text-decoration: none
     td
       padding: 0px 12px
       .la
@@ -52,23 +34,9 @@
       font-weight: 700
   .scroll-wrap
     position: relative
-    min-height: calc(100% - 48px)
-    max-height: calc(100% - 48px)
-    height: calc(100% - 48px)
-    @media(max-width: $break-point)
-      min-height: calc(100% - 54px)
-      max-height: calc(100% - 54px)
-      height: calc(100% - 54px)
-
-.top-link
-  display: inline-block
-  padding: 4px
-  width: 60px
-  height: 60px
-  border-radius: 60px
-  background-color: lighten($bg, 1.5%)
-  &:hover
-    background-color: lighten($bg, 1.95%)
+    min-height: 100%
+    max-height: 100%
+    height: 100%
 
 .fixed-table
   table-layout: fixed
