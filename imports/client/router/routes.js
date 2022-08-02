@@ -55,16 +55,51 @@ Promise.all([
   console.error('[Promise.all] loading dynamic imports error:', e);
 });
 
+// WRAPPER FOR whileWaiting METHOD
+// TO REMOVE BLINKING "SPINNER" BETWEEN ROUTES
+// THIS FUNCTION WOULD DELAY "loading" TEMPLATE RENDER BY 1024 MS
+let lastRun;
+let renderWaitingTimer;
+let renderActionTimer;
+const renderDelay = 1024;
+const cancelAfterNext = () => {
+  clearTimeout(renderWaitingTimer);
+  clearTimeout(renderActionTimer);
+};
+const renderWaiting = (router, layoutName, templateName) => {
+  cancelAfterNext();
+  if (!lastRun) {
+    lastRun = Date.now();
+    router.render(layoutName, templateName);
+  } else {
+    renderWaitingTimer = setTimeout(() => {
+      lastRun = Date.now();
+      router.render(layoutName, templateName);
+    }, renderDelay);
+  }
+};
+const renderAction = (router, ...args) => {
+  cancelAfterNext();
+  const tdiff = Date.now() - lastRun;
+  if (!lastRun || tdiff > renderDelay) {
+    router.render(...args);
+  } else if (tdiff) {
+    renderActionTimer = setTimeout(() => {
+      router.render(...args);
+    }, tdiff);
+  }
+};
+
 FlowRouter.route('/', {
   name: 'index',
   action() {
-    this.render('layout', 'index');
+    renderAction(this, 'layout', 'index');
   },
   waitOn() {
     return import('/imports/client/index/index.js');
   },
   whileWaiting() {
-    this.render('layout', 'loading');
+    renderWaiting(this, 'layout', 'loading');
   }
 });
 
@@ -86,13 +121,13 @@ FlowRouter.route('/about', {
     'twitter:description': 'About file-sharing web application'
   },
   action() {
-    this.render('layout', 'about');
+    renderAction(this, 'layout', 'about');
   },
   waitOn() {
     return import('/imports/client/about/about.js');
   },
   whileWaiting() {
-    this.render('layout', 'loading');
+    renderWaiting(this, 'layout', 'loading');
   }
 });
 
@@ -115,13 +150,13 @@ FlowRouter.route('/settings', {
     'twitter:description': 'File upload and sharing settings'
   },
   action() {
-    this.render('layout', 'settings');
+    renderAction(this, 'layout', 'settings');
   },
   waitOn() {
     return import('/imports/client/settings/settings.js');
   },
   whileWaiting() {
-    this.render('layout', 'loading');
+    renderWaiting(this, 'layout', 'loading');
   }
 });
 
@@ -129,13 +164,12 @@ FlowRouter.route('/f/:_id', {
   name: 'file',
   title(params, queryParams, file) {
     if (file) {
-      return 'Download shared file';
+      return `Download shared file: ${(file.name || '').substring(0, 120)}`;
     }
     return meta404.title;
   },
   meta(params, queryParams, _file) {
     if (_file) {
-      const file = _file.get();
       return {
         robots: 'noindex, nofollow',
         keywords: {
@@ -171,7 +205,7 @@ FlowRouter.route('/f/:_id', {
     }
   },
   action(params) {
-    this.render('layout', 'file', { params });
+    renderAction(this, 'layout', 'file', { params });
   },
   waitOn(params) {
     const waitFor = [import('/imports/client/file/file.js')];
@@ -182,9 +216,10 @@ FlowRouter.route('/f/:_id', {
     return waitFor;
   },
   whileWaiting() {
-    this.render('layout', 'loading');
+    renderWaiting(this, 'layout', 'loading');
   },
   onNoData() {
+    cancelAfterNext();
     // SHOW "loading" TEMPLATE
     this.render('layout', 'loading');
     // PULL 404 TEMPLATE AND ITS CONTROLLER "PROGRESSIVELY" FROM SERVER
@@ -221,12 +256,12 @@ FlowRouter.route('*', {
   title: '404: Page not found',
   meta: meta404,
   action() {
-    this.render('layout', '_404');
+    renderAction(this, 'layout', '_404');
   },
   waitOn() {
     return import('/imports/client/_404/_404.js');
   },
   whileWaiting() {
-    this.render('layout', 'loading');
+    renderWaiting(this, 'layout', 'loading');
   }
 });
