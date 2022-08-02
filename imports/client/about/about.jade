@@ -3,8 +3,8 @@ template(name="about")
     .info-block
       h1.h2 about
 
-      p simultaneously upload #{maxFilesQty} files up to #{getMaxSize} each.<br>all uploaded files are stored for #{getTTL} hours.<br>copy file's link to share with friends and colleagues.<br><br><b>upload supports drag'n'drop for file(s) and directories.</b>
+      p simultaneously upload #{maxFilesQty} files up to #{getMaxSize} each.<br>all uploaded files are stored for #{getTTL} hours.<br>copy file's link to share with friends and colleagues.<br><br><b class="muted">upload supports drag and drop for files and directories.</b>
 
-      p 2022 ・ <a href="https://github.com/veliovgroup/meteor-files-website" target="_blank" rel="noopener noreferrer">GitHub</a>
+      p.muted 2022 ・ <a href="https://github.com/veliovgroup/meteor-files-website" target="_blank" rel="noopener noreferrer">GitHub</a>
 
     a.info-link.right(href="{{pathFor 'index'}}" title="close"): i.la.la-times
