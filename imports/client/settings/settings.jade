@@ -1,6 +1,6 @@
 template(name="settings")
   form.col-50
-    .info-block
+    .text-center
       h1.h2 upload transport
 
       label
@@ -10,9 +10,7 @@ template(name="settings")
         input(type="radio" name="transport" value="http" checked="{{#if compare uploadTransport '===' 'http'}}checked{{/if}}")
         b HTTP (<em>faster</em>)
 
-      p 
-        | any file-type
-        br
-        b drag'n'drop files and directories
+      p
+        b.muted nerd-level settings
 
     a.info-link.right(href="{{pathFor 'index'}}" title="close"): i.la.la-times
