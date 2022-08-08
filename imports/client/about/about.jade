@@ -3,12 +3,10 @@ template(name="about")
     .info-block
       h1.h2 about
 
-      p
-        | simultaneously upload #{maxFilesQty} files up to #{getMaxSize} each.
-        br
-        | all uploaded files are stored for #{getTTL} hours.
-        br
-        | copy file's link to share with friends and colleagues.
+      ul.list-unstyled
+        li 📦 &nbsp; simultaneously upload <strong>#{maxFilesQty} files</strong> up to <strong>#{getMaxSize} each</strong>
+        li ⏱ &nbsp; all files are removed in <strong>#{getTTL} hours</strong> after upload
+        li 📎 &nbsp; <strong>copy file's link</strong> to share securely
       p: b.muted drag and drop files or directories over cloud icon to upload multiple files at once.
 
       p.muted 2022 ・ <a href="https://github.com/veliovgroup/meteor-files-website" target="_blank" rel="noopener noreferrer" title="view this project source code or contribute">GitHub</a> ・ <a href="https://github.com/sponsors/dr-dimitru" target="_blank" rel="noopener noreferrer" title="support this project">Support</a>
