@@ -12,5 +12,11 @@ template(name="settings")
 
       p
         b.muted nerd-level settings
+        br
+        small
+          if isNewVersionAvailable
+            | &nbsp;
+          else
+            a.muted(data-trigger-hcp href="#") Trigger HCP message
 
     a.info-link.right(href="{{pathFor 'index'}}" title="close"): i.la.la-times
