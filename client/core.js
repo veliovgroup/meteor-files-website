@@ -63,6 +63,7 @@ addListener(window, ['drop'], (e) => {
 _app.isiOS = /iPad|iPhone|iPod/.test(navigator.userAgent || navigator.vendor || window.opera) && !window.MSStream;
 _app.isMobile = _app.isiOS || ('ontouchstart' in window);
 _app.isStandalone = ('standalone' in window.navigator && window.navigator.standalone) || window.matchMedia('(display-mode: standalone)').matches || false;
+_app.isSmall = ((document.documentElement.clientWidth || document.body.clientWidth) < 768);
 _app.uploads = new ReactiveVar(false);
 _app.currentUrl = () => {
   return Meteor.absoluteUrl((FlowRouter.current().path || document.location.pathname).replace(/^\//g, '')).split('?')[0].split('#')[0].replace('!', '');
@@ -101,6 +102,10 @@ Template.registerHelper('getTTL', () => {
 
 Template.registerHelper('isMobile', () => {
   return _app.isMobile;
+});
+
+Template.registerHelper('isSmall', () => {
+  return _app.isSmall;
 });
 
 Template.registerHelper('fromNow', (timestamp) => {

@@ -76,4 +76,5 @@ template(name="file")
             | &nbsp;
             a(data-show-file href="#" title="Scroll up to file's actions") up
 
-    a.info-link.right(href="{{pathFor 'index'}}" title="close"): i.la.la-times
+    unless isSmall
+      a.info-link.right(href="{{pathFor 'index'}}" title="close"): i.la.la-times
