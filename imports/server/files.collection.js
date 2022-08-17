@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import { Random } from 'meteor/random';
 import { filesize } from 'meteor/mrt:filesize';
-import { FilesCollection, helpers } from 'meteor/ostrio:files';
+import { FilesCollection, helpers as filesHelpers } from 'meteor/ostrio:files';
 import { _app, Collections } from '/imports/lib/core.js';
 import { webPush } from '/imports/server/web-push.js';
 
@@ -60,7 +60,7 @@ if (s3Conf && s3Conf.key && s3Conf.secret && s3Conf.bucket && s3Conf.region) {
   }, (awsWriteError) => {
     bound(() => {
       if (awsWriteError) {
-        throw new Meteor.Error(500, 'Achtung! No WRITING access to AWS:S3 storage', awsWriteError);
+        throw new Meteor.Error(500, 'Achtung! No WRITE (`putObject`) access to AWS:S3 storage', awsWriteError);
       } else {
         client.getObject({
           Bucket: s3Conf.bucket,
@@ -68,7 +68,7 @@ if (s3Conf && s3Conf.key && s3Conf.secret && s3Conf.bucket && s3Conf.region) {
         }, (awsReadError) => {
           bound(() => {
             if (awsReadError) {
-              throw new Meteor.Error(500, 'Achtung! No READ access to AWS:S3 storage', awsReadError);
+              throw new Meteor.Error(500, 'Achtung! No READ (`getObject`) access to AWS:S3 storage', awsReadError);
             } else {
               client.deleteObject({
                 Bucket: s3Conf.bucket,
@@ -76,7 +76,7 @@ if (s3Conf && s3Conf.key && s3Conf.secret && s3Conf.bucket && s3Conf.region) {
               }, (awsRemoveError) => {
                 bound(() => {
                   if (awsRemoveError) {
-                    throw new Meteor.Error(500, 'Achtung! No REMOVAL access to AWS:S3 storage', awsRemoveError);
+                    throw new Meteor.Error(500, 'Achtung! No REMOVAL (`deleteObject`) access to AWS:S3 storage', awsRemoveError);
                   } else {
                     Meteor._debug('Meteor Files App: AWS integration SUCCESSFULLY tested');
                   }
@@ -98,9 +98,16 @@ Collections.files = new FilesCollection({
   allowClientCode: false,
   // disableUpload: true,
   // disableDownload: true,
-  namingFunction(file) {
-    // Overwrite client's `namingFunction` for security reasons against reverse-engineering
-    return helpers.sanitize(file.fileId);
+  sanitize(str = ''/*, max = 28, replacement = '-'*/) {
+    // REPLACE DEFAULT sanitize METHOD TO ALLOW:
+    // - File System names / _id(s) up to 40 chars long
+    // - "not allowed characters" will be replaced with 'f' char
+    return filesHelpers.sanitize(str, 40, 'f');
+  },
+  namingFunction({ file }) {
+    // Override client's `namingFunction` for security reasons against reverse-engineering
+    // Use `this.sanitize` method to utilize `sanitize` function passed into FilesCollection constructor above
+    return this.sanitize(file._id);
   },
   onBeforeUpload() {
     if (this.file.size <= _app.conf.maxFileSize) {
