@@ -1,17 +1,17 @@
 # Basic packages
-meteor@1.10.0
+meteor@1.10.1
 webapp@1.13.1
 ddp@1.4.0
 hot-code-push@1.0.4
 livedata@1.0.18
-mongo@1.15.0
+mongo@1.16.0
 blaze-html-templates
 jquery
 tracker@1.2.0
 reactive-var@1.0.11
 
 seba:minifiers-autoprefixer
-standard-minifier-js@2.8.0
+standard-minifier-js@2.8.1
 
 # Additional MDG packages
 audit-argument-checks@1.0.7
