@@ -1,6 +1,7 @@
 import { check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 import { _app, Collections } from '/imports/lib/core.js';
+import { webPush } from '/imports/server/web-push.js';
 
 Meteor.methods({
   'file.unblame'(_id) {
@@ -69,5 +70,15 @@ Meteor.methods({
     }
 
     return void 0;
+  },
+  'webpush.test'(subscription) {
+    check(subscription, String);
+
+    webPush.send(subscription, {
+      title: 'Test notification',
+      body: 'If you can read this, it means web-push notifications are working!'
+    });
+
+    return true;
   }
 });
