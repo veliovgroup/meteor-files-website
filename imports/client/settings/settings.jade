@@ -18,5 +18,8 @@ template(name="settings")
             | &nbsp;
           else
             a.muted(data-trigger-hcp href="#") Trigger HCP message
+        if hasPWASupport
+          br
+          small: a.muted(data-install-pwa href="#") Install as PWA
 
     a.info-link.right(href="{{pathFor 'index'}}" title="close"): i.la.la-times

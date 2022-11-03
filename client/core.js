@@ -119,6 +119,8 @@ Meteor.startup(() => {
   document.documentElement.setAttribute('lang', 'en');
 });
 
+Meteor.hasPWASupport = false;
+Meteor.pwaInstallPrompt = new ReactiveVar(false);
 setUpServiceWorker();
 
 export { _app, Collections };

@@ -11,6 +11,12 @@ import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 const setUpServiceWorker = async (force = false) => {
   try {
     if ('serviceWorker' in navigator) {
+      window.addEventListener('beforeinstallprompt', (event) => {
+        // This is a great place to tell to your UI that
+        // Service Worker is supported by this browser
+        Meteor.pwaInstallPrompt.set(event);
+      });
+
       navigator.serviceWorker.addEventListener('message', (event) => {
         if (event.data.action === 'openRoute' && event.data.url) {
           FlowRouter.go(event.data.url);
@@ -18,14 +24,10 @@ const setUpServiceWorker = async (force = false) => {
       }, false);
 
       if (force === true || !navigator.serviceWorker.controller) {
-        // window.addEventListener('beforeinstallprompt', (event) => {
-        //   // This is a great place to tell to your UI that
-        //   // Service Worker is supported by this browser
-        // });
-
         window.addEventListener('load', async () => {
           try {
             await navigator.serviceWorker.register(Meteor.absoluteUrl('sw-v3.js'));
+            Meteor.hasPWASupport = true;
           } catch (error) {
             console.info('Can\'t load SW');
             console.error(error);
@@ -36,6 +38,8 @@ const setUpServiceWorker = async (force = false) => {
 
         if (!swRegistration) {
           setUpServiceWorker(true);
+        } else {
+          Meteor.hasPWASupport = true;
         }
       }
     }
