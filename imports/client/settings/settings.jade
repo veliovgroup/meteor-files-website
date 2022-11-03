@@ -10,16 +10,23 @@ template(name="settings")
         input(type="radio" name="transport" value="http" checked="{{#if compare uploadTransport '===' 'http'}}checked{{/if}}")
         b HTTP (<em>faster</em>)
 
-      p
-        b.muted nerd-level settings
-        br
-        small
-          if isNewVersionAvailable
-            | &nbsp;
-          else
-            a.muted(data-trigger-hcp href="#") Trigger HCP message
+    ul.settings-options
+      li: b nerd-level settings:
+      li
+        if isNewVersionAvailable
+          | &nbsp;
+        else
+          a.muted(data-trigger-hcp href="#") Trigger HCP message
+      li
         if hasPWASupport
-          br
-          small: a.muted(data-install-pwa href="#") Install as PWA
+          a.muted(data-install-pwa href="#") Install as PWA
+      li
+        if hasWebPushSupport
+          if compare pushTestStatus '===' true
+            span.muted Web-push notification tested
+          else if compare pushTestStatus '===' '1'
+            b.muted Web-push notification testing...
+          else
+            a.muted(data-web-push href="#") Web-push notification test
 
     a.info-link.right(href="{{pathFor 'index'}}" title="close"): i.la.la-times
