@@ -44,7 +44,7 @@
     "web-push": "^3.5.0"
   },
   "engines": {
-    "node": "^14.19.3",
+    "node": "^14.20.1",
     "npm": "^6.14.17"
   },
   "devDependencies": {
