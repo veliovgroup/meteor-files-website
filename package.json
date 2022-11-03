@@ -1,6 +1,6 @@
 {
   "name": "meteor-files-website",
-  "version": "1.16.0",
+  "version": "1.16.1",
   "description": "Upload files with the speed of Meteor. Application build on top of ostrio:files package and meteor.js",
   "main": "main.js",
   "scripts": {
@@ -8,7 +8,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/VeliovGroup/meteor-files-website.git"
+    "url": "git+https://github.com/veliovgroup/meteor-files-website.git"
   },
   "keywords": [
     "meteor",
@@ -25,9 +25,9 @@
   "author": "Dmitriy A. (Veliov Group, LLC)",
   "license": "BSD-3-Clause",
   "bugs": {
-    "url": "https://github.com/VeliovGroup/meteor-files-website/issues"
+    "url": "https://github.com/veliovgroup/meteor-files-website/issues"
   },
-  "homepage": "https://github.com/VeliovGroup/meteor-files-website",
+  "homepage": "https://github.com/veliovgroup/meteor-files-website",
   "meteor": {
     "mainModule": {
       "client": "client/core.js",
@@ -35,11 +35,11 @@
     }
   },
   "dependencies": {
-    "@babel/runtime": "^7.18.9",
-    "aws-sdk": "^2.1196.0",
-    "core-js": "^3.24.1",
+    "@babel/runtime": "^7.20.1",
+    "aws-sdk": "^2.1246.0",
+    "core-js": "^3.26.0",
     "fs-extra": "^10.1.0",
-    "jquery": "^3.6.0",
+    "jquery": "^3.6.1",
     "meteor-node-stubs": "^1.2.5",
     "web-push": "^3.5.0"
   },
@@ -48,7 +48,7 @@
     "npm": "^6.14.17"
   },
   "devDependencies": {
-    "browserslist": "^4.21.3",
-    "caniuse-lite": "^1.0.30001378"
+    "browserslist": "^4.21.4",
+    "caniuse-lite": "^1.0.30001429"
   }
 }
