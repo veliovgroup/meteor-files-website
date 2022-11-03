@@ -1,13 +1,13 @@
 # Deploy to Heroku
 
-- Due to "*ephemeral filesystem*" on Heroku, we suggest to use 3rd-party permanent storage, [read DropBox/S3/GridFS tutorial](https://github.com/VeliovGroup/Meteor-Files/wiki/Third-party-storage)
+- Due to "*ephemeral filesystem*" on Heroku, we suggest to use 3rd-party permanent storage, [read DropBox/S3/GridFS tutorial](https://github.com/veliovgroup/Meteor-Files/wiki/Third-party-storage)
 - Go to [Heroku](https://signup.heroku.com/dc) create and confirm your new account
 - Go through [Node.js Tutorial](https://devcenter.heroku.com/articles/getting-started-with-nodejs)
 - Install [Heroku Toolbet](https://devcenter.heroku.com/articles/getting-started-with-nodejs#set-up)
 - Then go to Terminal into Meteor's project directory and run:
 
 ```shell
-# Build meteor app from https://github.com/VeliovGroup/meteor-files-website
+# Build meteor app from https://github.com/veliovgroup/meteor-files-website
 # Available architectures:
 # os.osx.x86_64
 # os.linux.x86_64

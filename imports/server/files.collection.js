@@ -9,7 +9,7 @@ import fs from 'fs-extra';
 import S3 from 'aws-sdk/clients/s3';
 
 // AWS:S3 usage:
-// Read: https://github.com/VeliovGroup/Meteor-Files/wiki/AWS-S3-Integration
+// Read: https://github.com/veliovgroup/Meteor-Files/wiki/AWS-S3-Integration
 // env.var example: S3='{"s3":{"key": "xxx", "secret": "xxx", "bucket": "xxx", "region": "xxx""}}'
 let useS3 = false;
 let client;

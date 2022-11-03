@@ -65,7 +65,7 @@ Application is ready to be used as it is without need of extra configuration. Op
 
 ### Activate AWS:S3
 
-1. Read [this article](https://github.com/VeliovGroup/Meteor-Files/wiki/AWS-S3-Integration)
+1. Read [this article](https://github.com/veliovgroup/Meteor-Files/wiki/AWS-S3-Integration)
 2. After creating S3 bucket, create CloudFront Distribution and attach it to S3 bucket
 3. Set S3 credentials into `METEOR_SETTINGS` env.var or pass as the file, read [here for more info](http://docs.meteor.com/#/full/meteor_settings), alternatively (*if something not working*) set `S3` env.var
 4. You can pass S3 credentials as JSON-string when using "*Heroku's one click install-button*"
@@ -147,12 +147,12 @@ Learn more about DevOps, deployment, and running this app live in [DevOps and De
 
 To make this project "crawlable" by search engines, social networks, and web-crawlers on this project we are using:
 
-- [`ostrio:flow-router-meta`](https://github.com/VeliovGroup/Meteor-flow-router-meta) package to generate meta-tags and title
+- [`ostrio:flow-router-meta`](https://github.com/veliovgroup/Meteor-flow-router-meta) package to generate meta-tags and title
 - [Pre-rendering](https://prerendering.com/) service to serve rendered HTML to crawlers and search engines
 
 ### Meta tags and title
 
-Using [`ostrio:flow-router-meta`](https://github.com/VeliovGroup/Meteor-flow-router-meta) package controlling meta-tags content as easy as extending *FlowRouter* definition with `{ meta, title, link }` properties:
+Using [`ostrio:flow-router-meta`](https://github.com/veliovgroup/Meteor-flow-router-meta) package controlling meta-tags content as easy as extending *FlowRouter* definition with `{ meta, title, link }` properties:
 
 ```js
 FlowRouter.route('/about', {
@@ -197,7 +197,7 @@ new FlowRouterMeta(FlowRouter);
 
 ### Pre-rendering
 
-To pre-render JS-driven templates (Blaze, React, Vue, etc.) to HTML we are using [pre-rendering](https://prerendering.com/) via [`siderable-middleware` package](https://github.com/VeliovGroup/spiderable-middleware#meteor-specific-usage):
+To pre-render JS-driven templates (Blaze, React, Vue, etc.) to HTML we are using [pre-rendering](https://prerendering.com/) via [`siderable-middleware` package](https://github.com/veliovgroup/spiderable-middleware#meteor-specific-usage):
 
 ```js
 /*
@@ -235,7 +235,7 @@ Set `{ public: { debug: true } }` in the [settings file](https://docs.meteor.com
 
 - Star on [GitHub](https://github.com/veliovgroup/Meteor-Files)
 - Star on [Atmosphere](https://atmospherejs.com/ostrio/files)
-- Share via [Facebook](https://www.facebook.com/sharer.php?u=https%3A%2F%2Fgithub.com%2FVeliovGroup%2FMeteor-Files) and [Twitter](https://twitter.com/share?url=https%3A%2F%2Fgithub.com%2FVeliovGroup%2FMeteor-Files)
+- Share via [Facebook](https://www.facebook.com/sharer.php?u=https%3A%2F%2Fgithub.com%2Fveliovgroup%2FMeteor-Files) and [Twitter](https://twitter.com/share?url=https%3A%2F%2Fgithub.com%2Fveliovgroup%2FMeteor-Files)
 - [Sponsor via GitHub](https://github.com/sponsors/dr-dimitru) — support open source contributions on a regular basis
 - [Support via PayPal](https://paypal.me/veliovgroup) — support our open source contributions
 - Use [ostr.io](https://ostr.io) — [Monitoring](https://snmp-monitoring.com), [Analytics](https://ostr.io/info/web-analytics), [WebSec](https://domain-protection.info), [Web-CRON](https://web-cron.info) and [Pre-rendering](https://prerendering.com) for a website
