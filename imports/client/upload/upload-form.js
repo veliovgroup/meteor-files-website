@@ -171,9 +171,13 @@ Template.uploadForm.onCreated(function () {
     const createdAt = +new Date();
 
     this.heatingUp.set(true);
-    // ASK IF USER OKAY WITH WEB PUSH NOTIFICATIONS
-    // GET subscription IF PERMISSION IS GRANTED
-    await webPush.check();
+    try {
+      // ASK IF USER OKAY WITH WEB PUSH NOTIFICATIONS
+      // GET subscription IF PERMISSION IS GRANTED
+      await webPush.check();
+    } catch (e) {
+      // -- perhaps not fully enabled Push deamon like iOS
+    }
 
     // ITEREATE OVER EACH SELECTED FILE BY USER.
     // AND UPLOAD EACH FILE INDIVIDUALLY.
