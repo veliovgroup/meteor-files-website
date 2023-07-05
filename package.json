@@ -1,6 +1,6 @@
 {
   "name": "meteor-files-website",
-  "version": "1.16.1",
+  "version": "1.16.2",
   "description": "Upload files with the speed of Meteor. Application build on top of ostrio:files package and meteor.js",
   "main": "main.js",
   "scripts": {
