@@ -1,17 +1,19 @@
 template(name="settings")
   form.col-50
     .text-center
-      h1.h2 upload transport
+      h1.h2 settings
 
-      label
-        input(type="radio" name="transport" value="ddp" checked="{{#if compare uploadTransport '===' 'ddp'}}checked{{/if}}")
+    ul.settings-options
+      li: b select upload transport
+      li: label(for="transport-ddp")
+        input(type="radio" name="transport" id="transport-ddp" value="ddp" checked="{{#if compare uploadTransport '===' 'ddp'}}checked{{/if}}")
         b DDP
-      label
-        input(type="radio" name="transport" value="http" checked="{{#if compare uploadTransport '===' 'http'}}checked{{/if}}")
+      li: label(for="transport-http")
+        input(type="radio" name="transport" id="transport-http" value="http" checked="{{#if compare uploadTransport '===' 'http'}}checked{{/if}}")
         b HTTP (<em>faster</em>)
 
     ul.settings-options
-      li: b nerd-level settings:
+      li: b nerd-level settings
       li
         if isNewVersionAvailable
           | &nbsp;
@@ -29,4 +31,4 @@ template(name="settings")
           else
             a.muted(data-web-push href="#") Web-push notification test
 
-    a.info-link.right(href="{{pathFor 'index'}}" title="close"): i.la.la-times
+    a.info-link(href="{{pathFor 'index'}}" title="close"): i.la.la-times

@@ -4,7 +4,7 @@ template(name="uploadForm")
       | Drop files here for upload, or
       a(href="#" data-cancel-dnd) cancel
 
-    a.info-link.right(href="{{#if compare currentRouteName '===' 'about'}}{{pathFor 'index'}}{{else}}{{pathFor 'about'}}{{/if}}" class="{{isActiveRoute 'about'}}" title="Project Info"): i.la.la-info-circle
+    a.info-link.show-info(href="{{#if compare currentRouteName '===' 'about'}}{{pathFor 'index'}}{{else}}{{pathFor 'about'}}{{/if}}" class="{{isActiveRoute 'about'}}" title="Project Info"): i.la.la-info-circle
     a.info-link.show-settings(href="{{#if compare currentRouteName '===' 'settings'}}{{pathFor 'index'}}{{else}}{{pathFor 'settings'}}{{/if}}" class="{{isActiveRoute 'settings'}}" title="Upload Settings"): i.la.la-gear
 
     if isOffline

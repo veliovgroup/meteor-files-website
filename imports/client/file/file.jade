@@ -68,13 +68,13 @@ template(name="file")
             tr
               th Expire:
               td(colspan="2") {{fromNow meta.expireAt}}
-          
-          p.strong.muted
-            a(href="/" title="Back to the list of files") back to files
-            | &nbsp;
-            | &middot;
-            | &nbsp;
-            a(data-show-file href="#" title="Scroll up to file's actions") up
+            tr.strong.muted
+              th &nbsp;
+              td(colspan="2")
+                a(href="/" title="Back to the list of files") back to files
+                | &nbsp;
+                | &middot;
+                | &nbsp;
+                a(data-show-file href="#" title="Scroll up to file's actions") up
 
-    unless isSmall
-      a.info-link.right(href="{{pathFor 'index'}}" title="close"): i.la.la-times
+    a.info-link(href="{{pathFor 'index'}}" title="close"): i.la.la-times

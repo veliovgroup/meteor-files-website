@@ -113,8 +113,16 @@ progress::-moz-progress-value
     a
       text-decoration: none
 
-.show-settings
+.show-settings, .show-info
   display: inline-block
   transition: transform 256ms ease-in-out
+  bottom: 6px
+  top: initial
+.show-settings
+  left: initial
+  right: 8px
   &:hover, &.active
     transform: rotate(150deg)
+.show-info
+  right: initial
+  left: 8px

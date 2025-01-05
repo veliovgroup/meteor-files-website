@@ -5,10 +5,10 @@ template(name="about")
 
       ul.list-unstyled
         li 📦 &nbsp; simultaneously upload <strong>#{maxFilesQty} files</strong> up to <strong>#{getMaxSize} each</strong>
-        li ⏱ &nbsp; all files are removed in <strong>#{getTTL} hours</strong> after upload
+        li ⏳ &nbsp; all files are removed in <strong>#{getTTL} hours</strong> after upload
         li 📎 &nbsp; <strong>copy file's link</strong> to share securely
       p: b.muted drag and drop files or directories over cloud icon to upload multiple files at once.
 
       p.muted #{date} ・ <a href="https://github.com/veliovgroup/meteor-files-website" target="_blank" rel="noopener noreferrer" title="view this project source code or contribute">GitHub</a> ・ <a href="https://github.com/sponsors/dr-dimitru" target="_blank" rel="noopener noreferrer" title="support this project">Support</a>
 
-    a.info-link.right(href="{{pathFor 'index'}}" title="close"): i.la.la-times
+    a.info-link(href="{{pathFor 'index'}}" title="close"): i.la.la-times

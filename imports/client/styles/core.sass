@@ -16,20 +16,16 @@
   position: absolute
   animation: new-element 350ms ease-in-out 1
   bottom: 6px
-  right: 8px
+  left: 8px
   padding: 7px
   text-decoration: none
-  &.right
-    left: 8px
-    right: initial
   @media(max-width: $break-point)
-    font-size: 2.05rem
-    padding: 14px
-    bottom: 0px
-    right: 0px
-    &.right
-      left: 0px
-      right: initial
+    font-size: 2rem
+    padding: 4px
+    bottom: unset
+    top: 0px
+    left: initial
+    right: 8px
 
 .copy-link
   .la-check
@@ -60,8 +56,8 @@
   overflow-y: scroll
   overflow-x: hidden
   @media(max-width: $break-point)
-    min-height: unset;
-    max-height: unset;
+    min-height: unset
+    max-height: unset
 
 .absolute-invisible
   position: absolute
