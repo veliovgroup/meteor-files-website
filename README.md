@@ -1,8 +1,7 @@
 [![support](https://img.shields.io/badge/support-GitHub-white)](https://github.com/sponsors/dr-dimitru)
 [![support](https://img.shields.io/badge/support-PayPal-white)](https://paypal.me/veliovgroup)
-<a href="https://ostr.io/info/built-by-developers-for-developers">
-  <img src="https://ostr.io/apple-touch-icon-60x60.png" height="20">
-</a>
+<a href="https://ostr.io/info/built-by-developers-for-developers?ref=meteor-files-website-repo-top"><img src="https://ostr.io/apple-touch-icon-60x60.png" height="20"></a>
+<a href="https://meteor-files.com/?ref=meteor-files-website-repo-top"><img src="https://meteor-files.com/apple-touch-icon-60x60.png" height="20"></a>
 
 # File sharing web app
 
@@ -12,7 +11,7 @@ This is third reincarnation of this webapp, most of changes in this release made
 
 Awarded by Meteor Chef with [GCAA 2016](https://themeteorchef.com/blog/giant-cotton-apron-awards-show). Used by [thousands Meteor developers](https://atmospherejs.com/ostrio/files) to manage files and uploads in Meteor.js apps.
 
-Backed by [veliovgroup](https://veliovgroup.com), sponsored by [ostr.io](https://ostr.io) and [awesome community members](https://github.com/veliovgroup/Meteor-Files#supporters). Idea, development, maintenance, and support by [@smart_egg](https://twitter.com/smart_egg) and [@veliovgroup](https://twitter.com/veliovgroup).
+Backed by [veliovgroup](https://veliovgroup.com), sponsored by [ostr.io](https://ostr.io), [meteor-files.com](https://meteor-files.com/), and [awesome community members](https://github.com/veliovgroup/Meteor-Files#supporters). Idea, design, development, maintenance, and support by [@smart_egg](https://twitter.com/smart_egg) and [@veliovgroup](https://twitter.com/veliovgroup).
 
 ## ToC:
 
@@ -53,7 +52,7 @@ Goals of this open source web application:
 - 🗂 Drag'n'drop support for files and directories (*including nested directories*)
 - 🗄 Use AWS:S3 as a storage
 - 📲 PWA with Push Notifications
-- 🚀 Upload via HTTP and/or DDP
+- 🚀 Upload via `HTTP` and/or `DDP`
 
 ## Quick start:
 
@@ -231,11 +230,11 @@ Set environment variable `DEBUG` to `true` or `{ debug: true }` in the [settings
 
 Set `{ public: { debug: true } }` in the [settings file](https://docs.meteor.com/api/core.html#Meteor-settings) passed via `--settings` option. This will enable logging mode in the meteor-files package and other components of the web application
 
-## Support this project
+## Support our open source contributions
 
-- Star on [GitHub](https://github.com/veliovgroup/Meteor-Files)
-- Star on [Atmosphere](https://atmospherejs.com/ostrio/files)
-- Share via [Facebook](https://www.facebook.com/sharer.php?u=https%3A%2F%2Fgithub.com%2Fveliovgroup%2FMeteor-Files) and [Twitter](https://twitter.com/share?url=https%3A%2F%2Fgithub.com%2Fveliovgroup%2FMeteor-Files)
-- [Sponsor via GitHub](https://github.com/sponsors/dr-dimitru) — support open source contributions on a regular basis
-- [Support via PayPal](https://paypal.me/veliovgroup) — support our open source contributions
-- Use [ostr.io](https://ostr.io) — [Monitoring](https://snmp-monitoring.com), [Analytics](https://ostr.io/info/web-analytics), [WebSec](https://domain-protection.info), [Web-CRON](https://web-cron.info) and [Pre-rendering](https://prerendering.com) for a website
+- Upload and share files using [☄️ meteor-files.com](https://meteor-files.com/?ref=meteor-files-website-repo-footer) — Continue interrupted file uploads without losing any progress. There is nothing that will stop Meteor from delivering your file to the desired destination
+- Use [▲ ostr.io](https://ostr.io?ref=meteor-files-website-repo-footer) for [Server Monitoring](https://snmp-monitoring.com), [Web Analytics](https://ostr.io/info/web-analytics?ref=meteor-files-website-repo-footer), [WebSec](https://domain-protection.info), [Web-CRON](https://web-cron.info) and [SEO Pre-rendering](https://prerendering.com) of a website
+- [Sponsor via GitHub](https://github.com/sponsors/dr-dimitru)
+- [Support via PayPal](https://paypal.me/veliovgroup)
+- Star this project on [GitHub](https://github.com/veliovgroup/Meteor-Files)
+- Star this project on [Atmosphere](https://atmospherejs.com/ostrio/files)
