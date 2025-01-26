@@ -258,7 +258,7 @@ Collections.files.on('afterUpload', function(fileRef) {
 });
 
 // Set index on 'meta.expireAt' field
-Collections.files.collection._ensureIndex({ 'meta.expireAt': 1 }, { background: true });
+await Collections.files.collection.ensureIndexAsync({ 'meta.expireAt': 1 }, { background: true });
 
 // Intercept FileCollection's remove method
 // to remove file from AWS S3
