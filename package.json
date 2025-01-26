@@ -35,20 +35,23 @@
     }
   },
   "dependencies": {
-    "@babel/runtime": "^7.20.1",
-    "aws-sdk": "^2.1246.0",
-    "core-js": "^3.26.0",
-    "fs-extra": "^10.1.0",
-    "jquery": "^3.6.1",
+    "@babel/runtime": "^7.21.0",
+    "aws-sdk": "^2.1328.0",
+    "core-js": "^3.29.0",
+    "fs-extra": "^11.2.0",
+    "jquery": "^3.6.3",
     "meteor-node-stubs": "^1.2.5",
     "web-push": "^3.5.0"
   },
   "engines": {
-    "node": "^14.20.1",
-    "npm": "^6.14.17"
+    "node": "^22.11.0",
+    "npm": "^10.9.0"
   },
   "devDependencies": {
-    "browserslist": "^4.21.4",
-    "caniuse-lite": "^1.0.30001429"
+    "autoprefixer": "^10.4.20",
+    "browserslist": "^4.21.5",
+    "caniuse-lite": "^1.0.30001460",
+    "postcss": "^8.4.49",
+    "postcss-load-config": "^6.0.1"
   }
 }
