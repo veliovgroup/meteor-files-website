@@ -293,8 +293,8 @@ if (useS3) {
 // Every two minutes (120000ms) check for files which is about to expire
 // Remove files along with MongoDB records two minutes before expiration date
 // Note: having 'expireAfterSeconds' index on 'meta.expireAt' field, won't remove file itself
-Meteor.setInterval(() => {
-  Collections.files.remove({
+Meteor.setInterval(async () => {
+  await Collections.files.removeAsync({
     'meta.expireAt': {
       $lte: Date.now() + 120000
     }
