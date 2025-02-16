@@ -14,10 +14,6 @@ import S3 from 'aws-sdk/clients/s3';
 let useS3 = false;
 let client;
 
-const bound = Meteor.bindEnvironment((callback) => {
-  return callback();
-});
-
 if (process.env.S3) {
   Meteor.settings.s3 = JSON.parse(process.env.S3).s3;
 }
@@ -58,35 +54,29 @@ if (s3Conf && s3Conf.key && s3Conf.secret && s3Conf.bucket && s3Conf.region) {
     Key: `test-file-${rndmName}.txt`,
     Body: Buffer.from('text text file', 'utf8')
   }, (awsWriteError) => {
-    bound(() => {
-      if (awsWriteError) {
-        throw new Meteor.Error(500, 'Achtung! No WRITE (`putObject`) access to AWS:S3 storage', awsWriteError);
-      } else {
-        client.getObject({
-          Bucket: s3Conf.bucket,
-          Key: `test-file-${rndmName}.txt`,
-        }, (awsReadError) => {
-          bound(() => {
-            if (awsReadError) {
-              throw new Meteor.Error(500, 'Achtung! No READ (`getObject`) access to AWS:S3 storage', awsReadError);
+    if (awsWriteError) {
+      throw new Meteor.Error(500, 'Achtung! No WRITE (`putObject`) access to AWS:S3 storage', awsWriteError);
+    } else {
+      client.getObject({
+        Bucket: s3Conf.bucket,
+        Key: `test-file-${rndmName}.txt`,
+      }, (awsReadError) => {
+        if (awsReadError) {
+          throw new Meteor.Error(500, 'Achtung! No READ (`getObject`) access to AWS:S3 storage', awsReadError);
+        } else {
+          client.deleteObject({
+            Bucket: s3Conf.bucket,
+            Key: `test-file-${rndmName}.txt`,
+          }, (awsRemoveError) => {
+            if (awsRemoveError) {
+              throw new Meteor.Error(500, 'Achtung! No REMOVAL (`deleteObject`) access to AWS:S3 storage', awsRemoveError);
             } else {
-              client.deleteObject({
-                Bucket: s3Conf.bucket,
-                Key: `test-file-${rndmName}.txt`,
-              }, (awsRemoveError) => {
-                bound(() => {
-                  if (awsRemoveError) {
-                    throw new Meteor.Error(500, 'Achtung! No REMOVAL (`deleteObject`) access to AWS:S3 storage', awsRemoveError);
-                  } else {
-                    Meteor._debug('Meteor Files App: AWS integration SUCCESSFULLY tested');
-                  }
-                });
-              });
+              Meteor._debug('Meteor Files App: AWS integration SUCCESSFULLY tested');
             }
           });
-        });
-      }
-    });
+        }
+      });
+    }
   });
 }
 
@@ -153,15 +143,13 @@ Collections.files = new FilesCollection({
         }
 
         const responseEnd = (error) => {
-          bound(() => {
-            if (error) {
-              console.error('[interceptDownload] [responseEnd]', error);
-            }
+          if (error) {
+            console.error('[interceptDownload] [responseEnd]', error);
+          }
 
-            if (!http.response.finished) {
-              http.response.end();
+          if (!http.response.finished) {
+            http.response.end();
             }
-          });
         };
 
         const awsStream = client.getObject(opts).createReadStream();
@@ -179,7 +167,7 @@ Collections.files = new FilesCollection({
 });
 
 Collections.files.denyClient();
-Collections.files.on('afterUpload', function(fileRef) {
+Collections.files.on('afterUpload', function (fileRef) {
   const messageObj = {
     title: `File: ${fileRef.name}`,
     body: 'Successfully uploaded. Click to view',
@@ -210,44 +198,40 @@ Collections.files.on('afterUpload', function(fileRef) {
           Body: fs.createReadStream(vRef.path),
           ContentType: vRef.type,
         }, (error) => {
-          bound(() => {
-            if (error) {
-              console.error('[afterUpload] [putObject] Error:', error);
-            } else {
-              const upd = {
-                $set: {
-                  [`versions.${version}.meta.pipePath`]: filePath
-                }
-              };
-
-              if (webPushSubscription) {
-                upd.$unset = {
-                  'meta.subscription': ''
-                };
+          if (error) {
+            console.error('[afterUpload] [putObject] Error:', error);
+          } else {
+            const upd = {
+              $set: {
+                [`versions.${version}.meta.pipePath`]: filePath
               }
+            };
 
-              this.collection.update({
-                _id: fileRef._id
-              }, upd, (updError) => {
-                if (updError) {
-                  console.error('[afterUpload] [putObject] [collection.update] Error:', updError);
-                } else {
-                  // Unlink original file from FS
-                  // after successful upload to AWS:S3
-                  this.unlink(this.collection.findOne(fileRef._id), version);
-                  if (webPushSubscription) {
-                    webPush.send(webPushSubscription, messageObj);
-                  }
-                }
-              });
+            if (webPushSubscription) {
+              upd.$unset = {
+                'meta.subscription': ''
+              };
             }
-          });
+
+            this.collection.updateAsync({
+              _id: fileRef._id
+            }, upd).catch((updError) => {
+              console.error('[afterUpload] [putObject] [collection.update] Error:', updError);
+            }).then(async () => {
+              // Unlink original file from FS
+              // after successful upload to AWS:S3
+              this.unlink(await this.collection.findOneAsync(fileRef._id), version);
+              if (webPushSubscription) {
+                webPush.send(webPushSubscription, messageObj);
+              }
+            });
+          }
         });
       }
     }
   } else if (webPushSubscription) {
     webPush.send(webPushSubscription, messageObj);
-    Collections.files.collection.update({
+    Collections.files.collection.updateAsync({
       _id: fileRef._id
     }, {
       $unset: {
@@ -263,10 +247,10 @@ await Collections.files.collection.ensureIndexAsync({ 'meta.expireAt': 1 }, { ba
 // Intercept FileCollection's remove method
 // to remove file from AWS S3
 if (useS3) {
-  const _origRemove = Collections.files.remove;
-  Collections.files.remove = function(search) {
+  const _origRemoveAsync = Collections.files.removeAsync;
+  Collections.files.removeAsync = async function (search) {
     const cursor = this.collection.find(search);
-    cursor.forEach((fileRef) => {
+    await cursor.forEachAsync((fileRef) => {
       for (let version in fileRef.versions) {
         if (fileRef.versions[version]) {
           const vRef = fileRef.versions[version];
@@ -275,18 +259,16 @@ if (useS3) {
               Bucket: s3Conf.bucket,
               Key: vRef.meta.pipePath,
             }, (error) => {
-              bound(() => {
-                if (error) {
-                  console.error('[remove] [deleteObject] Error:', error);
-                }
-              });
+              if (error) {
+                console.error('[remove] [deleteObject] Error:', error);
+              }
             });
           }
         }
       }
     });
     // Call original method
-    _origRemove.call(this, search);
+    _origRemoveAsync.call(this, search);
   };
 }
 
