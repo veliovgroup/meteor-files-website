@@ -1,0 +1,21 @@
+<template name="index">
+  <div class="col-50">
+    {{#if compare recent.count '||' uploads}}
+      <div class="wh100 scroll-wrap">
+        {{#each uploads}}
+          {{> uploadRow}}
+        {{/each}}
+        {{#each recent.each}}
+          {{> listingRow}}
+        {{/each}}
+      </div>
+    {{else}}
+      <p class="text-center">
+        start with 
+        <a data-select-file href="#" title="Select file">selecting a file</a>
+        <br>
+        <b class="muted">drag and drop files or directory</b>
+      </p>
+    {{/if}}
+  </div>
+</template>

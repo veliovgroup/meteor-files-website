@@ -4,7 +4,7 @@ import { $ } from 'meteor/jquery';
 
 import '/imports/client/upload/upload-row.js';
 import '/imports/client/listing/listing-row.js';
-import './index.jade';
+import './index.html';
 
 Template.index.onRendered(function() {
   window.IS_RENDERED = true;

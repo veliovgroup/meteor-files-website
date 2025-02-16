@@ -1,0 +1,81 @@
+<template name="uploadForm">
+  <form class="col-50 upload-form bg-dark {{#if isFileOver}}file-over{{/if}}" id="uploadFile">
+    <div class="dnd-notice">
+      Drop files here for upload, or
+      <a href="#" data-cancel-dnd>cancel</a>
+    </div>
+
+    <a class="info-link show-info {{isActiveRoute 'about'}}" href="{{#if compare currentRouteName '===' 'about'}}{{pathFor 'index'}}{{else}}{{pathFor 'about'}}{{/if}}" title="Project Info">
+      <i class="la la-info-circle"></i>
+    </a>
+    <a class="info-link show-settings {{isActiveRoute 'settings'}}" href="{{#if compare currentRouteName '===' 'settings'}}{{pathFor 'index'}}{{else}}{{pathFor 'settings'}}{{/if}}" title="Upload Settings">
+      <i class="la la-gear"></i>
+    </a>
+
+    {{#if isOffline}}
+      <div class="upload-title">you're offline</div>
+      <p>
+        <b>
+          {{#if compare meteorStatus '===' 'waiting'}}
+            connecting now...
+          {{else}}
+            wait for re-connection or
+          {{/if}}
+        </b>
+        <br>
+        <b class="muted"><a data-reconnect href="#">try to reconnect now</a></b>
+      </p>
+    {{else}}
+      {{#if isHeatingUp}}
+        <div class="upload-title percentage">0%</div>
+        <progress max="100" value="1"></progress>
+        <div class="upload-actions">
+          00:00:00 &nbsp; &middot; &nbsp; 0kbps
+          <br>
+          <a href="#"><i class="la la-3x la-pause"></i></a>
+          &nbsp; &nbsp;
+          <a href="#"><i class="la la-3x la-stop"></i></a>
+        </div>
+      {{else}}
+        {{#unless uploads}}
+          <input class="invisible {{#if showSettings}}settings-open{{/if}}" id="userfile" type="file" name="userfile" required multiple>
+          <label class="fake-upload" for="userfile">
+            <div class="icon-container">
+              <div class="cloud-container">
+                <i class="la la-cloud"></i>
+                <div class="arrow-container">
+                  <i class="la la-arrow-up"></i>
+                </div>
+              </div>
+            </div>
+            {{#if error}}
+              <div class="danger strong">{{{error}}}</div>
+            {{else}}
+              <div class="upload-title">share a file</div>
+            {{/if}}
+          </label>
+        {{else}}
+          <div class="upload-title percentage">{{status.progress}}%</div>
+          <progress max="100" value="{{status.progress}}"></progress>
+          <div class="upload-actions">
+            {{#if error}}
+              <span class="danger">{{{error}}}</span>
+            {{else if isDisconnected}}
+              <span class="danger">Connection interrupted. The upload will resume once the connection is re-established</span>
+            {{else}}
+              {{status.accumDuration}} &nbsp; &middot; &nbsp; {{status.accumBitrate}}
+            {{/if}}
+            <br>
+            {{#if status.onPause}}
+              <a data-continue-all href="#" title="Resume upload"><i class="la la-3x la-play"></i></a>
+            {{else}}
+              <a data-pause-all href="#" title="Pause upload"><i class="la la-3x la-pause"></i></a>
+            {{/if}}
+            &nbsp; &nbsp;
+            <a data-abort-all href="#" title="Abort upload"><i class="la la-3x la-stop"></i></a>
+          </div>
+        {{/unless}}
+      {{/if}}
+    {{/if}}
+  </form>
+</template>

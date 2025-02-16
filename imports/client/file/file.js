@@ -3,7 +3,7 @@ import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
 import { _app, Collections } from '/imports/lib/core.js';
 import './file.sass';
-import './file.jade';
+import './file.html';
 
 Template.file.onRendered(function() {
   window.IS_RENDERED = true;

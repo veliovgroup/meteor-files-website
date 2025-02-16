@@ -5,7 +5,7 @@ import { webPush } from '/imports/client/misc/web-push.js';
 import { ReactiveVar } from 'meteor/reactive-var';
 
 import './settings.sass';
-import './settings.jade';
+import './settings.html';
 
 const PWA_INSTALL_ERROR = 'We\'re sorry, PWA can\'t be installed now 😕. PWA standard is very young and implemented differently from browser to browser, we\'re working hard 👨‍💻 to add PWA support to all platforms.';
 

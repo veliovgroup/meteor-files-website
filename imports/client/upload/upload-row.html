@@ -1,0 +1,26 @@
+<template name="uploadRow">
+  <div class="item-row upload">
+    <div class="item-icon">
+      <div class="progress-radial progress-{{getProgressClass}}">
+        <div class="overlay" data-toggle-upload>
+          {{#if onPause.get}}
+            <span title="Resume upload"><i class="la la-lg la-play"></i></span>
+          {{else}}
+            <span class="progress">{{progress.get}}%</span>
+            <span class="action" title="Pause upload"><i class="la la-lg la-pause"></i></span>
+          {{/if}}
+        </div>
+      </div>
+    </div>
+    <div class="item-details">
+      <div class="file-name">{{file.name}}</div>
+      <div class="file-info">
+        <span title="File size">{{filesize file.size}}</span>
+        &nbsp; &middot; &nbsp;
+        <span title="Upload in">{{estimatedDuration}}</span>
+        &nbsp; &middot; &nbsp;
+        <span title="Upload speed">{{estimatedBitrate}}</span>
+      </div>
+    </div>
+  </div>
+</template>

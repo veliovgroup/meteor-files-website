@@ -1,0 +1,41 @@
+<template name="listingRow">
+  <div class="item-row">
+    <div class="item-icon" data-show-file>
+      <div class="preview-circle">
+        {{#if isPDF}}
+          <i class="la la-file-pdf-o"></i>
+        {{else if isAudio}}
+          <i class="la la-music"></i>
+        {{else if isVideo}}
+          <i class="la la-file-video-o"></i>
+        {{else if isImage}}
+          <i class="la la-file-picture-o"></i>
+        {{else if isText}}
+          <i class="la la-file-text-o"></i>
+        {{else if isJSON}}
+          <i class="la la-file-code-o"></i>
+        {{else}}
+          <i class="la la-file-o"></i>
+        {{/if}}
+      </div>
+    </div>
+    <div class="item-details" data-show-file>
+      <div class="file-name">{{name}}</div>
+      <div class="file-info">
+        <span title="File size">{{filesize size}}</span>
+        &nbsp; &middot; &nbsp;
+        <span title="When this file becomes unavailable">expire {{fromNow meta.expireAt}}</span>
+      </div>
+    </div>
+    <a class="file-settings" data-download-file title="Download file" href="{{link}}?download=true" download="{{name}}">
+      <i class="la la-download"></i>
+    </a>
+    <a class="file-settings copy-link" data-copy="{{urlFor 'file' _id=_id}}" title="Copy share link" href="#">
+      <i class="la la-copy"></i>
+      <i class="la la-check"></i>
+    </a>
+    <a class="file-settings close-link" data-hide title="Hide file" href="#">
+      <i class="la la-times"></i>
+    </a>
+  </div>
+</template>

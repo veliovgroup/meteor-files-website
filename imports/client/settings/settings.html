@@ -1,0 +1,54 @@
+<template name="settings">
+  <form class="col-50">
+    <div class="text-center">
+      <h1 class="h2">settings</h1>
+    </div>
+
+    <ul class="settings-options">
+      <li><b>select upload transport</b></li>
+      <li>
+        <label for="transport-ddp">
+          <input type="radio" name="transport" id="transport-ddp" value="ddp" checked="{{#if compare uploadTransport '===' 'ddp'}}checked{{/if}}">
+          <b>DDP</b>
+        </label>
+      </li>
+      <li>
+        <label for="transport-http">
+          <input type="radio" name="transport" id="transport-http" value="http" checked="{{#if compare uploadTransport '===' 'http'}}checked{{/if}}">
+          <b>HTTP (<em>faster</em>)</b>
+        </label>
+      </li>
+    </ul>
+
+    <ul class="settings-options">
+      <li><b>nerd-level settings</b></li>
+      <li>
+        {{#if isNewVersionAvailable}}
+          &nbsp;
+        {{else}}
+          <a class="muted" data-trigger-hcp href="#">Trigger HCP message</a>
+        {{/if}}
+      </li>
+      <li>
+        {{#if hasPWASupport}}
+          <a class="muted" data-install-pwa href="#">Install as PWA</a>
+        {{/if}}
+      </li>
+      <li>
+        {{#if hasWebPushSupport}}
+          {{#if compare pushTestStatus '===' true}}
+            <span class="muted">Web-push notification tested</span>
+          {{else if compare pushTestStatus '===' '1'}}
+            <b class="muted">Web-push notification testing...</b>
+          {{else}}
+            <a class="muted" data-web-push href="#">Web-push notification test</a>
+          {{/if}}
+        {{/if}}
+      </li>
+    </ul>
+
+    <a class="info-link" href="{{pathFor 'index'}}" title="close">
+      <i class="la la-times"></i>
+    </a>
+  </form>
+</template>

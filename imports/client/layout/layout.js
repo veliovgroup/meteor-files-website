@@ -6,7 +6,7 @@ import { onReload } from '/imports/client/misc/on-reload.js';
 
 import '/imports/client/upload/upload-form.js';
 import './layout.sass';
-import './layout.jade';
+import './layout.html';
 
 const copySuccess = (elementId, template) => {
   const element = template.find(`#${elementId}`);

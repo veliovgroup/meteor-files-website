@@ -1,0 +1,109 @@
+<template name="file">
+  <div class="col-50 file">
+    {{#with file.with}}
+      <div class="file-body scroll-wrap">
+        <div class="wh100 flex">
+          <div class="file-logo">
+            {{#if isPDF}}
+              <i class="la la-file-pdf-o la-lg"></i>
+            {{else if isAudio}}
+              <i class="la la-music la-lg"></i>
+            {{else if isVideo}}
+              <i class="la la-file-video-o la-lg"></i>
+            {{else if isImage}}
+              <i class="la la-file-picture-o la-lg"></i>
+            {{else if isText}}
+              <i class="la la-file-text-o la-lg"></i>
+            {{else if isJSON}}
+              <i class="la la-file-code-o la-lg"></i>
+            {{else}}
+              <i class="la la-file-o la-lg"></i>
+            {{/if}}
+          </div>
+          <h3>{{name}}</h3>
+          <table class="file-actions">
+            <tbody>
+              <tr>
+                <td>
+                  <a title="Download file" href="{{link}}?download=true" download="{{name}}">
+                    <i class="la la-download la-lg"></i><br> download
+                  </a>
+                </td>
+                <td>
+                  <a class="copy-link" data-copy="{{link}}?download=true" title="Copy download link" href="#">
+                    <i class="la la-copy la-lg"></i>
+                    <i class="la la-check la-lg"></i><br> copy link
+                  </a>
+                </td>
+                {{#if canPreview}}
+                  <td>
+                    <a title="Open file in a new window" href="{{link}}" target="_blank">
+                      <i class="la la-external-link la-lg"></i><br> open
+                    </a>
+                  </td>
+                {{/if}}
+                <td>
+                  <a data-show-info href="#" title="File's Info">
+                    <i class="la la-info-circle la-lg"></i><br> details
+                  </a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="file-details wh100 flex">
+          <table class="fixed-table">
+            <tbody>
+              <tr>
+                <th>Name:</th>
+                <td colspan="2">{{name}}</td>
+              </tr>
+              <tr>
+                <th>Mime-type:</th>
+                <td colspan="2">{{type}}</td>
+              </tr>
+              <tr>
+                <th>Size:</th>
+                <td colspan="2">{{filesize size}}</td>
+              </tr>
+              <tr>
+                <th>Extension:</th>
+                <td colspan="2">
+                  {{#if extension}}
+                    .{{extension}}
+                  {{else}}
+                    extension-less
+                  {{/if}}
+                </td>
+              </tr>
+              <tr>
+                <th>Abuse:</th>
+                <td colspan="2">
+                  {{meta.blamed}} &nbsp;
+                  <a data-blame title="Mark this upload as inappropriate" href="#" class="{{#if isBlamed}}danger{{/if}}">
+                    <i class="la la-flag-o"></i>
+                  </a>
+                </td>
+              </tr>
+              <tr>
+                <th>Expire:</th>
+                <td colspan="2">{{fromNow meta.expireAt}}</td>
+              </tr>
+              <tr class="strong muted">
+                <th>&nbsp;</th>
+                <td colspan="2">
+                  <a href="/" title="Back to the list of files">back to files</a>
+                  &nbsp; &middot; &nbsp;
+                  <a data-show-file href="#" title="Scroll up to file's actions">up</a>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    {{/with}}
+    <a class="info-link" href="{{pathFor 'index'}}" title="close">
+      <i class="la la-times"></i>
+    </a>
+  </div>
+</template>

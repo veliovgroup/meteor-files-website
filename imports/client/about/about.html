@@ -1,0 +1,20 @@
+<template name="about">
+  <div class="col-50">
+    <div class="info-block">
+      <h1 class="h2">about</h1>
+
+      <ul class="list-unstyled">
+        <li>📦 &nbsp; simultaneously upload <strong>{{maxFilesQty}} files</strong> up to <strong>{{getMaxSize}} each</strong></li>
+        <li>⏳ &nbsp; all files are removed in <strong>{{getTTL}} hours</strong> after upload</li>
+        <li>📎 &nbsp; <strong>copy file's link</strong> to share securely</li>
+        <li>☄️ &nbsp; try <a href="https://meteor-files.com/" target="_blank">meteor-files.com</a></li>
+      </ul>
+      
+      <p><b class="muted">drag and drop files or directories over cloud icon to upload multiple files at once.</b></p>
+      
+      <p class="muted">{{date}} ・ <a href="https://github.com/veliovgroup/meteor-files-website" target="_blank" rel="noopener noreferrer" title="view this project source code or contribute">GitHub</a> ・ <a href="https://github.com/sponsors/dr-dimitru" target="_blank" rel="noopener noreferrer" title="support this project">Support</a></p>
+    </div>
+    
+    <a class="info-link" href="{{pathFor 'index'}}" title="close"><i class="la la-times"></i></a>
+  </div>
+</template>

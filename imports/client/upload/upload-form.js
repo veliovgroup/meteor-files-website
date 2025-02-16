@@ -8,7 +8,7 @@ import { _app, Collections } from '/imports/lib/core.js';
 
 import { webPush } from '/imports/client/misc/web-push.js';
 import '/imports/client/upload/upload-form.sass';
-import '/imports/client/upload/upload-form.jade';
+import '/imports/client/upload/upload-form.html';
 
 const formError = new ReactiveVar(false);
 // LIST OF FILES WE DON'T WANT TO UPLOAD WHEN RECURSIVELY READING A DIRECTORY

@@ -1,5 +1,5 @@
 import { Template } from 'meteor/templating';
-import './about.jade';
+import './about.html';
 import './about.sass';
 
 Template.about.onRendered(function() {
