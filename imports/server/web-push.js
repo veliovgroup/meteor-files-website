@@ -1,7 +1,7 @@
 import { Meteor } from 'meteor/meteor';
 import webpush from 'web-push';
 
-/*
+/**
  * @constant
  * @name DEFAULT_MESSAGE
  * @summary OBJECT WITH MOST USED AND REQUIRED FIELDS OF WEB-PUSH NOTIFICATION
@@ -29,13 +29,13 @@ const DEFAULT_MESSAGE = {
 
 // SEE `settings.json` AND `README.md` for more details
 // GENERATE KEY PAIR USING `webpush.generateVAPIDKeys()` ONCE AND UPDATE SETTINGS IN `settings.json`
-const vapid = Meteor.settings.vapid || false;
+const vapid = Meteor.settings.app.vapid || false;
 if (vapid && vapid.email && vapid.privateKey && Meteor.settings.public.vapid?.publicKey) {
   webpush.setVapidDetails(vapid.email, Meteor.settings.public.vapid?.publicKey || vapid.publicKey, vapid.privateKey);
 }
 
 const webPush = {
-  /*
+  /**
    * Send push notification with message
    *
    * @method

@@ -71,13 +71,15 @@ Application is ready to be used as it is without need of extra configuration. Op
 
 S3 credentials format (*region is required*):
 
-```js
+```json
 {
-  "s3": {
-    "key": "xxx",
-    "secret": "xxx",
-    "bucket": "xxx",
-    "region": "xxx"
+  "app": {
+    "s3": {
+      "key": "xxx",
+      "secret": "xxx",
+      "bucket": "xxx",
+      "region": "xxx"
+    }
   }
 }
 ```
@@ -90,16 +92,18 @@ S3 credentials format (*region is required*):
 
 VAPID credentials format:
 
-```js
+```json
 {
   "public": {
     "vapid": {
       "publicKey": ""
     }
   },
-  "vapid": {
-    "email": "mailto:webmaster@example.com", // SET TO REAL EMAIL
-    "privateKey": ""
+  "app": {
+    "vapid": {
+      "email": "mailto:webmaster@example.com", // SET TO REAL EMAIL
+      "privateKey": ""
+    }
   }
 }
 ```
@@ -111,9 +115,22 @@ All supported and annotated settings
 ```js
 {
   "debug": false, // Enable debug mode on a Server
-  "storagePath": "/data/meteor-files/uploads", // LOCAL STORAGE ON THE SERVER
-  "spiderable": { // `spiderable-middleware` package settings
-    "auth": ""
+  "app" { // application server-settings
+    "storagePath": "/data/meteor-files/uploads", // LOCAL STORAGE ON THE SERVER
+    "continueUploadTTL": 10800, // RESUMALBE UPLOADS TTL
+    "spiderable": { // `spiderable-middleware` package settings
+      "auth": ""
+    },
+    "s3": { // AWS:S#3 CLOUD STORAGE CREDENTIALS
+      "key": "",
+      "secret": "",
+      "bucket": "",
+      "region": ""
+    },
+    "vapid": { // VAPID WEB PUSH NOTIFICATIONS CONFIGURATION
+      "email": "mailto:webmaster@example.com", // WEB PUSH NOTIFICATION EMAIL
+      "privateKey": "" // WEB PUSH NOTIFICATION PRIVATE KEY
+    }
   },
   "public": {
     "debug": false, // Enable debug mode on a Client (Browser)
@@ -124,16 +141,6 @@ All supported and annotated settings
       "publicKey": "" // WEB PUSH NOTIFICATION PUBLIC KEY
     },
     "trackingId": "" // trackingId for ostrio-analytics package
-  },
-  "s3": { // AWS:S#3 CLOUD STORAGE CREDENTIALS
-    "key": "",
-    "secret": "",
-    "bucket": "",
-    "region": ""
-  },
-  "vapid": { // VAPID WEB PUSH NOTIFICATIONS CONFIGURATION
-    "email": "mailto:webmaster@example.com", // WEB PUSH NOTIFICATION EMAIL
-    "privateKey": "" // WEB PUSH NOTIFICATION PRIVATE KEY
   }
 }
 ```

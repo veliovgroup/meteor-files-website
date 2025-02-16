@@ -15,14 +15,14 @@ let useS3 = false;
 let client;
 
 if (process.env.S3) {
-  Meteor.settings.s3 = JSON.parse(process.env.S3).s3;
+  Meteor.settings.app.s3 = JSON.parse(process.env.S3).s3;
 }
 
 if (!Meteor.settings.debug) {
   Meteor.settings.debug = process.env.DEBUG === 'true' ? true : false;
 }
 
-const s3Conf = Meteor.settings.s3 || {};
+const s3Conf = Meteor.settings.app.s3 || {};
 
 if (s3Conf && s3Conf.key && s3Conf.secret && s3Conf.bucket && s3Conf.region) {
   useS3  = true;
@@ -82,12 +82,12 @@ if (s3Conf && s3Conf.key && s3Conf.secret && s3Conf.bucket && s3Conf.region) {
 
 Collections.files = new FilesCollection({
   debug: Meteor.settings.debug,
-  continueUploadTTL: 32400, // Limit upload to 9 hours (by default 3 hours), since we allow 3GB in our demo app, it might take time on slow connection to upload it
-  storagePath: Meteor.settings.storagePath || 'assets/app/uploads/uploadedFiles',
+  continueUploadTTL: Meteor.settings.app.continueUploadTTL, // Limit upload to X seconds (by default 3 hours)
+  storagePath: Meteor.settings.app.storagePath || 'assets/app/uploads/uploadedFiles',
   collectionName: 'uploadedFiles',
   allowClientCode: false,
-  // disableUpload: true,
-  // disableDownload: true,
+  disableUpload: true,
+  disableDownload: true,
   sanitize(str = ''/*, max = 28, replacement = '-'*/) {
     // REPLACE DEFAULT sanitize METHOD TO ALLOW:
     // - File System names / _id(s) up to 40 chars long

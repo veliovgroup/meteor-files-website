@@ -1,27 +1,30 @@
 {
   "debug": false,
-  "storagePath": "/data/meteor-files/uploads",
-  "spiderable": {
-    "auth": ""
+  "app": {
+    "storagePath": "/data/meteor-files/uploads",
+    "continueUploadTTL": 3600,
+    "spiderable": {
+      "auth": ""
+    },
+    "s3": {
+      "key": "",
+      "secret": "",
+      "bucket": "bucket-name",
+      "region": ""
+    },
+    "vapid": {
+      "email": "mailto:webmaster@example.com",
+      "privateKey": ""
+    }
   },
   "public": {
     "debug": false,
-    "maxFileSizeMb": 3000,
+    "maxFileSizeMb": 64,
     "maxFilesQty": 10,
-    "fileTTLSec": 129600,
+    "fileTTLSec": 14400,
     "vapid": {
       "publicKey": ""
     },
     "trackingId": ""
-  },
-  "s3": {
-    "key": "",
-    "secret": "",
-    "bucket": "",
-    "region": ""
-  },
-  "vapid": {
-    "email": "",
-    "privateKey": ""
   }
 }
