@@ -44,7 +44,7 @@ const setFileFullPath = (directory, file) => {
  * Read a file from FileSystemFileEntry in async way
  * @function readWebkitEntry
  * @param {FileSystemFileEntry} entry - FileSystemEntry with .isDirectory === true returned from non-standard `.webkitGetAsEntry()` method
- * @returns {Promise}
+ * @returns {Promise<File>}
  */
 const readWebkitEntry = (entry) => {
   return new Promise((resolve, reject) => {
@@ -59,7 +59,7 @@ const readWebkitEntry = (entry) => {
  * @function getFilesFromDirectory
  * @param {DataTransferItem|FileSystemFileEntry} directory - Directory selected by user in `drop` event
  * @param {Boolean} isWebKit - `true` if directory returned from `.webkitGetAsEntry()` method
- * @returns {[File]} - Array of File instances
+ * @returns {Promise<File[]>} - Array of File instances
  */
 const getFilesFromDirectory = async (directory, isWebKit = false) => {
   setDirFullPath(directory);
@@ -93,7 +93,7 @@ const getFilesFromDirectory = async (directory, isWebKit = false) => {
  * Recursively read entries returned from reader created by `.webkitGetAsEntry().createReader()` method
  * @function readWebkitEntries
  * @param {FileSystemDirectoryReader} reader - reader created by `.webkitGetAsEntry().createReader()` method
- * @returns {Promise}
+ * @returns {Promise<File[]>}
  */
 function readWebkitEntries(reader) {
   let files = [];
@@ -111,7 +111,7 @@ function readWebkitEntries(reader) {
           entry.fullPath = reader.fullPath;
           try {
             files = files.concat(await getFilesFromDirectory(entry, true));
-          } catch (e) {
+          } catch (_e) {
             // Something isn't supported...
             formError.set(NOT_SUPPORTED_MSG);
           }
@@ -127,7 +127,26 @@ Template.uploadForm.onCreated(function () {
   this.uploadQTY = 0;
   this.heatingUp = new ReactiveVar(false);
 
-  this.initiateUpload = async (event, files) => {
+  this.cleanUploaded = (current) => {
+    template.heatingUp.set(false);
+    const uploads = [..._app.uploads.get()];
+    if (_app.isArray(uploads)) {
+      for (let i = 0; i < uploads.length; i++) {
+        if (uploads[i].config.fileId === current.config.fileId) {
+          uploads.splice(i, 1);
+          if (uploads.length) {
+            _app.uploads.set(uploads);
+          } else {
+            this.uploadQTY = 0;
+            _app.uploads.set(false);
+          }
+          break;
+        }
+      }
+    }
+  };
+
+  this.initiateUpload = async (_event, files) => {
     if (_app.uploads.get()) {
       return false;
     }
@@ -148,25 +167,6 @@ Template.uploadForm.onCreated(function () {
     }
 
     this.uploadQTY = files.length;
-    const cleanUploaded = (current) => {
-      template.heatingUp.set(false);
-
-      const _uploads = _app.clone(_app.uploads.get());
-      if (_app.isArray(_uploads)) {
-        for (let i = 0; i < _uploads.length; i++) {
-          if (_uploads[i].file.name === current.file.name) {
-            _uploads.splice(i, 1);
-            if (_uploads.length) {
-              _app.uploads.set(_uploads);
-            } else {
-              this.uploadQTY = 0;
-              _app.uploads.set(false);
-            }
-          }
-        }
-      }
-    };
-
     const uploads = [];
     const createdAt = +new Date();
 
@@ -175,8 +175,8 @@ Template.uploadForm.onCreated(function () {
       // ASK IF USER OKAY WITH WEB PUSH NOTIFICATIONS
       // GET subscription IF PERMISSION IS GRANTED
       await webPush.check();
-    } catch (e) {
-      // -- perhaps not fully enabled Push deamon like iOS
+    } catch (_e) {
+      // -- perhaps not fully enabled Push daemon like iOS
     }
 
     // ITEREATE OVER EACH SELECTED FILE BY USER.
@@ -185,7 +185,7 @@ Template.uploadForm.onCreated(function () {
     // INSTANCE AND PUSH IT TO `uploads` {ReactiveVar} ARRAY.
     for (let i = 0; i < files.length; i++) {
       const file = files[i];
-      const upload = Collections.files.insert({
+      const fileUpload = await Collections.files.insertAsync({
         file: file,
         meta: {
           blamed: 0,
@@ -195,10 +195,19 @@ Template.uploadForm.onCreated(function () {
         },
         chunkSize: 'dynamic',
         transport: _app.conf.uploadTransport.get()
-      }, false).on('end', function (error, fileObj) {
+      }, false); // <- PASS FALSE AS SECOND ARGUMENT TO PREVENT UPLOAD AUTO-START
+
+      // REGISTER EVENTS ON FileUpload INSTANCE
+      fileUpload.on('start', function () {
+        template.heatingUp.set(false);
+        uploads.push(this);
+        _app.uploads.set(uploads);
+      }).on('end', function (error, fileObj) {
         if (!error) {
-          // PUSH NEWLY UPLOADED FILE TO PERSISTENT COLLECTION
-          Collections._files.insert(fileObj);
+          // PUSH NEWLY UPLOADED FILE TO PERSISTENT CACHE
+          const recentUploads = _app.conf.recentUploads.get();
+          recentUploads.push(fileObj);
+          _app.conf.recentUploads.set(recentUploads);
 
           if (files.length === 1) {
             setTimeout(() => {
@@ -206,26 +215,29 @@ Template.uploadForm.onCreated(function () {
             }, 128);
           }
         }
-        cleanUploaded(this);
+        template.cleanUploaded(this);
       }).on('abort', function () {
-        cleanUploaded(this);
+        template.cleanUploaded(this);
       }).on('error', function (error) {
         let currentError = formError.get() || '';
         if (currentError.length) {
           currentError += '<br/>';
         }
-        formError.set(`${currentError}${this.file.name}: ${(_app.isObject(error) && error?.reason) ? error.reason : (error || 'unexpected error occurred')}`);
+
+        formError.set(`${currentError}${this.fileData?.name || this.file?.name}: ${(_app.isObject(error) && error?.reason) ? error.reason : (error?.toString?.() || 'unexpected error occurred')}`);
+
+        if (this.errorTimer) {
+          clearTimeout(this.errorTimer);
+        }
+
+        // HIDE ERROR AFTER 15 SECONDS TIMEOUT
         this.errorTimer = setTimeout( () => {
           formError.set(false);
         }, 15000);
-        cleanUploaded(this);
-      }).on('start', function() {
-        template.heatingUp.set(false);
-        uploads.push(this);
-        _app.uploads.set(uploads);
       });
 
-      upload.start();
+      // START UPLOAD
+      await fileUpload.start();
     }
     return true;
   };
@@ -316,12 +328,13 @@ Template.uploadForm.events({
     }
     return false;
   },
-  'click [data-abort-all]'(e) {
+  async 'click [data-abort-all]'(e) {
     e.preventDefault();
-    const uploads = _app.uploads.get();
+    const uploads = [..._app.uploads.get()];
+
     if (uploads) {
       for (let j = 0; j < uploads.length; j++) {
-        uploads[j].abort();
+        await uploads[j].abort();
       }
     }
     formError.set(false);
@@ -404,7 +417,7 @@ Template.uploadForm.events({
     template.initiateUpload(e, files, template);
     return false;
   },
-  'change #userfile'(e, template) {
+  'change #userfile'(_e, template) {
     template.$('form#uploadFile').submit();
   },
   'submit form#uploadFile'(e, template) {

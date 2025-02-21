@@ -39,9 +39,9 @@ Template.uploadRow.events({
     this.toggle();
     return false;
   },
-  'click [data-abort-upload]'(e) {
+  async 'click [data-abort-upload]'(e) {
     e.preventDefault();
-    this.abort();
+    await this.abort();
     return false;
   }
 });
