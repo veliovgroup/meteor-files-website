@@ -1,6 +1,6 @@
 import { Meteor } from 'meteor/meteor';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
-import { Collections } from '/imports/lib/core.js';
+import { _app, Collections } from '/imports/lib/core.js';
 
 const meta404 = {
   robots: 'noindex, nofollow',
@@ -27,20 +27,6 @@ const meta404 = {
   }
 };
 
-const promiseMethod = (name, args, sharedObj, key) => {
-  return new Promise((resolve) => {
-    Meteor.apply(name, args, (error, result) => {
-      if (error) {
-        console.error(`[promiseMethod] [${name}]`, error);
-        sharedObj[key] = void 0;
-      } else {
-        sharedObj[key] = result || void 0;
-      }
-      resolve();
-    });
-  });
-};
-
 // ASK FLOWROUTER TO WAIT AND PULL ALL DYNAMIC DEPENDENCIES
 // BEFORE INITIALIZING ROUTER
 FlowRouter.wait();
@@ -52,6 +38,7 @@ Promise.all([
 ]).then(() => {
   FlowRouter.initialize();
 }).catch((e) => {
+  // eslint-disable-next-line no-console
   console.error('[Promise.all] loading dynamic imports error:', e);
 });
 
@@ -61,22 +48,15 @@ Promise.all([
 let lastRun;
 let renderWaitingTimer;
 let renderActionTimer;
-const renderDelay = 1024;
+const renderDelay = 256;
 const cancelAfterNext = () => {
   clearTimeout(renderWaitingTimer);
   clearTimeout(renderActionTimer);
 };
 const renderWaiting = (router, layoutName, templateName) => {
   cancelAfterNext();
-  if (!lastRun) {
-    lastRun = Date.now();
-    router.render(layoutName, templateName);
-  } else {
-    renderWaitingTimer = setTimeout(() => {
-      lastRun = Date.now();
-      router.render(layoutName, templateName);
-    }, renderDelay);
-  }
+  lastRun = Date.now();
+  router.render(layoutName, templateName);
 };
 const renderAction = (router, ...args) => {
   cancelAfterNext();
@@ -95,8 +75,15 @@ FlowRouter.route('/', {
   action() {
     renderAction(this, 'layout', 'index');
   },
-  waitOn() {
-    return import('/imports/client/index/index.js');
+  waitOn(_params, _queryParams, ready) {
+    return [import('/imports/client/index/index.js'), Tracker.autorun(() => {
+      // REACTIVE DATA WARAPPED INTO TRACKER
+      // WILL RE-RUN SUBSCRIPTION WITH NEW ARGUMENTS
+      const uploadIds = _app.conf.recentUploads.get().map((file) => file._id).filter((_id) => typeof _id === 'string');
+      ready(() => {
+        return Meteor.subscribe('file.list', uploadIds);
+      });
+    })];
   },
   whileWaiting() {
     renderWaiting(this, 'layout', 'loading');
@@ -162,14 +149,14 @@ FlowRouter.route('/settings', {
 
 FlowRouter.route('/f/:_id', {
   name: 'file',
-  title(params, queryParams, file) {
+  title(_params, _queryParams, file) {
     if (file) {
       return `Download shared file: ${(file.name || '').substring(0, 120)}`;
     }
     return meta404.title;
   },
-  meta(params, queryParams, _file) {
-    if (_file) {
+  meta(_params, _queryParams, file) {
+    if (file) {
       return {
         robots: 'noindex, nofollow',
         keywords: {
@@ -204,50 +191,23 @@ FlowRouter.route('/f/:_id', {
       href: Meteor.absoluteUrl('file-1280x640.png')
     }
   },
-  action(params) {
-    renderAction(this, 'layout', 'file', { params });
+  action(params, _queryParams, file) {
+    renderAction(this, 'layout', 'file', { params, file });
   },
   waitOn(params) {
-    const waitFor = [import('/imports/client/file/file.js')];
-    if (!Collections.files.findOne(params._id)) {
-      waitFor.push(promiseMethod('file.get', [params._id], this.conf, 'file'));
-    }
-
-    return waitFor;
+    return [import('/imports/client/file/file.js'), Meteor.subscribe('file.get', params._id)];
   },
   whileWaiting() {
     renderWaiting(this, 'layout', 'loading');
   },
-  onNoData() {
-    cancelAfterNext();
-    // SHOW "loading" TEMPLATE
-    this.render('layout', 'loading');
+  async onNoData() {
     // PULL 404 TEMPLATE AND ITS CONTROLLER "PROGRESSIVELY" FROM SERVER
-    import('/imports/client/_404/_404.js').then(() => {
-      // RENDER 404 TEMPLATE AFTER IT'S FULLY LOADED ON THE CLIENT
-      this.render('layout', '_404');
-    });
+    await import('/imports/client/_404/_404.js');
+    // RENDER 404 TEMPLATE AFTER IT'S FULLY LOADED ON THE CLIENT
+    this.render('layout', '_404');
   },
-  data(params) {
-    // CHECK IF FILE EXISTS IN LOCAL STORAGE
-    const file = Collections.files.findOne(params._id);
-    if (file) {
-      return file;
-    }
-
-    // CHECK IF FILE EXISTS ON SERVER
-    if (this.conf.file) {
-      // INSERT RECORD TO LOCAL COLLECTION
-      // WHICH WOULD STORE RECORD IN THE PERSISTENT STORAGE
-      Collections._files.insert(this.conf.file);
-
-      // GET *FileCursor* FROM *FilesCollection*
-      // WITH REACTIVITY AND METHODS LIKE `.link()`
-      return Collections.files.findOne(this.conf.file._id);
-    }
-
-    // TRIGGER 404 PAGE
-    return void 0;
+  async data(params) {
+    return await Collections.files.findOneAsync(params._id);
   }
 });
 

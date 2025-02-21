@@ -22,20 +22,27 @@ Template.listingRow.events({
     FlowRouter.go('file', { _id: this._id });
     return false;
   },
-  'click [data-hide]'(e) {
+  async 'click [data-hide]'(e) {
     e.preventDefault();
-    Collections._files.remove(this._id);
 
-    const _recentUploads = _app.conf.recentUploads.get();
-    if (_recentUploads && _recentUploads.length) {
-      for (const fileRef of _recentUploads) {
+    if (Collections.files.allowClientCode) {
+      // REMOVE FILE FROM SERVER
+      // WORKS ONLY IF `{allowClientCode: true}`
+      await Collections.files.removeAsync(this._id);
+    }
+
+    // THEN REMOVE THIS FILE FROM PERSISTENT STORAGE
+    const recentUploads = _app.conf.recentUploads.get();
+    if (recentUploads && recentUploads.length) {
+      for (const fileRef of recentUploads) {
         if (fileRef._id === this._id) {
-          _recentUploads.splice(_recentUploads.indexOf(fileRef), 1);
-          _app.conf.recentUploads.set(_recentUploads);
+          recentUploads.splice(recentUploads.indexOf(fileRef), 1);
+          _app.conf.recentUploads.set(recentUploads);
           break;
         }
       }
     }
+
     return false;
   }
 });

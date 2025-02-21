@@ -2,6 +2,7 @@ import { WebAppInternals } from 'meteor/webapp';
 
 import '/imports/server/files.collection.js';
 import '/imports/server/methods.js';
+import '/imports/server/publications.js';
 import '/imports/server/spiderable.js';
 // service-configuration.js USED TO
 // LOAD 3rd PARTY AUTHENTICATION SETTINGS

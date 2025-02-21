@@ -1,18 +1,35 @@
 import { Meteor } from 'meteor/meteor';
 import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
-import { _app, Collections } from '/imports/lib/core.js';
+import { _app } from '/imports/lib/core.js';
 import './file.sass';
 import './file.html';
 
 Template.file.onRendered(function() {
   window.IS_RENDERED = true;
+
+  // ADD OPENED FILE TO CACHED recentUploads PERSISTENT ReactiveVar
+  // TO DISPLAY IT LATER IN THE LIST OF THE FILES AT THE MAIN PAGE
+  const recentUploads = _app.conf.recentUploads.get();
+  if (recentUploads && this.data.file?._id) {
+    let isNew = true;
+    if (recentUploads.length) {
+      for (const file of recentUploads) {
+        if (file._id === this.data.file._id) {
+          isNew = false;
+          break;
+        }
+      }
+    }
+
+    if (isNew) {
+      recentUploads.push(this.data.file.get());
+      _app.conf.recentUploads.set(recentUploads);
+    }
+  }
 });
 
 Template.file.helpers({
-  file() {
-    return Collections.files.findOne(Template.instance().data.params._id);
-  },
   isBlamed() {
     return _app.conf.blamed.get().includes(this._id);
   },
@@ -38,38 +55,22 @@ Template.file.events({
     }
     return false;
   },
-  'click [data-blame]'(e) {
+  async 'click [data-blame]'(e, template) {
     e.preventDefault();
     const blamed = _app.conf.blamed.get();
     if (blamed.includes(this._id)) {
       blamed.splice(blamed.indexOf(this._id), 1);
       _app.conf.blamed.set(blamed);
-
-      Collections._files.update(this._id, {
-        $inc: {
-          'meta.blamed': -1
-        }
-      });
-
-      Meteor.call('file.unblame', this._id);
+      await Meteor.callAsync('file.unblame', this._id);
     } else {
       blamed.push(this._id);
       _app.conf.blamed.set(blamed);
 
-      const file = Collections._files.findOne(this._id);
-
-      if (file.meta.blamed >= 5) {
-        Collections._files.remove(this._id);
+      if (template.data.file.meta.blamed >= 5) {
         FlowRouter.go('/');
-      } else {
-        Collections._files.update(this._id, {
-          $inc: {
-            'meta.blamed': 1
-          }
-        });
       }
 
-      Meteor.call('file.blame', this._id);
+      await Meteor.callAsync('file.blame', this._id);
     }
     return false;
   }
