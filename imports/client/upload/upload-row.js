@@ -5,17 +5,17 @@ import './upload-row.html';
 import './upload-row.sass';
 
 Template.uploadRow.helpers({
-  estimatedBitrate: function() {
+  estimatedBitrate() {
     return `${filesize(this.estimateSpeed.get(), { bits: true })}/s`;
   },
-  getProgressClass: function() {
+  getProgressClass() {
     let progress = Math.ceil(this.progress.get() / 5) * 5;
     if (progress > 100) {
       progress = 100;
     }
     return progress;
   },
-  estimatedDuration: function() {
+  estimatedDuration() {
     const duration = moment.duration(this.estimateTime.get());
     let hours = `${duration.hours()}`;
     if (hours.length <= 1) {
@@ -37,6 +37,11 @@ Template.uploadRow.events({
   'click [data-toggle-upload]'(e) {
     e.preventDefault();
     this.toggle();
+    return false;
+  },
+  'click [data-abort-upload]'(e) {
+    e.preventDefault();
+    this.abort();
     return false;
   }
 });

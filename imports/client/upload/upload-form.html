@@ -36,45 +36,43 @@
           &nbsp; &nbsp;
           <a href="#"><i class="la la-3x la-stop"></i></a>
         </div>
+      {{else if uploads}}
+        <div class="upload-title percentage">{{status.progress}}%</div>
+        <progress max="100" value="{{status.progress}}"></progress>
+        <div class="upload-actions">
+          {{#if error}}
+            <span class="uppload-error danger">{{{error}}}</span>
+          {{else if isDisconnected}}
+            <span class="uppload-error danger">Connection interrupted. The upload will resume once the connection is re-established</span>
+          {{else}}
+            {{status.accumDuration}} &nbsp; &middot; &nbsp; {{status.accumBitrate}}
+          {{/if}}
+          <br>
+          {{#if status.onPause}}
+            <a data-continue-all href="#" title="Resume upload"><i class="la la-3x la-play"></i></a>
+          {{else}}
+            <a data-pause-all href="#" title="Pause upload"><i class="la la-3x la-pause"></i></a>
+          {{/if}}
+          &nbsp; &nbsp;
+          <a data-abort-all href="#" title="Abort upload"><i class="la la-3x la-stop"></i></a>
+        </div>
       {{else}}
-        {{#unless uploads}}
-          <input class="invisible {{#if showSettings}}settings-open{{/if}}" id="userfile" type="file" name="userfile" required multiple>
-          <label class="fake-upload" for="userfile">
-            <div class="icon-container">
-              <div class="cloud-container">
-                <i class="la la-cloud"></i>
-                <div class="arrow-container">
-                  <i class="la la-arrow-up"></i>
-                </div>
+        <input class="invisible {{#if showSettings}}settings-open{{/if}}" id="userfile" type="file" name="userfile" required multiple>
+        <label class="fake-upload" for="userfile">
+          <div class="icon-container">
+            <div class="cloud-container">
+              <i class="la la-cloud"></i>
+              <div class="arrow-container">
+                <i class="la la-arrow-up"></i>
               </div>
             </div>
-            {{#if error}}
-              <div class="danger strong">{{{error}}}</div>
-            {{else}}
-              <div class="upload-title">share a file</div>
-            {{/if}}
-          </label>
-        {{else}}
-          <div class="upload-title percentage">{{status.progress}}%</div>
-          <progress max="100" value="{{status.progress}}"></progress>
-          <div class="upload-actions">
-            {{#if error}}
-              <span class="danger">{{{error}}}</span>
-            {{else if isDisconnected}}
-              <span class="danger">Connection interrupted. The upload will resume once the connection is re-established</span>
-            {{else}}
-              {{status.accumDuration}} &nbsp; &middot; &nbsp; {{status.accumBitrate}}
-            {{/if}}
-            <br>
-            {{#if status.onPause}}
-              <a data-continue-all href="#" title="Resume upload"><i class="la la-3x la-play"></i></a>
-            {{else}}
-              <a data-pause-all href="#" title="Pause upload"><i class="la la-3x la-pause"></i></a>
-            {{/if}}
-            &nbsp; &nbsp;
-            <a data-abort-all href="#" title="Abort upload"><i class="la la-3x la-stop"></i></a>
           </div>
-        {{/unless}}
+          {{#if error}}
+            <div class="uppload-error danger strong">{{{error}}}</div>
+          {{else}}
+            <div class="upload-title">share a file</div>
+          {{/if}}
+        </label>
       {{/if}}
     {{/if}}
   </form>
