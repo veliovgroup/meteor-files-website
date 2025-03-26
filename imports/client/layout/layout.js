@@ -25,7 +25,11 @@ const copyRestore = (elementId, template) => {
 Template.layout.helpers({
   isNewVersionAvailable() {
     return _app.isNewVersionAvailable.get();
-  }
+  },
+  corner() {
+    // TEST "REGIONS" SUPPORT BY FLOW-ROUTER-EXTRA
+    return 'gh-ribbon';
+  },
 });
 
 Template.layout.events({

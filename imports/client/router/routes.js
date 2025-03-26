@@ -32,6 +32,7 @@ const meta404 = {
 FlowRouter.wait();
 Promise.all([
   import('/imports/client/loading/loading.html'),
+  import('/imports/client/misc/gh-ribbon.html'),
   import('/imports/client/styles/core.sass'),
   import('/imports/client/line-awesome.css'),
   import('/imports/client/layout/layout.js')
@@ -44,7 +45,7 @@ Promise.all([
 
 // WRAPPER FOR whileWaiting METHOD
 // TO REMOVE BLINKING "SPINNER" BETWEEN ROUTES
-// THIS FUNCTION WOULD DELAY "loading" TEMPLATE RENDER BY 1024 MS
+// THIS FUNCTION WOULD DELAY "loading" TEMPLATE RENDER BY 256 MS
 let lastRun;
 let renderWaitingTimer;
 let renderActionTimer;
