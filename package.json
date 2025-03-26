@@ -35,23 +35,23 @@
     }
   },
   "dependencies": {
-    "@babel/runtime": "^7.21.0",
-    "aws-sdk": "^2.1328.0",
-    "core-js": "^3.29.0",
-    "fs-extra": "^11.2.0",
-    "jquery": "^3.6.3",
-    "meteor-node-stubs": "^1.2.5",
-    "web-push": "^3.5.0"
+    "@babel/runtime": "^7.27.0",
+    "aws-sdk": "^2.1692.0",
+    "core-js": "^3.41.0",
+    "fs-extra": "^11.3.0",
+    "jquery": "^3.7.1",
+    "meteor-node-stubs": "^1.2.13",
+    "web-push": "^3.6.7"
   },
   "engines": {
-    "node": "^22.11.0",
-    "npm": "^10.9.0"
+    "node": "^22.13.1",
+    "npm": "^10.9.2"
   },
   "devDependencies": {
-    "autoprefixer": "^10.4.20",
-    "browserslist": "^4.21.5",
-    "caniuse-lite": "^1.0.30001460",
-    "postcss": "^8.4.49",
+    "autoprefixer": "^10.4.21",
+    "browserslist": "^4.24.4",
+    "caniuse-lite": "^1.0.30001707",
+    "postcss": "^8.5.3",
     "postcss-load-config": "^6.0.1"
   }
 }
