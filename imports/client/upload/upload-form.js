@@ -1,5 +1,4 @@
 import { Meteor } from 'meteor/meteor';
-import { moment } from 'meteor/momentjs:moment';
 import { filesize } from 'meteor/mrt:filesize';
 import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
@@ -129,6 +128,10 @@ Template.uploadForm.onCreated(function () {
 
   this.cleanUploaded = (current) => {
     template.heatingUp.set(false);
+    if (!_app.uploads.get()) {
+      return;
+    }
+
     const uploads = [..._app.uploads.get()];
     if (_app.isArray(uploads)) {
       for (let i = 0; i < uploads.length; i++) {
@@ -194,7 +197,8 @@ Template.uploadForm.onCreated(function () {
           subscription: webPush.subscription || void 0 // <-- This is the place where we send Web Push Notification subscription to a server
         },
         chunkSize: 'dynamic',
-        transport: _app.conf.uploadTransport.get()
+        transport: _app.conf.uploadTransport.get(),
+        // allowWebWorkers: false,
       }, false); // <- PASS FALSE AS SECOND ARGUMENT TO PREVENT UPLOAD AUTO-START
 
       // REGISTER EVENTS ON FileUpload INSTANCE
@@ -289,22 +293,11 @@ Template.uploadForm.helpers({
       progress = Math.ceil(progress / uploadQTY);
       accumBitrate = filesize(Math.ceil(accumBitrate / i), { bits: true }) + '/s';
       accumDuration = (() => {
-        const duration = moment.duration(Math.ceil(accumDuration / i));
-        let hours = `${duration.hours()}`;
-        if (hours.length <= 1) {
-          hours = `0${hours}`;
-        }
-
-        let minutes = `${duration.minutes()}`;
-        if (minutes.length <= 1) {
-          minutes = `0${minutes}`;
-        }
-
-        let seconds = `${duration.seconds()}`;
-        if (seconds.length <= 1) {
-          seconds = `0${seconds}`;
-        }
-        return `${hours}:${minutes}:${seconds}`;
+        const ms = Math.ceil(accumDuration / i);
+        const hh = `${Math.floor(ms / (1000 * 60 * 60))}`.padStart(2, '0');
+        const mm = `${Math.floor((ms % (1000 * 60 * 60)) / (1000 * 60))}`.padStart(2, '0');
+        const ss = `${Math.floor((ms % (1000 * 60)) / 1000)}`.padStart(2, '0');
+        return `${hh}:${mm}:${ss}`;
       })();
     }
 
