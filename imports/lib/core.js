@@ -25,7 +25,11 @@ const _app = {
     return obj === true || obj === false || Object.prototype.toString.call(obj) === '[object Boolean]';
   },
   isFunction(obj) {
-    return typeof obj === 'function' || false;
+    if (this.isUndefined(obj)) {
+      return false;
+    }
+    const type = Object.prototype.toString.call(obj);
+    return type === '[object Function]' || type === '[object AsyncFunction]';
   },
   isEmpty(obj) {
     if (this.isDate(obj)) {
@@ -40,8 +44,10 @@ const _app = {
     return false;
   },
   clone(obj) {
-    if (!this.isObject(obj)) return obj;
-    return this.isArray(obj) ? obj.slice() : Object.assign({}, obj);
+    if (!this.isObject(obj)) {
+      return obj;
+    }
+    return this.isArray(obj) ? [...obj] : { ...obj };
   },
   has(_obj, path) {
     let obj = _obj;
