@@ -1,4 +1,3 @@
-import { moment }   from 'meteor/momentjs:moment';
 import { filesize } from 'meteor/mrt:filesize';
 import { Template } from 'meteor/templating';
 import './upload-row.html';
@@ -15,22 +14,6 @@ Template.uploadRow.helpers({
     }
     return progress;
   },
-  estimatedDuration() {
-    const duration = moment.duration(this.estimateTime.get());
-    let hours = `${duration.hours()}`;
-    if (hours.length <= 1) {
-      hours = `0${hours}`;
-    }
-    let minutes = `${duration.minutes()}`;
-    if (minutes.length <= 1) {
-      minutes = `0${minutes}`;
-    }
-    let seconds = '' + (duration.seconds());
-    if (seconds.length <= 1) {
-      seconds = `0${seconds}`;
-    }
-    return `${hours}:${minutes}:${seconds}`;
-  }
 });
 
 Template.uploadRow.events({

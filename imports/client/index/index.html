@@ -1,6 +1,6 @@
 <template name="index">
   <div class="col-50">
-    {{#if compare recent.count '||' uploads}}
+    {{#if compare recent.countDocuments '||' uploads}}
       <div class="wh100 scroll-wrap">
         {{#each uploads}}
           {{> uploadRow}}
