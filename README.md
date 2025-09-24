@@ -86,14 +86,18 @@ S3 credentials format (*region is required*):
 }
 ```
 
-### Activate login via Social Networks
+### User Accounts
 
-All credentials is set via env.var(s), if you're using "*Heroku's one click install-button*" - you will be able to pass all of them.
+__Activate login via Social Networks.__ All credentials is set via `settings.json` or `METEOR_SETTINGS` env.variable.
+
+#### Get OAuth keys and credentials at
 
 - Facebook - [Create an App](https://developers.facebook.com/apps/)
 - Twitter/X - [Create an App](https://developer.x.com/apps)
 - GitHub - [Create OAuth App](https://github.com/settings/developers)
 - Meteor Developer - [Create an App](https://www.meteor.com/account-settings)
+
+#### Setup settings.json
 
 Update `setting.json` with `serviceConfiguration` (`loginStyle` can be `redirect` or `popup`):
 
@@ -154,10 +158,10 @@ VAPID credentials format:
 
 All supported and annotated settings
 
-```js
+```json
 {
   "debug": false, // Enable debug mode on a Server
-  "app" { // application server-settings
+  "app": { // application server-settings
     "storagePath": "/data/meteor-files/uploads", // LOCAL STORAGE ON THE SERVER
     "continueUploadTTL": 10800, // RESUMALBE UPLOADS TTL
     "spiderable": { // `spiderable-middleware` package settings
@@ -174,6 +178,7 @@ All supported and annotated settings
       "privateKey": "" // WEB PUSH NOTIFICATION PRIVATE KEY
     }
   },
+  "serviceConfiguration": {}, // SEE "User Accounts" SECTION ABOVE
   "public": {
     "debug": false, // Enable debug mode on a Client (Browser)
     "maxFileSizeMb": 1024, // MAXIMUM UPLOAD FILE-SIZE IN MEGABYTES (1024mb ~= 1GB)
