@@ -6,7 +6,7 @@ import './listing-row.html';
 
 Template.listingRow.helpers({
   isOwned() {
-    return this.userId === Meteor.userId();
+    return this.userId && this.userId === Meteor.userId();
   }
 });
 
