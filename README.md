@@ -61,6 +61,7 @@ Goals of this open source web application:
 Application is ready to be used as it is without need of extra configuration. Optionally there's a lot of room for changing settings to meet required features, like store files in AWS:S3, send Web Push Notifications via APNs when file is fully loaded and moved to long-term storage.
 
 - [Activate AWS:S3](https://github.com/veliovgroup/meteor-files-website#activate-awss3)
+- [Setup User Accounts](https://github.com/veliovgroup/meteor-files-website#user-accounts)
 - [Activate Web Push Notifications](https://github.com/veliovgroup/meteor-files-website#activate-web-push-notifications)
 - [Change application settings](https://github.com/veliovgroup/meteor-files-website#application-settings)
 
@@ -167,7 +168,7 @@ All supported and annotated settings
     "spiderable": { // `spiderable-middleware` package settings
       "auth": ""
     },
-    "s3": { // AWS:S#3 CLOUD STORAGE CREDENTIALS
+    "s3": { // AWS:S3 CLOUD STORAGE CREDENTIALS
       "key": "",
       "secret": "",
       "bucket": "",
