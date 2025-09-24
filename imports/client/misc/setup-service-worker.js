@@ -26,7 +26,7 @@ const setUpServiceWorker = async (force = false) => {
       if (force === true || !navigator.serviceWorker.controller) {
         window.addEventListener('load', async () => {
           try {
-            await navigator.serviceWorker.register(Meteor.absoluteUrl('sw-v3.js'));
+            await navigator.serviceWorker.register(Meteor.absoluteUrl('sw-v4.js'));
             Meteor.hasPWASupport = true;
           } catch (error) {
             console.info('Can\'t load SW');
@@ -43,7 +43,7 @@ const setUpServiceWorker = async (force = false) => {
         }
       }
     }
-  } catch (e) {
+  } catch (_e) {
     // We're good here
     // Just an old browser
   }
