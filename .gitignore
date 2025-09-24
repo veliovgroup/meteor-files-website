@@ -7,3 +7,4 @@ run-dev.sh
 nohup.out
 
 settings.dev.json
+settings.prod.json
