@@ -17,6 +17,7 @@
       "privateKey": ""
     }
   },
+  "serviceConfiguration": { },
   "public": {
     "debug": false,
     "maxFileSizeMb": 64,
