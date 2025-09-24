@@ -1,3 +1,4 @@
+import { _app } from '/imports/lib/core.js';
 import { check } from 'meteor/check';
 import { Meteor } from 'meteor/meteor';
 import { Collections } from '/imports/lib/core.js';
@@ -75,6 +76,24 @@ Meteor.methods({
 
     return void 0;
   },
+  async 'file.remove'(_id) {
+    check(_id, String);
+    // DO NOT PASS UNAUHTENTICATED REQUESTS
+    check(this.userId, String);
+
+    const fileCursor = await Collections.files.findOneAsync({ _id }, {
+      fields: {
+        _id: 1,
+        userId: 1,
+      }
+    });
+
+    if (fileCursor && (fileCursor.userId === this.userId)) {
+      fileCursor.removeAsync();
+    }
+
+    return void 0;
+  },
   'webpush.test'(subscription) {
     check(subscription, String);
 
@@ -84,5 +103,8 @@ Meteor.methods({
     });
 
     return true;
-  }
+  },
+  getServiceConfiguration() {
+    return _app.sc;
+  },
 });
