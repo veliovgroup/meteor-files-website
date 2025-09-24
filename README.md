@@ -1,7 +1,7 @@
 [![support](https://img.shields.io/badge/support-GitHub-white)](https://github.com/sponsors/dr-dimitru)
 [![support](https://img.shields.io/badge/support-PayPal-white)](https://paypal.me/veliovgroup)
-<a href="https://ostr.io/info/built-by-developers-for-developers?ref=meteor-files-website-repo-top"><img src="https://ostr.io/apple-touch-icon-60x60.png" height="20"></a>
-<a href="https://meteor-files.com/?ref=meteor-files-website-repo-top"><img src="https://meteor-files.com/apple-touch-icon-60x60.png" height="20"></a>
+<a href="https://ostr.io/info/built-by-developers-for-developers?ref=meteor-files-website-repo-top"><img src="https://ostr.io/apple-touch-icon-60x60.png" height="20" alt="ostr.io web services"></a>
+<a href="https://meteor-files.com/?ref=meteor-files-website-repo-top"><img src="https://meteor-files.com/apple-touch-icon-60x60.png" height="20" alt="meteor-files.com: upload files like never before"></a>
 
 # File sharing web app
 
@@ -20,6 +20,7 @@ Backed by [veliovgroup](https://veliovgroup.com), sponsored by [ostr.io](https:/
 - [Features](https://github.com/veliovgroup/meteor-files-website#functionality)
 - [Quick start](https://github.com/veliovgroup/meteor-files-website#quick-start)
   - [Activate AWS:S3](https://github.com/veliovgroup/meteor-files-website#activate-awss3)
+  - [Activate User Account Logins](https://github.com/veliovgroup/meteor-files-website#activate-login-via-social-networks)
   - [Activate Web Push Notifications](https://github.com/veliovgroup/meteor-files-website#activate-web-push-notifications)
   - [Change application settings](https://github.com/veliovgroup/meteor-files-website#application-settings)
 - [Deploy this app](https://github.com/veliovgroup/meteor-files-website#deployment)
@@ -51,8 +52,9 @@ Goals of this open source web application:
 - 📑 Upload / Download Files
 - 🗂 Drag'n'drop support for files and directories (*including nested directories*)
 - 🗄 Use AWS:S3 as a storage
-- 📲 PWA with Push Notifications
+- 📲 Install-able PWA with Push Notifications
 - 🚀 Upload via `HTTP` and/or `DDP`
+- 👨‍💻 User authentication and permissions settings per user
 
 ## Quick start:
 
@@ -83,6 +85,46 @@ S3 credentials format (*region is required*):
   }
 }
 ```
+
+### Activate login via Social Networks
+
+All credentials is set via env.var(s), if you're using "*Heroku's one click install-button*" - you will be able to pass all of them.
+
+- Facebook - [Create an App](https://developers.facebook.com/apps/)
+- Twitter/X - [Create an App](https://developer.x.com/apps)
+- GitHub - [Create OAuth App](https://github.com/settings/developers)
+- Meteor Developer - [Create an App](https://www.meteor.com/account-settings)
+
+Update `setting.json` with `serviceConfiguration` (`loginStyle` can be `redirect` or `popup`):
+
+```json
+"serviceConfiguration": {
+  "github": {
+    "clientId": "aaaaaaaaaaaaaaaaaaaa",
+    "secret": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "loginStyle": "redirect"
+  },
+  "facebook": {
+    "appId": "aaaaaaaaaaaaaaa",
+    "secret": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "loginStyle": "redirect"
+  },
+  "twitter": {
+    "consumerKey": "aaaaaaaaaaaaaaaaaaaaaaaaa",
+    "secret": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+    "loginStyle": "redirect"
+  },
+  "meteor-developer": {
+    "secret": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "clientId": "xxxxxxxxxxxxxxxxx",
+    "loginStyle": "redirect"
+  }
+}
+```
+
+> [!TIP]
+> When configuring OAuth login with a provider (such as Facebook or Google), Meteor lets you choose a popup- or redirect-based flow. In a popup-based flow, when a user logs in, they will be prompted to login at the provider in a popup window. In a redirect-based flow, the user's whole browser window will be redirected to the login provider, and the window will redirect back to your app when the login is completed.
+> Learn more in [Meteor.js documentation](https://docs.meteor.com/api/accounts#popup-vs-redirect-flow)
 
 ### Activate Web Push Notifications
 
