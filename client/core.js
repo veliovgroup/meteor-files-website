@@ -117,6 +117,15 @@ Meteor.startup(() => {
   document.documentElement.setAttribute('itemscope', '');
   document.documentElement.setAttribute('itemtype', 'http://schema.org/WebPage');
   document.documentElement.setAttribute('lang', 'en');
+
+  _app.serviceConfiguration = new ReactiveVar({});
+  Meteor.call('getServiceConfiguration', (error, serviceConfiguration) => {
+    if (error) {
+      console.error(error);
+    } else {
+      _app.serviceConfiguration.set(serviceConfiguration);
+    }
+  });
 });
 
 Meteor.hasPWASupport = false;
