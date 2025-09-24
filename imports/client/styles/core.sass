@@ -59,6 +59,34 @@
     min-height: unset
     max-height: unset
 
+.list-unstyled
+  list-style: none
+  padding: 0px
+  margin: 5px 0px
+  li
+    margin: 0px 0px 6px 0px
+
+.content-container
+  min-width: 190px
+  list-style: none
+  text-align: left
+  margin: 1.2rem auto 0 auto
+  padding: 0 15px
+  display: block
+  li
+    padding: 0
+    margin: 0 0 0.333rem 0
+    font-size: 0.93rem
+
+.well
+  padding: 0px 15px 0px 15px
+  box-sizing: border-box
+  @media(max-width: $break-point)
+    overflow-y: scroll
+    padding-right: 50px
+  p
+    width: 100%
+
 .absolute-invisible
   position: absolute
   top: -999px

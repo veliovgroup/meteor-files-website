@@ -1,10 +1,15 @@
 <template name="about">
   <div class="col-50">
-    <div class="info-block">
+    <div class="well">
       <h1 class="h2">about</h1>
 
       <ul class="list-unstyled">
-        <li>📦 &nbsp; simultaneously upload <strong>{{maxFilesQty}} files</strong> up to <strong>{{getMaxSize}} each</strong></li>
+        {{#if currentUser}}
+          <li>👤 &nbsp; <a href="{{pathFor 'login'}}">account settings</a></li>
+        {{else}}
+          <li>👤 &nbsp; <a href="{{pathFor 'login'}}">login or create an account</a></li>
+        {{/if}}
+        <li>📦 &nbsp; simultaneously <a href="{{pathFor 'index'}}">upload <strong>{{maxFilesQty}} files</strong> up to <strong>{{getMaxSize}} each</strong></a></li>
         <li>⏳ &nbsp; all files are removed in <strong>{{getTTL}} hours</strong> after upload</li>
         <li>📎 &nbsp; <strong>copy file's link</strong> to share securely</li>
         <li>☄️ &nbsp; try <a href="https://meteor-files.com/" target="_blank">meteor-files.com</a></li>

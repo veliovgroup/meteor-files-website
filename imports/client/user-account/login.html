@@ -1,0 +1,55 @@
+<template name="login">
+  <div class="col-50">
+    {{#if currentUser}}
+      <div class="well">
+        <h1 class="h2">user account</h1>
+        <p>Logged in as <b>{{currentUser.profile.name}}</b> — all uploads are securely stored under account credentials and accessible to this account only</p>
+        
+        <ul class="list-unstyled content-container">
+          <li><a class="muted" href="{{pathFor 'index'}}">Upload files</a></li>
+          <li><a class="muted" href="{{pathFor 'settings'}}">Upload settings</a></li>
+          <li><a class="muted" href="{{pathFor 'about'}}">Learn more</a></li>
+          <li><b>{{> logout}}</b></li>
+        </ul>
+      </div>
+    {{else}}
+      {{#if loggingIn}}
+        {{> loading}}
+      {{else}}
+        <h1 class="h2 content-container">login via</h1>
+
+        {{#with serviceConfiguration}}
+          <ul class="list-unstyled content-container">
+            {{#if meteor}}
+              <li>
+                <a class="muted" data-login-meteor href="#" title="Login via: Meteor">Meteor</a>
+              </li>
+            {{/if}}
+
+            {{#if github}}
+              <li>
+                <a class="muted" data-login-github href="#" title="Login via: GitHub">GitHub</a>
+              </li>
+            {{/if}}
+
+            {{#if twitter}}
+              <li>
+                <a class="muted" data-login-twitter href="#" title="Login via: Twitter">X/Twitter</a>
+              </li>
+            {{/if}}
+
+            {{#if facebook}}
+              <li>
+                <a class="muted" data-login-facebook href="#" title="Login via: Facebook">Facebook</a>
+              </li>
+            {{/if}}
+          </ul>
+        {{/with}}
+      {{/if}}
+    {{/if}}
+
+    <a class="info-link" href="{{pathFor 'index'}}" title="close">
+      <i class="la la-times"></i>
+    </a>
+  </div>
+</template>

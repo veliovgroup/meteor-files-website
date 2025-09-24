@@ -80,16 +80,38 @@ if (s3Conf && s3Conf.key && s3Conf.secret && s3Conf.bucket && s3Conf.region) {
   });
 }
 
+// CREATE `FilesCollection` INSTANCE`
 Collections.files = new FilesCollection({
   debug: Meteor.settings.debug,
   continueUploadTTL: Meteor.settings.app.continueUploadTTL, // Limit upload to X seconds (by default 3 hours)
   storagePath: Meteor.settings.app.storagePath || 'assets/app/uploads/uploadedFiles',
   collectionName: 'uploadedFiles',
   allowClientCode: false,
-  // disableUpload: true,
-  // disableDownload: true,
+  // disableUpload: true, // DISABLE UPLOAD FROM CLIENT, MANAGE ALL FILES FROM SERVER
+  // disableDownload: true, // DISABLE DOWNLOAD
+  // protected: true, // Allow to read by any authorized user
+  async protected(fileObj) {
+    if (fileObj?.userId) {
+      // DO NOT SERVE "OWNED" FILES TO UNAUTHORIZED USERS
+      if (!this.userId) {
+        return false;
+      }
 
-  // Intercept calls to `.remove()` and `.removeAsync()` to remove file from S3
+      // DO NOT SERVE "OWNED" FILES TO OTHER USERS
+      if (fileObj.userId !== this.userId) {
+        return false;
+      }
+
+      // TOGGLE FILE PRIVACY VIA `meta.secured` FLAG
+      // if (!(fileObj.meta && fileObj.meta.secured)) {
+      //   return true;
+      // } else if ((fileObj.meta && fileObj.meta.secured === true) && this.userId === fileObj.userId) {
+      //   return true;
+      // }
+    }
+    return true;
+  },
+  // Intercept calls to `.removeAsync()` to remove file from S3
   // onAfterRemove called right after record is removed from the MongoDB Collection
   // and before calling `.unlink()` or `.unlinkAsync()`,
   // return `true` to prevent calling `.unlink()` or `.unlinkAsync()`
@@ -203,7 +225,10 @@ Collections.files = new FilesCollection({
   }
 });
 
+// DISALLOD REMOVE AND UPDATE FROM CLIENT
 Collections.files.denyClient();
+
+// UPLOAD FILES TO S3 AFTER UPLOAD
 Collections.files.on('afterUpload', function (fileRef) {
   const messageObj = {
     title: `File: ${fileRef.name}`,
@@ -297,8 +322,10 @@ Collections.files.on('afterUpload', function (fileRef) {
   }
 });
 
-// Set index on 'meta.expireAt' field
+// Set necessary indexes
 await Collections.files.collection.ensureIndexAsync({ 'meta.expireAt': 1 }, { background: true });
+await Collections.files.collection.ensureIndexAsync({ userId: 1, 'meta.createdAt': -1 });
+await Collections.files.collection.ensureIndexAsync({ _id: 1, 'meta.createdAt': -1 });
 
 // Every two minutes (120000ms) check for files which is about to expire
 // Remove files along with MongoDB records two minutes before expiration date

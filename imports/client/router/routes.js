@@ -91,6 +91,39 @@ FlowRouter.route('/', {
   }
 });
 
+FlowRouter.route('/login', {
+  name: 'login',
+  title() {
+    if (Meteor.userId()) {
+      return 'Account settings';
+    }
+    return 'Login into Account';
+  },
+  meta: {
+    keywords: {
+      name: 'keywords',
+      itemprop: 'keywords',
+      content: 'account, files, sharing, upload, meteor, open source, javascript'
+    },
+    description: {
+      name: 'description',
+      itemprop: 'description',
+      property: 'og:description',
+      content: 'Login into Account. Join free and open source file-sharing application'
+    },
+    'twitter:description': 'Login into Account. Join free and open source file-sharing application',
+  },
+  action() {
+    this.render('layout', 'login');
+  },
+  waitOn() {
+    return import('/imports/client/user-account/login.js');
+  },
+  whileWaiting() {
+    this.render('layout', 'loading');
+  }
+});
+
 FlowRouter.route('/about', {
   name: 'about',
   title: 'About',
@@ -106,7 +139,7 @@ FlowRouter.route('/about', {
       property: 'og:description',
       content: 'About file-sharing web application'
     },
-    'twitter:description': 'About file-sharing web application'
+    'twitter:description': 'About file-sharing web application',
   },
   action() {
     renderAction(this, 'layout', 'about');

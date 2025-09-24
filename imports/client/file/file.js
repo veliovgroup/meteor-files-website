@@ -8,10 +8,20 @@ import './file.html';
 Template.file.onRendered(function() {
   window.IS_RENDERED = true;
 
+  // NO PROCESSING IF FILE IS FAILED TO LOAD
+  if (!this.data.file?._id) {
+    return;
+  }
+
+  // DO NOT CACHE OWNED FILES
+  if (this.data.file.userId) {
+    return;
+  }
+
   // ADD OPENED FILE TO CACHED recentUploads PERSISTENT ReactiveVar
   // TO DISPLAY IT LATER IN THE LIST OF THE FILES AT THE MAIN PAGE
   const recentUploads = _app.conf.recentUploads.get();
-  if (recentUploads && this.data.file?._id) {
+  if (recentUploads && this.data.file._id) {
     let isNew = true;
     if (recentUploads.length) {
       for (const file of recentUploads) {

@@ -1,15 +1,12 @@
 import { Template } from 'meteor/templating';
 import { FlowRouter } from 'meteor/ostrio:flow-router-extra';
-import { ReactiveVar } from 'meteor/reactive-var';
 import { _app, Collections } from '/imports/lib/core.js';
 import './listing-row.sass';
 import './listing-row.html';
 
-const showSettings = new ReactiveVar(false);
-
 Template.listingRow.helpers({
-  showSettings() {
-    return showSettings.get() === this._id;
+  isOwned() {
+    return this.userId === Meteor.userId();
   }
 });
 
@@ -43,6 +40,11 @@ Template.listingRow.events({
       }
     }
 
+    return false;
+  },
+  async 'click [data-remove]'(e) {
+    e.preventDefault();
+    await Meteor.callAsync('file.remove', this._id);
     return false;
   }
 });

@@ -209,9 +209,11 @@ Template.uploadForm.onCreated(function () {
       }).on('end', function (error, fileObj) {
         if (!error) {
           // PUSH NEWLY UPLOADED FILE TO PERSISTENT CACHE
-          const recentUploads = _app.conf.recentUploads.get();
-          recentUploads.push(fileObj);
-          _app.conf.recentUploads.set(recentUploads);
+          if (!Meteor.userId()) {
+            const recentUploads = _app.conf.recentUploads.get();
+            recentUploads.push(fileObj);
+            _app.conf.recentUploads.set(recentUploads);
+          }
 
           if (files.length === 1) {
             setTimeout(() => {

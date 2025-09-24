@@ -34,8 +34,14 @@
       <i class="la la-copy"></i>
       <i class="la la-check"></i>
     </a>
-    <a class="file-settings close-link" data-hide title="Hide file" href="#">
-      <i class="la la-times"></i>
-    </a>
+    {{#if isOwned}}
+      <a class="file-settings close-link" data-remove title="Remove file" href="#">
+        <i class="la la-times"></i>
+      </a>
+    {{else}}
+      <a class="file-settings close-link" data-hide title="Hide file" href="#">
+        <i class="la la-times"></i>
+      </a>
+    {{/if}}
   </div>
 </template>
