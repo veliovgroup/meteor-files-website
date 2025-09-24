@@ -271,7 +271,7 @@ Template.uploadForm.helpers({
   status() {
     let i = 0;
     let progress = 0;
-    let onPause = false;
+    const onPause = [];
     const uploads = _app.uploads.get();
     const uploadQTY = Template.instance().uploadQTY;
     let accumBitrate = 0;
@@ -281,7 +281,7 @@ Template.uploadForm.helpers({
     // ESTIMATE TOTAL SPEED AND UPLOAD ETA
     if (uploads) {
       for (let j = 0; j < uploads.length; j++) {
-        onPause = uploads[j].onPause.get();
+        onPause.push(uploads[j].onPause.get());
         progress += uploads[j].progress.get();
         accumBitrate += uploads[j].estimateSpeed.get();
         accumDuration += uploads[j].estimateTime.get();
@@ -303,7 +303,7 @@ Template.uploadForm.helpers({
       })();
     }
 
-    return { progress, accumBitrate, accumDuration, onPause };
+    return { progress, accumBitrate, accumDuration, onPause: !onPause.includes(false) };
   }
 });
 
