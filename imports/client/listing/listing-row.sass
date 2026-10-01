@@ -1,4 +1,5 @@
-@import "{}/imports/client/styles/_color-scheme.sass"
+@use "sass:color"
+@use "{}/imports/client/styles/_color-scheme.sass" as *
 
 .item-row
   display: flex
@@ -31,7 +32,7 @@
     font-size: 1.4rem
     padding: 23px 12px
     &:hover
-      background-color: lighten($bg-dark, 3%)
+      background-color: color.adjust($bg-dark, $lightness: 3%)
   &.upload
     cursor: default
     .item-icon
@@ -42,8 +43,8 @@
     background-color: $bg-dark
     .preview-circle
       color: $link-active
-      background-color: darken($background-color, 1%)
-      border: 2px solid darken($background-color, 1%)
+      background-color: color.adjust($background-color, $lightness: -1%)
+      border: 2px solid color.adjust($background-color, $lightness: -1%)
 
 
 .preview-circle
@@ -54,8 +55,8 @@
   text-align: center
   overflow: hidden
   border-radius: 40px
-  border: 2px solid darken($background-color, 5%)
-  background-color: darken($background-color, 5%)
+  border: 2px solid color.adjust($background-color, $lightness: -5%)
+  background-color: color.adjust($background-color, $lightness: -5%)
   position: relative
   i
     font-size: 20px

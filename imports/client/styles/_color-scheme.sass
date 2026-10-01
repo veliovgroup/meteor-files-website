@@ -1,10 +1,11 @@
-$link-color: lighten(#97A2D0, 11%);
+@use "sass:color"
+$link-color: color.adjust(#97A2D0, $lightness: 11%);
 $link-active: #FFFFFF;
-$text-color: lighten(#97A2D0, 10%);
+$text-color: color.adjust(#97A2D0, $lightness: 10%);
 $green: #228B22;
 $red: #EA6F43;
 $muted: #606C80;
-$bg: mix(#080C15, #1C222E);
+$bg: color.mix(#080C15, #1C222E);
 $bg-dark: #0F141D;
 $bg-alt: #111620;
 $transition-128ms: color 128ms ease-in-out;
