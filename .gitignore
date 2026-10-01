@@ -4,7 +4,9 @@
 node_modules
 junk/
 run-dev.sh
+deploy.sh
 nohup.out
 
 settings.dev.json
 settings.prod.json
+packages/

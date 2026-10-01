@@ -25,7 +25,11 @@ Meteor.setTimeout(() => {
 
 // ENABLE ANALYTICS IF TRACKING_ID IS PROVIDED
 if (Meteor.settings.public?.trackingId) {
-  _app.analytics = new Analytics(Meteor.settings.public.trackingId);
+  _app.analytics = new Analytics(Meteor.settings.public.trackingId, {
+    auto: true,
+    trackHash: false,
+    trackQuery: false
+  });
 }
 
 // HELPER FOR CREATING MULTIPLE LISTENERS

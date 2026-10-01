@@ -9,12 +9,13 @@
     "start": "node main.js"
   },
   "dependencies": {
-    "@babel/runtime": "^7.27.0",
-    "aws-sdk": "^2.1692.0",
-    "core-js": "^3.41.0",
-    "fs-extra": "^11.3.0",
+    "@aws-sdk/client-s3": "^3.1145.0",
+    "@babel/runtime": "^7.29.7",
+    "@swc/helpers": "^0.5.23",
+    "core-js": "^3.50.0",
+    "fs-extra": "^11.4.1",
     "jquery": "^3.7.1",
-    "meteor-node-stubs": "^1.2.13",
+    "meteor-node-stubs": "^1.2.30",
     "web-push": "^3.6.7"
   },
   "env": {
@@ -58,7 +59,7 @@
     }
   ],
   "engines": {
-    "node": "^22.13.1",
-    "npm": "^10.9.2"
+    "node": "^24.15.0",
+    "npm": "^11.12.1"
   }
 }
