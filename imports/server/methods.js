@@ -79,7 +79,9 @@ Meteor.methods({
   async 'file.remove'(_id) {
     check(_id, String);
     // DO NOT PASS UNAUHTENTICATED REQUESTS
-    check(this.userId, String);
+    if (!this.userId) {
+      throw new Meteor.Error(401, 'Login required');
+    }
 
     const fileCursor = await Collections.files.findOneAsync({ _id }, {
       fields: {
@@ -89,7 +91,7 @@ Meteor.methods({
     });
 
     if (fileCursor && (fileCursor.userId === this.userId)) {
-      fileCursor.removeAsync();
+      await fileCursor.removeAsync();
     }
 
     return void 0;
