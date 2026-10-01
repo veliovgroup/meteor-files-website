@@ -67,12 +67,12 @@ Application is ready to be used as it is without need of extra configuration. Op
 
 ### Activate AWS:S3
 
-1. Read [this article](https://github.com/veliovgroup/Meteor-Files/wiki/AWS-S3-Integration)
+1. Read [this article](https://github.com/veliovgroup/Meteor-Files/blob/master/docs/aws-s3-integration.md). The app uses the `storage` adapter from `imports/server/s3-storage.js`: finished uploads move to S3, and downloads stream from S3 with `Range` support
 2. After creating S3 bucket, create CloudFront Distribution and attach it to S3 bucket
 3. Set S3 credentials into `METEOR_SETTINGS` env.var or pass as the file, read [here for more info](http://docs.meteor.com/#/full/meteor_settings), alternatively (*if something not working*) set `S3` env.var
 4. You can pass S3 credentials as JSON-string when using "*Heroku's one click install-button*"
 
-S3 credentials format (*region is required*):
+S3 credentials format (*region is required*, `endpoint` is optional and only needed for S3-compatible services like MinIO or Wasabi):
 
 ```json
 {
@@ -81,7 +81,8 @@ S3 credentials format (*region is required*):
       "key": "xxx",
       "secret": "xxx",
       "bucket": "xxx",
-      "region": "xxx"
+      "region": "xxx",
+      "endpoint": ""
     }
   }
 }
@@ -172,7 +173,8 @@ All supported and annotated settings
       "key": "",
       "secret": "",
       "bucket": "",
-      "region": ""
+      "region": "",
+      "endpoint": "" // OPTIONAL, FOR S3-COMPATIBLE SERVICES (MinIO, Wasabi)
     },
     "vapid": { // VAPID WEB PUSH NOTIFICATIONS CONFIGURATION
       "email": "mailto:webmaster@example.com", // WEB PUSH NOTIFICATION EMAIL
